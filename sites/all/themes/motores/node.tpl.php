@@ -80,6 +80,24 @@
     <?php print $content; ?>
   </div>
 
+  <? if ($page): ?>
+  <div id="vehiculo-detalles">
+    <h2>Detalles y Equipamiento</h2>
+    <div class="detalles-inner">
+      <div class="detalles-row clearfix">
+        <?=$field_confort_rendered?>
+        <?=$field_cristales_rendered?>
+        <?=$field_sonido_rendered?>
+      </div>
+      <div class="detalles-row clearfix">
+        <?=$field_equipo_rendered?>
+        <?=$field_proteccion_rendered?>
+        <?=$field_seguridad_rendered?>
+      </div>
+    </div>
+  </div>
+  <? endif; ?>
+  
   <?php print $links; ?>
 
 </div></div> <!-- /node-inner, /node -->
