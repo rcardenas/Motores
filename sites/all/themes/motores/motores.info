@@ -1,9 +1,9 @@
-; $Id: STARTERKIT.info.txt,v 1.1.2.3 2009/05/08 15:05:04 johnalbin Exp $
+; $Id: motores.info.txt,v 1.1.2.3 2009/05/08 15:05:04 johnalbin Exp $
 
 
   ; The name and description of the theme used on the admin/build/themes page.
-name        = Zen Sub-theme Starter Kit
-description = Read the <a href="http://drupal.org/node/226507">online docs</a> on how to create a sub-theme.
+name        = Tema de Venta Absoluta de Motores
+description = 
 
   ; The screenshot used on the admin/build/themes page.
 screenshot = screenshot.png
@@ -30,7 +30,7 @@ stylesheets[all][]   = html-elements.css
 ; stylesheets[all][] = messages.css
 ; stylesheets[all][] = block-editing.css
 ; stylesheets[all][] = wireframes.css
-stylesheets[all][]   = STARTERKIT.css
+stylesheets[all][]   = motores.css
 stylesheets[print][] = print.css
   ; To prevent stylesheets of a base theme or of a module from being included in
   ; our sub-theme, we specify it in our .info file (and we don't need to have a
