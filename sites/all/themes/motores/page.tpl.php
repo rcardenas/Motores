@@ -93,12 +93,15 @@
   <div id="page"><div id="page-inner">
 
     <a name="navigation-top" id="navigation-top"></a>
-    <?php if ($primary_links || $secondary_links || $navbar): ?>
-      <div id="skip-to-nav"><a href="#navigation"><?php print t('Skip to Navigation'); ?></a></div>
-    <?php endif; ?>
 
     <div id="header"><div id="header-inner" class="clear-block">
 
+      <?php if ($header): ?>
+        <div id="header-blocks" class="region region-header">
+          <?php print $header; ?>
+        </div> <!-- /#header-blocks -->
+      <?php endif; ?>
+      
       <?php if ($logo || $site_name || $site_slogan): ?>
         <div id="logo-title">
 
@@ -129,15 +132,38 @@
         </div> <!-- /#logo-title -->
       <?php endif; ?>
 
-      <?php if ($header): ?>
-        <div id="header-blocks" class="region region-header">
-          <?php print $header; ?>
-        </div> <!-- /#header-blocks -->
-      <?php endif; ?>
-
     </div></div> <!-- /#header-inner, /#header -->
 
-    <div id="main"><div id="main-inner" class="clear-block<?php if ($search_box || $primary_links || $secondary_links || $navbar) { print ' with-navbar'; } ?>">
+    <?php if ($search_box || $primary_links || $secondary_links || $navbar): ?>
+      <div id="navbar"><div id="navbar-inner" class="clear-block region region-navbar">
+
+        <a name="navigation" id="navigation"></a>
+
+        <div id="navbar-blocks">
+          <?php if ($search_box): ?>
+            <div id="search-box">
+              <?php print $search_box; ?>
+            </div> <!-- /#search-box -->
+          <?php endif; ?>
+          <?php print $navbar; ?>
+        </div>
+
+        <?php if ($primary_links): ?>
+          <div id="primary" class="clear-block">
+            <?php print theme('links', $primary_links); ?>
+          </div> <!-- /#primary -->
+        <?php endif; ?>
+
+        <?php if ($secondary_links): ?>
+          <div id="secondary" class="clear-block">
+            <?php print theme('links', $secondary_links); ?>
+          </div> <!-- /#secondary -->
+        <?php endif; ?>
+
+      </div></div> <!-- /#navbar-inner, /#navbar -->
+    <?php endif; ?>
+    
+    <div id="main"><div id="main-inner" class="clear-block<?php if ($search_box || $primary_links || $secondary_links) { print ' with-navbar'; } ?>">
 
       <div id="content"><div id="content-inner">
 
@@ -180,34 +206,6 @@
         <?php endif; ?>
 
       </div></div> <!-- /#content-inner, /#content -->
-
-      <?php if ($search_box || $primary_links || $secondary_links || $navbar): ?>
-        <div id="navbar"><div id="navbar-inner" class="clear-block region region-navbar">
-
-          <a name="navigation" id="navigation"></a>
-
-          <?php if ($search_box): ?>
-            <div id="search-box">
-              <?php print $search_box; ?>
-            </div> <!-- /#search-box -->
-          <?php endif; ?>
-
-          <?php if ($primary_links): ?>
-            <div id="primary" class="clear-block">
-              <?php print theme('links', $primary_links); ?>
-            </div> <!-- /#primary -->
-          <?php endif; ?>
-
-          <?php if ($secondary_links): ?>
-            <div id="secondary" class="clear-block">
-              <?php print theme('links', $secondary_links); ?>
-            </div> <!-- /#secondary -->
-          <?php endif; ?>
-
-          <?php print $navbar; ?>
-
-        </div></div> <!-- /#navbar-inner, /#navbar -->
-      <?php endif; ?>
 
       <?php if ($left): ?>
         <div id="sidebar-left"><div id="sidebar-left-inner" class="region region-left">
