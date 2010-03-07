@@ -10,6 +10,12 @@ function motores_custom_block($op = 'list', $delta = 0, $edit = array()) {
 	      switch ( $delta )
 	      {
 			case 0:
+			  drupal_add_js("$(document).ready(function(){
+				var user=$('#edit-nuevo-field').val();
+				$('#edit-field-inbox-0-uid-uid').val(user);
+				$('#edit-field-inbox-0-uid-uid-wrapper').hide();
+				$('#edit-preview').hide();
+			});",'inline');
 	          $blocks['title'] = t('¿Quieres más info?');
 	          $blocks['content'] = motores_custom_get_mensaje_form();
 	          break;
@@ -35,12 +41,6 @@ function motores_custom_form_alter(&$form, &$form_state, $form_id){
 		$node = node_load(arg(1));
 		$form['nuevo_field']=array('#value'=>$node->name,
 		                           '#type'=>'hidden');
-		drupal_add_js("$(document).ready(function(){
-			var user=$('#edit-nuevo-field').val();
-			$('#edit-field-inbox-0-uid-uid').val(user);
-			$('#edit-field-inbox-0-uid-uid-wrapper').hide();
-			$('#edit-preview').hide();
-		});",'inline');
 		$form['#redirect']='node/'.$node->nid;
 	}
 }
@@ -48,6 +48,7 @@ function motores_custom_form_alter(&$form, &$form_state, $form_id){
 function motores_custom_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL){
 
 	if($op=='insert' && $node->type=='mensaje'){
-	
+	  drupal_get_messages($type = NULL, $clear_queue  = TRUE);
+	  drupal_set_message('Tu mensaje ha sido enviado al anunciante.');
 	}
 }
