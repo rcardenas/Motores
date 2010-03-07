@@ -214,8 +214,8 @@
 /** navbar **/
   #navbar
   {
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
 	border-radius: 10px;
 	background: #D2D2D2 url(img/primarybg.gif) repeat-x 0 bottom;
 }
@@ -826,9 +826,9 @@
 {
 	background: url(img/primarybg.gif) repeat-x 0 bottom;
 	background-color: #D2D2D2;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	border-radius: 10px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
 }
 #header-blocks .first a
 {
@@ -837,4 +837,78 @@
 #header-blocks .last a
 {
 	border-right: none;
+}
+#sidebar-right .block h2.title
+{
+	background-color: #0093FF;
+	color: #FFFFFF;
+	padding: 6px 12px;
+	-moz-border-radius-topleft: 8px;
+	-moz-border-radius-topright: 8px;
+	-webkit-border-top-left-radius: 8px;
+	-webkit-border-top-right-radius: 8px;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+}
+#sidebar-right .block .content
+{
+	border: 2px solid #CBCBCB;
+	border-top: none;
+	padding: 12px;
+	-moz-border-radius: 8px;
+	-moz-border-radius-topleft: 0px;
+	-moz-border-radius-topright: 0px;
+	-webkit-border-radius: 8px;
+	-webkit-border-top-left-radius: 0px;
+	-webkit-border-top-right-radius: 0px;
+	border-radius: 8px;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+}
+#sidebar-right .form-item
+{
+	margin-top: 0;
+}
+#vehiculo-detalles
+{
+	border: 2px solid #CBCBCB;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+}
+#vehiculo-detalles .field
+{
+	width: 210px;
+	float: left;
+}
+#vehiculo-detalles .field .field-items
+{
+	color: #757979;
+	font-size: 12px;
+}
+#vehiculo-detalles .field .field-label
+{
+	color: #0093FF;
+}
+#vehiculo-detalles .detalles-row
+{
+	margin-top: 12px;
+}
+#vehiculo-detalles h2
+{
+	margin: 0;
+	font-weight: normal;
+	padding: 12px;
+	font-size: 18px;
+	line-height: 19px;
+	border-bottom: 1px solid #CBCBCB;
+}
+#vehiculo-detalles .detalles-inner
+{
+	padding: 12px;
+	padding-top: 0;
+}
+#vehiculo-detalles .field .field-item
+{
+	background: url(img/bullet.gif) no-repeat;
 }
