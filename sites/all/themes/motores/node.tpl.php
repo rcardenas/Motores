@@ -94,6 +94,10 @@
       <div class="ubicacion"><?=t('Ubicación').': '.$field_ciudad[0]['view']?></div>
     </div>
     
+    <div id="scrollable">
+      <?=$field_imagenes_rendered?>
+    </div>
+    
     <div class="additional-details">
       <?=$field_version_rendered?>
       <?=$field_km_rendered?>
