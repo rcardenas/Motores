@@ -991,3 +991,25 @@
 {
 	width: 240px;
 }
+
+#scrollable-big
+{
+	padding: 12px;
+	border-top: 1px solid #CBCBCB;
+}
+#scrollable-big .field
+{
+	position: relative;
+	overflow: hidden;
+	width: 630px;
+	height: 470px;
+}
+#scrollable-big .field .field-items
+{
+	position: absolute;
+	width: 99999em;
+}
+#scrollable-big .field .field-item
+{
+	float: left;
+}

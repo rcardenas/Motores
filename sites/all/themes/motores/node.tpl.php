@@ -94,7 +94,7 @@
       <div class="ubicacion"><?=t('Ubicación').': '.$field_ciudad[0]['view']?></div>
     </div>
     
-    <div id="scrollable">
+    <div id="scrollable-big">
       <?=$field_imagenes_rendered?>
     </div>
     

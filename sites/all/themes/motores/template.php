@@ -131,7 +131,7 @@ function motores_preprocess_page(&$vars, $hook) {
  */
 
 function motores_preprocess_node(&$vars, $hook) {
-  //print_r($vars);
+  //print_r($vars['field_imagenes']);
   switch ( $vars['node']->type )
   {
     case 'page':
@@ -147,6 +147,9 @@ function motores_preprocess_node(&$vars, $hook) {
       {
         $vars['nombre'] .= ' '.$c->name;
       }
+      drupal_add_js( path_to_theme(). '/js/scrollable.min.js', 'theme' );
+      // JS engine
+      drupal_add_js( path_to_theme(). '/js/anuncio_engine.js', 'theme' );
       break;
   }
 }
