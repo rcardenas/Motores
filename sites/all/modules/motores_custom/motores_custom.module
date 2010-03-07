@@ -4,6 +4,8 @@ function motores_custom_block($op = 'list', $delta = 0, $edit = array()) {
 	switch($op){
 		case 'list':
 	      $blocks[0]['info'] = t('¿Quieres más info?');
+	      $blocks[1]['info'] = t('Mi cuenta');
+	      $blocks[2]['info'] = t('Mis anuncios');
 	      return $blocks;
 	      break;
 	    case 'view':
@@ -19,6 +21,14 @@ function motores_custom_block($op = 'list', $delta = 0, $edit = array()) {
 	          $blocks['title'] = t('¿Quieres más info?');
 	          $blocks['content'] = motores_custom_get_mensaje_form();
 	          break;
+	        case 1:
+	          $blocks['title'] = t('Mi cuenta');
+	          $blocks['content'] = motores_custom_get_micuenta();
+	        break;
+	        case 2:
+	          $blocks['title'] = t('Mis anuncios');
+	          $blocks['content'] = motores_custom_get_misanuncios();
+	        break;
 	      }
 	      return $blocks;
 	      break;
@@ -51,4 +61,39 @@ function motores_custom_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL){
 	  drupal_get_messages($type = NULL, $clear_queue  = TRUE);
 	  drupal_set_message('Tu mensaje ha sido enviado al anunciante.');
 	}
+}
+
+function motores_custom_get_misanuncios(){
+	global $user;
+	
+	$output ='<div class="mis-anuncios">';
+	$output .='<div class="camionetas">'.l('camioneta','micuenta/'.$user->uid.'/camionetas').'</div>';
+	$output .='<div class="carro">'.l('carro','micuenta/'.$user->uid.'/vehiculo').'</div>';
+	$output .='<div class="moto">'.l('moto','micuenta/'.$user->uid.'/moto').'</div>';
+	$output .='<div class="otro-tipo">'.l('otro','micuenta/'.$user->uid.'/lanchas').'</div>';
+	$output .='<div class="accesorios">'.l('accesorios','micuenta/'.$user->uid.'/accesorios').'</div>';
+	$output .='</div>';
+	
+	return $output;
+}
+
+function motores_custom_get_micuenta(){
+	global $user;
+	
+	$output = '<div class="item-mis-datos">'.l('Modificar mis datos','user/'.$user->uid.'/edit').'</div>';
+	$output .='<div class="item-mis-mensajes">'.l('Mis mensajes ('.motores_custom_get_inbox_total().')','inbox').'</div>';
+	$output .='<div class="item-ayuda">'.l('Ayuda','ayuda').'</div>';
+	$output .='<div class="item-centro-seguridad">'.l('Centro de seguridad','seguridad').'</div>';
+	
+	return $output;
+}
+
+function motores_custom_get_inbox_total(){
+	global $user;
+	$count = db_result(db_query("SELECT COUNT(DISTINCT(node.nid)) FROM node node 
+	 LEFT JOIN content_type_mensaje node_data_field_inbox ON node.vid = node_data_field_inbox.vid
+	 WHERE (node.type in ('mensaje')) AND (node_data_field_inbox.field_inbox_uid = $user->uid)
+	"));
+	
+	return $count;
 }
