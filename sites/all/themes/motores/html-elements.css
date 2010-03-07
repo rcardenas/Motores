@@ -190,10 +190,12 @@
    */
   a:link
   {
+	color: #000000;
   }
 
   a:visited
   {
+	color: #000000;
   }
 
   a:hover,

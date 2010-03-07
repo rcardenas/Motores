@@ -62,7 +62,7 @@
     <div class="unpublished"><?php print t('Unpublished'); ?></div>
   <?php endif; ?>
 
-  <?php if ($submitted || $terms): ?>
+  <?php if (!$page && ($submitted || $terms) ): ?>
     <div class="meta">
       <?php if ($submitted): ?>
         <div class="submitted">
@@ -81,7 +81,29 @@
   </div>
 
   <? if ($page): ?>
-  <div id="vehiculo-detalles">
+  <div id="main-desc" class="greybox">
+    
+    <div class="desc-inner">
+      <div class="precio-fecha">
+        <?=$field_precio_rendered?>
+        <div class="fecha">
+          <div class="field-label"><?=t('Fecha de anuncio').': '?></div><?=format_date($created, 'custom', 'd/m/Y')?>
+        </div>
+      </div>
+      <h1><?=$nombre?></h1>
+      <div class="ubicacion"><?=t('Ubicación').': '.$field_ciudad[0]['view']?></div>
+    </div>
+    
+    <div class="additional-details">
+      <?=$field_version_rendered?>
+      <?=$field_km_rendered?>
+      <?=$field_color_rendered?>
+      <?=$field_vestiduras_rendered?>
+      <?=$field_transmision_rendered?>
+    </div>
+    
+  </div>
+  <div id="vehiculo-detalles" class="greybox">
     <h2>Detalles y Equipamiento</h2>
     <div class="detalles-inner">
       <div class="detalles-row clearfix">

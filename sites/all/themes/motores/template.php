@@ -113,9 +113,11 @@ function motores_preprocess(&$vars, $hook) {
  * @param $hook
  *   The name of the template being rendered ("page" in this case.)
  */
-/* -- Delete this line if you want to use this function
 function motores_preprocess_page(&$vars, $hook) {
-  $vars['sample_variable'] = t('Lorem ipsum.');
+  if ( $vars['node']->type == 'vehiculo' )
+  {
+    unset($vars['title']);
+  }
 }
 // */
 
@@ -130,6 +132,23 @@ function motores_preprocess_page(&$vars, $hook) {
 
 function motores_preprocess_node(&$vars, $hook) {
   //print_r($vars);
+  switch ( $vars['node']->type )
+  {
+    case 'page':
+      break;
+    
+    default:
+    
+      $vars['classes'] .= ' anuncio';
+      $vars['nombre'] = $vars['field_anio'][0]['value'];
+      $carro = taxonomy_get_parents_all( $vars['field_marca'][0]['value'] );
+      $carro = array_reverse($carro);
+      foreach ($carro as $c)
+      {
+        $vars['nombre'] .= ' '.$c->name;
+      }
+      break;
+  }
 }
 // */
 
