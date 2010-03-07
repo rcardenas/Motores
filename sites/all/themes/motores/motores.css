@@ -910,5 +910,6 @@
 }
 #vehiculo-detalles .field .field-item
 {
-	background: url(img/bullet.gif) no-repeat;
+	background: url(img/bullet.gif) no-repeat 0 2px;
+	padding-left: 17px;
 }
