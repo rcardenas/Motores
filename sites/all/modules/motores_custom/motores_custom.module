@@ -38,6 +38,7 @@ function motores_custom_form_alter(&$form, &$form_state, $form_id){
 		drupal_add_js("$(document).ready(function(){
 			var user=$('#edit-nuevo-field').val();
 			$('#edit-field-inbox-0-uid-uid').val(user);
+			$('#edit-field-inbox-0-uid-uid').hide();
 		});",'inline');
 		$form['#redirect']='node/'.$node->nid;
 	}
