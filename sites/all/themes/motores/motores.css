@@ -1004,12 +1004,62 @@
 	width: 630px;
 	height: 470px;
 }
-#scrollable-big .field .field-items
+#scrollable-small .field
+{
+	height:94px;
+	margin:0 47px;
+	overflow:hidden;
+	padding:6px;
+	position:relative;
+}
+#scrollable-small img
+{
+	-moz-box-shadow:0 0 6px #666666;
+	box-shadow:0 0 6px #666666;
+	border:1px solid #FFFFFF;
+	cursor: pointer;
+}
+#scrollable-small
+{
+	position: relative;
+	margin-bottom: 12px;
+}
+#scrollable-small .field-item
+{
+	margin-right: 12px;
+}
+#scrollable-small .prevPage
+{
+	background: url(img/left.png) no-repeat;
+	display: block;
+	width: 18px;
+	height: 18px;
+	left:21px;
+	position:absolute;
+	top:45px;
+	cursor: pointer;
+}
+#scrollable-small a:hover
+{
+	background-position: 0 -18px;
+}
+#scrollable-small .nextPage
+{
+	background: url(img/right.png) no-repeat;
+	display: block;
+	width: 18px;
+	height: 18px;
+	right:21px;
+	position:absolute;
+	top:45px;
+	cursor: pointer;
+}
+.scrollable .field .field-items
 {
 	position: absolute;
 	width: 99999em;
 }
-#scrollable-big .field .field-item
+.scrollable .field .field-item
 {
 	float: left;
 }

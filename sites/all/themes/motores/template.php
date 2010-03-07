@@ -139,14 +139,22 @@ function motores_preprocess_node(&$vars, $hook) {
     
     default:
     
+      // nombre del carro
       $vars['classes'] .= ' anuncio';
       $vars['nombre'] = $vars['field_anio'][0]['value'];
       $carro = taxonomy_get_parents_all( $vars['field_marca'][0]['value'] );
       $carro = array_reverse($carro);
-      foreach ($carro as $c)
+      foreach ( $carro as $c )
       {
         $vars['nombre'] .= ' '.$c->name;
       }
+      
+      // small scrollable
+      foreach ( $vars['field_imagenes'] as $i )
+      {
+        $vars['small_scrollable'][] = theme( 'imagecache', 'slideshow_small', $i['filepath'] );
+      }
+      
       drupal_add_js( path_to_theme(). '/js/scrollable.min.js', 'theme' );
       // JS engine
       drupal_add_js( path_to_theme(). '/js/anuncio_engine.js', 'theme' );

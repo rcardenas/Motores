@@ -94,8 +94,19 @@
       <div class="ubicacion"><?=t('Ubicación').': '.$field_ciudad[0]['view']?></div>
     </div>
     
-    <div id="scrollable-big">
+    <div id="scrollable-big" class="scrollable">
       <?=$field_imagenes_rendered?>
+    </div>
+    <div id="scrollable-small" class="scrollable clearfix">
+      <a class="prevPage">&nbsp;</a>
+      <div class="field">
+        <div class="field-items">
+        <? foreach ( $small_scrollable as $s ): ?>
+          <div class="field-item"><?=$s?></div>
+        <? endforeach; ?>
+        </div>
+      </div>
+      <a class="nextPage">&nbsp;</a>
     </div>
     
     <div class="additional-details">
