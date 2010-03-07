@@ -869,12 +869,70 @@
 {
 	margin-top: 0;
 }
-#vehiculo-detalles
+.greybox
 {
 	border: 2px solid #CBCBCB;
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
 	border-radius: 8px;
+	margin-bottom: 12px;
+}
+.anuncio h1
+{
+	margin: 0;
+	font-size: 20px;
+	line-height: 21px;
+}
+#main-desc .precio-fecha
+{
+	float: right;
+	width: 200px;
+	font-size: 12px;
+	line-height: 17px;
+}
+#main-desc .ubicacion
+{
+	color: #757979;
+	font-size: 12px;
+}
+#main-desc .desc-inner
+{
+	padding: 12px;
+}
+.precio-fecha .field-field-precio
+{
+	color: #FF0000;
+	font-weight: bold;
+}
+#main-desc .precio-fecha .fecha
+{
+	color: #757979;
+}
+.precio-fecha .field-field-precio .field-label
+{
+	color: #0093FF;
+}
+#main-desc .precio-fecha .field-label
+{
+	float: left;
+	margin-right: 5px;
+}
+#main-desc .additional-details
+{
+	border-top: 1px solid #CBCBCB;
+	clear: both;
+	padding: 12px;
+}
+#main-desc .additional-details .field-label
+{
+	float: left;
+	width: 100px;
+	color: #0093FF;
+}
+#main-desc .additional-details .field-items
+{
+	color: #757979;
+	font-size: 12px;
 }
 #vehiculo-detalles .field
 {
@@ -912,4 +970,15 @@
 {
 	background: url(img/bullet.gif) no-repeat 0 2px;
 	padding-left: 17px;
+}
+
+.breadcrumb
+{
+	margin: 12px 0;
+	font-size: 12px;
+}
+.block-motores_custom .form-text,
+.block-motores_custom .form-textarea
+{
+	width: 240px;
 }
