@@ -137,6 +137,11 @@
 
   div.messages /* Important messages (status, warning, and error) for the user */
   {
+	margin: 0;
+	margin-bottom: 12px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
   }
 
   div.status /* Normal priority messages */
@@ -976,6 +981,10 @@
 {
 	margin: 12px 0;
 	font-size: 12px;
+}
+.breadcrumb a
+{
+	font-weight: bold;
 }
 .block-motores_custom .form-text,
 .block-motores_custom .form-textarea
