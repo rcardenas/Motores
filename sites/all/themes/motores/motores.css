@@ -711,9 +711,17 @@
     margin: 0.4em 0;
   }
 
-  .form-submit /* The submit button */
+  #main .form-submit /* The submit button */
   {
-  }
+	border:medium none;
+	color:#FFFFFF;
+	font-weight:bold;
+	padding:4px 12px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	background: #FF4C00;
+}
 
   .container-inline div, .container-inline label /* Inline labels and form divs */
   {
@@ -1183,6 +1191,7 @@
 {
 	width: 100%;
 	margin-top: 0;
+	margin-bottom: 6px;
 }
 .view-micuenta .view-content
 {
