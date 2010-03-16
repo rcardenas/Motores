@@ -1,6 +1,14 @@
 <?php
 
 function motores_custom_block($op = 'list', $delta = 0, $edit = array()) {
+	
+/*	$jeep=explode(',','');
+	print_r($jeep);
+	foreach($jeep as $typed){
+		$edit = array('vid' =>  3, 'name' => $typed, 'parent'=>557);
+		$status = taxonomy_save_term($edit);
+	}
+*/	
 	switch($op){
 		case 'list':
 	      $blocks[0]['info'] = t('¿Quieres más info?');
