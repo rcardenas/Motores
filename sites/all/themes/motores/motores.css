@@ -1211,10 +1211,11 @@
 .multistep-tabs ul
 {
 	padding: 0;
+	background: url(img/multi_line.gif) no-repeat 35px 24px;
 }
 .multistep-tabs li.active
 {
-	
+	background-image: url(img/multi_active.gif);
 }
 .multistep-tabs li
 {

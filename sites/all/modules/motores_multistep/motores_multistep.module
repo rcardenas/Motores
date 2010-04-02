@@ -23,8 +23,6 @@ function motores_multistep_block($op = 'list', $delta = 0, $edit = array())
 
 function motores_multistep_markup()
 {
-  //drupal_add_js( drupal_get_path('module', 'motores_multistep').'/motores_multistep.js', 'module' );
-  
   $t[] = t('Marca y modelo');
   $t[] = t('A&ntilde;o y submodelo');
   $t[] = t('Detalles');
@@ -34,6 +32,7 @@ function motores_multistep_markup()
   $t[] = t('Pago');
   $t[] = t('Tu anuncio listo');
   
+  $active = -1;
   if ( $_GET['q'] == 'node/add/vehiculo' )
   {
     $active = 0;
@@ -44,8 +43,8 @@ function motores_multistep_markup()
   }
   
   $r = 
-  '<div class="multistep-tabs clearfix">
-    <ul>';
+  '<div class="multistep-tabs">
+    <ul class="clearfix">';
 
   foreach ( $t as $i => $step )
   {
