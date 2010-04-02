@@ -117,6 +117,19 @@ function motores_preprocess_page(&$vars, $hook) {
   if ( $vars['node']->type == 'vehiculo' )
   {
     unset($vars['title']);
+    
+    // Si se esta editando el nodo, poner body classes del multistep
+    if ( arg(2) == 'edit' )
+    {
+      $step = ( arg(3) ) ? arg(3) : '1';
+      $vars['body_classes'] .= ' multistep-'.$step;
+    }
+  }
+  
+  // Agregar body class para multistep en node creation
+  if ( $_GET['q'] == 'node/add/vehiculo' )
+  {
+    $vars['body_classes'] .= ' multistep-1';
   }
 }
 // */

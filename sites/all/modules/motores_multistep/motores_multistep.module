@@ -1,0 +1,27 @@
+<?php
+
+function motores_multistep_block($op = 'list', $delta = 0, $edit = array()) 
+{
+	switch( $op )
+	{
+		case 'list':
+	      $blocks[0]['info'] = t('Anuncio multistep');
+	      return $blocks;
+	      break;
+	    case 'view':
+	      switch ( $delta )
+	      {
+			    case 0:
+	          $blocks['title'] = '';
+	          $blocks['content'] = motores_multistep_markup();
+	          break;
+	      }
+	      return $blocks;
+	      break;
+	}
+}
+
+function motores_multistep_markup()
+{
+  return '<p>shit man</p>';
+}
