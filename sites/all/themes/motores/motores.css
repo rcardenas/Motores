@@ -1,3 +1,4 @@
+/* @override http://localhost/motores/sites/all/themes/motores/motores.css?o */
 /* $Id: zen.css,v 1.14.2.6 2009/11/05 11:03:32 johnalbin Exp $ */
 
 /*
@@ -1207,7 +1208,28 @@
 	color: #0093FF;
 }
 
-
+.multistep-tabs ul
+{
+	padding: 0;
+}
+.multistep-tabs li.active
+{
+	
+}
+.multistep-tabs li
+{
+	float: left;
+	width: 100px;
+	padding: 0 10px;
+	padding-top: 60px;
+	list-style-image: none;
+	list-style-type: none;
+	background: url(img/multi_inactive.gif) no-repeat center top;
+	text-align: center;
+	font-size: 12px;
+	line-height: 13px;
+	color: #B2B2B2;
+}
 
 
 

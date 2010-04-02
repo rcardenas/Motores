@@ -3,6 +3,7 @@ name = Multistep blocks
 description = Crea bloque de multistep al crear anuncio
 core = 6.x
 dependencies[] = multistep
+package = Techbase
 
 ; Information added by drupal.org packaging script on 2010-02-27
 version = "6.x-1.3"

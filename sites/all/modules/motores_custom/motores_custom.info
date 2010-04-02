@@ -2,6 +2,7 @@
 name = Custom
 description = Provides custom behaviors.
 core = 6.x
+package = Techbase
 
 ; Information added by drupal.org packaging script on 2010-02-27
 version = "6.x-1.3"
