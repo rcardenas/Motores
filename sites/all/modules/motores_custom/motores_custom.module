@@ -74,7 +74,7 @@ function motores_custom_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL){
 function motores_custom_get_misanuncios(){
 	global $user;
 	
-	$output ='<div class="mis-anuncios">';
+	$output ='<div class="mis-anuncios clearfix">';
 	$output .='<div class="camionetas">'.l('camioneta','micuenta/'.$user->uid.'/camionetas').'</div>';
 	$output .='<div class="carro">'.l('carro','micuenta/'.$user->uid.'/vehiculo').'</div>';
 	$output .='<div class="moto">'.l('moto','micuenta/'.$user->uid.'/moto').'</div>';

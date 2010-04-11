@@ -857,7 +857,8 @@
 {
 	border-right: none;
 }
-#sidebar-right .block h2.title
+#sidebar-right .block h2.title,
+.page-micuenta h2.title
 {
 	background-color: #0093FF;
 	color: #FFFFFF;
@@ -869,7 +870,8 @@
 	border-top-left-radius: 8px;
 	border-top-right-radius: 8px;
 }
-#sidebar-right .block .content
+#sidebar-right .block .content,
+.page-micuenta #content-inner .block .content
 {
 	border: 2px solid #CBCBCB;
 	border-top: none;
@@ -1166,6 +1168,10 @@
 	padding-left: 12px;
 }
 
+.view-micuenta
+{
+	clear: both;
+}
 .view-micuenta .views-table tbody tr
 {
 	background-color: #FFFFFF;
@@ -1232,6 +1238,58 @@
 	color: #B2B2B2;
 }
 
-
-
-
+.page-micuenta .block
+{
+	font-size: 13px;
+}
+.page-micuenta #block-motores_custom-1
+{
+	width: 300px;
+	margin-right: 20px;
+	float: left;
+}
+.page-micuenta #block-motores_custom-2
+{
+	float: left;
+	width: 640px;
+}
+#block-motores_custom-2 a
+{
+	float: left;
+	display: block;
+	width: 119px;
+	height: 22px;
+	padding-top: 90px;
+	text-align: center;
+	text-transform: capitalize;
+	font-weight: bold;
+	margin-right: 3px;
+}
+#block-motores_custom-2 .camionetas a
+{
+	background: url(img/camionetas.gif) no-repeat;
+}
+#block-motores_custom-2 .carro a
+{
+	background: url(img/carro.gif) no-repeat;
+}
+#block-motores_custom-2 .moto a
+{
+	background: url(img/moto.gif) no-repeat;
+}
+#block-motores_custom-2 .otro-tipo a
+{
+	background: url(img/otro.gif) no-repeat;
+}
+#block-motores_custom-2 .accesorios a
+{
+	background: url(img/accesorios.gif) no-repeat;
+}
+.page-micuenta .item-mis-mensajes
+{
+	margin-bottom: 20px;
+}
+.page-micuenta .item-centro-seguridad a
+{
+	color: #FF4C00;
+}
