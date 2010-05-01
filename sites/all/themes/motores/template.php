@@ -145,6 +145,7 @@ function motores_preprocess_page(&$vars, $hook) {
 
 function motores_preprocess_node(&$vars, $hook) {
   //print_r($vars['field_imagenes']);
+
   switch ( $vars['node']->type )
   {
     case 'page':

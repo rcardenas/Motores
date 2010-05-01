@@ -1,14 +1,29 @@
 <?php
 
+function motores_custom_menu () {
+  $items['crear/anuncio'] = array( 
+    'title' => 'Servicios y Tarifas para anunciar tu Carro', 
+    'page callback' => 'motores_custom_crear_anuncio', 
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK
+  );
+
+  return $items;
+}
+
 function motores_custom_block($op = 'list', $delta = 0, $edit = array()) {
 	/*
-	$jeep=explode(',','');
+	$jeep=explode(',','Caterpillar
+	,Clark
+	,Crown
+	,Hyster
+	,Mitsubishi');
 	print_r($jeep);
 	foreach($jeep as $typed){
-		$edit = array('vid' =>  4, 'name' => $typed, 'parent'=>557);
+		$edit = array('vid' =>  8, 'name' => $typed, 'parent'=>119);
 		$status = taxonomy_save_term($edit);
-	}
-	*/
+	}*/
+	
 	switch($op){
 		case 'list':
 	      $blocks[0]['info'] = t('¿Quieres más info?');
@@ -104,4 +119,133 @@ function motores_custom_get_inbox_total(){
 	"));
 	
 	return $count;
+}
+
+function motores_custom_crear_anuncio(){
+	 $output = '
+	<h2>Detalles de anuncios</h2>
+	<h3>Anuncio gratuito</h3>
+	<ul>
+	  <li>Máximo 1 anuncio por usuario.</li>
+	  <li>Duración 30 dias.</li>
+	  <li>Sin renovación.</li>
+	  <li>1 fotografía en el detalle del anuncio.</li>
+	</ul>
+	
+	<h3>Anuncio básico</h3>
+	<ul>
+	  <li>Duración 60 dias.</li>
+	  <li>Sin renovación.</li>
+	  <li>9 fotogrfías en el detalle del anuncio.</li>
+	  <li>Prioridad sobre anuncios gratuitos.</li>
+	</ul>
+	
+	<h3>Anuncio premium</h3>
+	<ul>
+	  <li>Publicación con distinción preferencial.</li>
+	  <li>Prioridad sobre anuncios gratuitos.</li>
+	  <li>Tiempo de publicación ilimitado hasta la venta de tu auto <span class="star">*</span></li>
+	  <li>32 fotografias en tu anuncio.</li>
+	  <li>Estadística de número de visitas a detalle y veces desplegado.</li>
+	  <li>Reposicionar tu anuncio <span class="star">*</span><span class="star">*</span></li>
+	</ul>
+	
+	<div class="politics">
+	<p><span class="star">*</span> Publicación siempre y cuando el cliente extienda manualmente la publicación al menos una vez cada 30.</p>
+	<p><span class="star">*</span><span class="star">*</span> El servicio de reposicionar y publicar nuevamente tu anuncio al principio de todos los 
+	anuncios premium es como volver a publicar tu auto nuevamente para ganar posiciones sobre todos los vehiculos.</p>
+	</div>
+	
+	<div class="costo-de-posicionar">
+	 <ul>
+	  <li>Costo por reposicionar anuncio</li>
+	  <li>$90</li>
+	  <li></li>
+	  <li></li>
+	 </ul>
+	</div>
+	
+	<div class="tarifas-de-anuncio">
+	<h2>Tarifas de anuncio</h2>
+	 <ul>
+	  <li>Tipo de anuncio</li>
+	  <li>Gratuito</li>
+	  <li>Basico</li>
+	  <li>Premium</li>
+	 </ul>
+	
+	 <ul>
+	  <li>Costo por anuncio</li>
+	  <li>$0</li>
+	  <li>$100</li>
+	  <li>$230</li>
+	 </ul>
+	
+	<ul>
+	  <li>Tiempo de publicacion</li>
+	  <li>30 dias</li>
+	  <li>60 dias</li>
+	  <li>Ilimitado</li>
+	 </ul>
+	
+	<ul>
+	  <li>Foto</li>
+	  <li> </li>
+	  <li><span class="checked">*</span></li>
+	  <li>Anuncio destacado</li>
+	 </ul>
+	
+	<ul>
+	  <li>Reposicionar anuncio</li>
+	  <li> </li>
+	  <li> </li>
+	  <li><span class="checked">*</span></li>
+	 </ul>
+	
+	<ul>
+	  <li>Fotografias por anuncio</li>
+	  <li>1</li>
+	  <li>9</li>
+	  <li>32</li>
+	 </ul>
+	
+	<ul>
+	  <li>Prioridad del anuncio sobre los demás</li>
+	  <li> </li>
+	  <li> </li>
+	  <li><span class="checked">*</span></li>
+	 </ul>
+	
+	<ul>
+	  <li>Distintivo de anuncio</li>
+	  <li> </li>
+	  <li> </li>
+	  <li><span class="checked">*</span></li>
+	 </ul>
+	
+	<ul>
+	  <li>Estadisticas de anuncio</li>
+	  <li> </li>
+	  <li> </li>
+	  <li><span class="checked">*</span></li>
+	 </ul>
+	
+	<ul>
+	  <li>Anuncios premitidos por pago</li>
+	  <li>1</li>
+	  <li>1</li>
+	  <li>1</li>
+	 </ul>
+	
+	<ul>
+	  <li> </li>
+	  <li class="quiero">'.l('¡Quiero esto!','node/add/carro').'</li>
+	  <li class="quiero"><a href="#">¡Quiero esto!</a></li>
+	  <li class="quiero"><a href="#">¡Quiero esto!</a></li>
+	 </ul>
+	</div>
+	
+	';
+	
+	return $output;
 }
