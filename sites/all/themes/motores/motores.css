@@ -106,6 +106,7 @@
 /** content **/
   #content
   {
+	font-size: 12px;
   }
 
   #content-inner
@@ -175,6 +176,7 @@
 
   #content-area /* Wrapper for the actual page content */
   {
+	color: #757979;
   }
 
   ul.links /* List of links */
@@ -712,13 +714,15 @@
     margin: 0.4em 0;
   }
 
-  #main .form-submit /* The submit button */
+  #main .form-submit,
+  .page-crear-anuncio .quiero a
   {
 	border:medium none;
 	color:#FFFFFF;
 	font-weight:bold;
 	padding:4px 12px;
 	-moz-border-radius: 8px;
+	text-decoration: none;
 	-webkit-border-radius: 8px;
 	border-radius: 8px;
 	background: #FF4C00;
@@ -903,6 +907,7 @@
 	margin: 0;
 	font-size: 20px;
 	line-height: 21px;
+	color: #000000;
 }
 #main-desc .precio-fecha
 {
@@ -976,6 +981,7 @@
 .anuncio h2
 {
 	margin: 0;
+	color: #000000;
 	font-weight: normal;
 	padding: 12px;
 	font-size: 18px;
@@ -1112,6 +1118,116 @@
 	color: #757979;
 	font-size: 12px;
 }
+
+.page-crear-anuncio h2
+{
+	color: #757979;
+}
+.page-crear-anuncio h3
+{
+	color: #0093FF;
+}
+.page-crear-anuncio #content .politics
+{
+	font-size: 11px;
+}
+.page-crear-anuncio .star
+{
+	color: #0093FF;
+	margin-right: 5px;
+}
+.page-crear-anuncio table
+{
+	color: #000000;
+	font-weight: bold;
+	width: 100%;
+	margin: 0;
+}
+.page-crear-anuncio .table
+{
+	border: 2px solid #CFCFCF;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	width: 650px;
+}
+.page-crear-anuncio th
+{
+	font-size: 14px;	
+	color: #0093FF;
+}
+.page-crear-anuncio th.tipo
+{
+	color: #FF4C00;
+}
+.page-crear-anuncio tr
+{
+	height: 35px;
+}
+.page-crear-anuncio table td,
+.page-crear-anuncio table th
+{
+	padding: 10px;
+	text-align: center;
+	border-bottom: 2px solid #CFCFCF;
+	border-right: 2px solid #CFCFCF;
+}
+.page-crear-anuncio tr.lastrow td
+{
+	border-bottom: none;
+}
+.page-crear-anuncio .lastcol
+{
+	border-right: none;
+}
+.page-crear-anuncio .checked
+{
+	background: url(img/check.gif) no-repeat;
+	display: block;
+	width: 14px;
+	height: 11px;
+	margin: 0 auto;
+	text-indent: -99em;
+	overflow: hidden;
+}
+
+
+.multistep form
+{
+	width: 590px;
+	margin: 0 auto;
+	margin-top: 60px;
+}
+.multistep form .form-item
+{
+	float: right;
+	margin-top: 0;
+	width: 535px;
+}
+.multistep form .tips,
+.multistep form .body-field-wrapper p,
+.multistep form .body-field-wrapper .teaser-button-wrapper
+{
+	display: none;
+}
+.multistep form .body-field-wrapper p
+{
+	
+}
+.multistep fieldset
+{
+	border: 2px solid #CFCFCF;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+.multistep fieldset legend
+{
+	position: absolute;
+	margin-top: -40px;
+	font-size: 16px;
+}
+
 .anuncio .content .descripcion p
 {
 	margin: 0;
@@ -1133,7 +1249,7 @@
 {
 	margin-bottom: 12px;
 }
-#seguridad .num
+.num
 {
 	float: left;
 	background: url(img/bluecirc.gif) no-repeat;

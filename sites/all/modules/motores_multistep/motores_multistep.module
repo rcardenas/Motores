@@ -21,6 +21,15 @@ function motores_multistep_block($op = 'list', $delta = 0, $edit = array())
 	}
 }
 
+function motores_multistep_form_alter(&$form, &$form_state, $form_id)
+{
+  if ($form_id == 'carro_node_form')
+  {
+    $form['field_marca']['#prefix'] = '<div class="num">1</div>';
+    $form['field_version']['#prefix'] = '<div class="num">1</div>';
+  }
+}
+
 function motores_multistep_markup()
 {
   $t[] = t('Marca y modelo');
@@ -33,11 +42,11 @@ function motores_multistep_markup()
   $t[] = t('Tu anuncio listo');
   
   $active = -1;
-  if ( $_GET['q'] == 'node/add/vehiculo' )
+  if ( strpos($_GET['q'], 'node/add/') >= 0 )
   {
     $active = 0;
   }
-  else if ( arg(2) == 'edit' )
+  if ( arg(2) == 'edit' )
   {
     $active = arg(3) - 1;
   }

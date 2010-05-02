@@ -114,16 +114,22 @@ function motores_preprocess(&$vars, $hook) {
  *   The name of the template being rendered ("page" in this case.)
  */
 function motores_preprocess_page(&$vars, $hook) {
-  if ( $vars['node']->type == 'vehiculo' )
+  switch ( $vars['node']->type )
   {
+    case 'vehiculo':
+    case 'carro':
     unset($vars['title']);
+    unset($vars['tabs']);
     
     // Si se esta editando el nodo, poner body classes del multistep
     if ( arg(2) == 'edit' )
     {
       $step = ( arg(3) ) ? arg(3) : '1';
-      $vars['body_classes'] .= ' multistep-'.$step;
+      $vars['body_classes'] .= ' multistep multistep-'.$step;
+      unset($vars['breadcrumb']);
     }
+    
+    break;
   }
   
   // Agregar body class para multistep en node creation

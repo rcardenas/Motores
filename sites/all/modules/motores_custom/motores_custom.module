@@ -156,93 +156,105 @@ function motores_custom_crear_anuncio(){
 	anuncios premium es como volver a publicar tu auto nuevamente para ganar posiciones sobre todos los vehiculos.</p>
 	</div>
 	
-	<div class="costo-de-posicionar">
-	 <ul>
-	  <li>Costo por reposicionar anuncio</li>
-	  <li>$90</li>
-	  <li></li>
-	  <li></li>
-	 </ul>
+	<div class="table">
+	<table>
+	<tbody>
+	 <tr class="lastrow">
+	  <td>Costo por reposicionar anuncio</td>
+	  <td>$90</td>
+	  <td></td>
+	  <td class="lastcol"></td>
+	 </tr>
+	 </tbody>
+	 </table>
 	</div>
 	
 	<div class="tarifas-de-anuncio">
 	<h2>Tarifas de anuncio</h2>
-	 <ul>
-	  <li>Tipo de anuncio</li>
-	  <li>Gratuito</li>
-	  <li>Basico</li>
-	  <li>Premium</li>
-	 </ul>
 	
-	 <ul>
-	  <li>Costo por anuncio</li>
-	  <li>$0</li>
-	  <li>$100</li>
-	  <li>$230</li>
-	 </ul>
-	
-	<ul>
-	  <li>Tiempo de publicacion</li>
-	  <li>30 dias</li>
-	  <li>60 dias</li>
-	  <li>Ilimitado</li>
-	 </ul>
-	
-	<ul>
-	  <li>Foto</li>
-	  <li> </li>
-	  <li><span class="checked">*</span></li>
-	  <li>Anuncio destacado</li>
-	 </ul>
-	
-	<ul>
-	  <li>Reposicionar anuncio</li>
-	  <li> </li>
-	  <li> </li>
-	  <li><span class="checked">*</span></li>
-	 </ul>
-	
-	<ul>
-	  <li>Fotografias por anuncio</li>
-	  <li>1</li>
-	  <li>9</li>
-	  <li>32</li>
-	 </ul>
-	
-	<ul>
-	  <li>Prioridad del anuncio sobre los demás</li>
-	  <li> </li>
-	  <li> </li>
-	  <li><span class="checked">*</span></li>
-	 </ul>
-	
-	<ul>
-	  <li>Distintivo de anuncio</li>
-	  <li> </li>
-	  <li> </li>
-	  <li><span class="checked">*</span></li>
-	 </ul>
-	
-	<ul>
-	  <li>Estadisticas de anuncio</li>
-	  <li> </li>
-	  <li> </li>
-	  <li><span class="checked">*</span></li>
-	 </ul>
-	
-	<ul>
-	  <li>Anuncios premitidos por pago</li>
-	  <li>1</li>
-	  <li>1</li>
-	  <li>1</li>
-	 </ul>
-	
-	<ul>
-	  <li> </li>
-	  <li class="quiero">'.l('¡Quiero esto!','node/add/carro').'</li>
-	  <li class="quiero"><a href="#">¡Quiero esto!</a></li>
-	  <li class="quiero"><a href="#">¡Quiero esto!</a></li>
-	 </ul>
+	<div class="table">
+	<table>
+	<thead>
+   <tr>
+    <th class="tipo">Tipo de anuncio</th>
+    <th>Gratuito</th>
+    <th>Basico</th>
+    <th class="lastcol">Premium</th>
+   </tr>
+   </thead>
+  <tbody>
+   <tr>
+    <td>Costo por anuncio</td>
+    <td>$0</td>
+    <td>$100</td>
+    <td class="lastcol">$230</td>
+   </tr>
+  
+  <tr>
+    <td>Tiempo de publicaci&oacute;n</td>
+    <td>30 dias</td>
+    <td>60 dias</td>
+    <td class="lastcol">Ilimitado</td>
+   </tr>
+  
+  <tr>
+    <td>Foto</td>
+    <td>&nbsp;</td>
+    <td><span class="checked">*</span></td>
+    <td class="lastcol">Anuncio destacado</td>
+   </tr>
+  
+  <tr>
+    <td>Reposicionar anuncio</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class="lastcol"><span class="checked">*</span></td>
+   </tr>
+  
+  <tr>
+    <td>Fotografias por anuncio</td>
+    <td>1</td>
+    <td>9</td>
+    <td class="lastcol">32</td>
+   </tr>
+  
+  <tr>
+    <td>Prioridad del anuncio sobre los demás</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class="lastcol"><span class="checked">*</span></td>
+   </tr>
+  
+  <tr>
+    <td>Distintivo de anuncio</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class="lastcol"><span class="checked">*</span></td>
+   </tr>
+  
+  <tr>
+    <td>Estadisticas de anuncio</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class="lastcol"><span class="checked">*</span></td>
+   </tr>
+  
+  <tr>
+    <td>Anuncios premitidos por pago</td>
+    <td>1</td>
+    <td>1</td>
+    <td class="lastcol">1</td>
+   </tr>
+  
+  <tr class="lastrow">
+    <td>&nbsp;</td>
+    <td class="quiero">'.l('¡Quiero esto!','node/add/carro').'</td>
+    <td class="quiero"><a href="#">¡Quiero esto!</a></td>
+    <td class="quiero lastcol"><a href="#">¡Quiero esto!</a></td>
+   </tr>
+	 </tbody>
+	 </table>
+	 </div>
 	</div>
 	
 	';
