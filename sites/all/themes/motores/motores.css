@@ -97,6 +97,7 @@
 /** main (container for everything else) **/
   #main
   {
+	margin-top: 20px;
   }
 
   #main-inner
@@ -1191,6 +1192,48 @@
 	overflow: hidden;
 }
 
+.front #content .view
+{
+	border: 2px solid #CFCFCF;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	padding: 15px;
+}
+.front #content h2
+{
+	color: #FF4C00;
+	margin-top: 0;
+}
+.view-home .views-row
+{
+	float: left;
+	width: 313px;
+	margin-bottom: 15px;
+}
+.view-home .views-field-field-anio-value
+{
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+.view-home .views-field-created
+{
+	clear: both;
+	font-size: 10px;
+	background: url(img/reloj.gif) no-repeat scroll 0 3px transparent;
+	padding-left: 18px;
+}
+.view-home .views-field-field-precio-value
+{
+	font-weight: bold;
+	color: #FF0000;
+}
+.view-home .views-field-field-imagenes-fid
+{
+	float: left;
+	margin-top: 5px;
+	margin-right: 15px;
+}
 
 .multistep form
 {

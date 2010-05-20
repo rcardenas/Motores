@@ -77,6 +77,8 @@ if (theme_get_setting('motores_fixed')) {
 }
 // */
 
+// Hack para clearfix en todas las views
+drupal_add_js('$(document).ready(function(){$(".view").addClass("clearfix")});','inline');
 
 /**
  * Implementation of HOOK_theme().
@@ -216,3 +218,8 @@ function motores_preprocess_block(&$vars, $hook) {
   $vars['sample_variable'] = t('Lorem ipsum.');
 }
 // */
+
+/*function motores_preprocess_views_view( $vars )
+{
+  print_r($vars);
+}*/
