@@ -116,6 +116,7 @@ function motores_preprocess(&$vars, $hook) {
  *   The name of the template being rendered ("page" in this case.)
  */
 function motores_preprocess_page(&$vars, $hook) {
+	global $user;
   switch ( $vars['node']->type )
   {
     case 'vehiculo':
@@ -132,6 +133,10 @@ function motores_preprocess_page(&$vars, $hook) {
     }
     
     break;
+  }
+
+  if(arg(1)=='register' && $user->uid==0){
+    $vars['content'] .=drupal_get_form('user_login');	
   }
   
   // Agregar body class para multistep en node creation

@@ -84,6 +84,14 @@ function motores_custom_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL){
 	  drupal_get_messages($type = NULL, $clear_queue  = TRUE);
 	  drupal_set_message('Tu mensaje ha sido enviado al anunciante.');
 	}
+	
+	if($op=='prepare'){
+		global $user;
+		if($user->uid==0){
+		  drupal_set_message('Porfavor registrate o inicia sesion antes de crear tu anuncio.');
+		  drupal_goto($path = 'user/register', $query = 'destination='.$_GET['q']);	
+		}
+	}
 }
 
 function motores_custom_get_misanuncios(){
