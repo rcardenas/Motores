@@ -1,0 +1,80 @@
+<?php
+
+function motores_search_block( $op = 'list', $delta = 0, $edit = array() )
+{
+  switch($op)
+  {
+  	case 'list':
+        $blocks[0]['info'] = t('Refinar búsqueda');
+        break;
+      case 'view':
+        switch ( $delta )
+        {
+          case 0:
+            $blocks['title'] = t('Refinar búsqueda');
+            $blocks['content'] = drupal_get_form('motores_search_refine_form');
+            break;
+        }
+        break;
+  }
+  return $blocks;
+}
+
+function motores_search_refine_form( $form_state )
+{
+  $form['top'] = array(
+    '#value' => '<h3>Usados</h3>'
+  );
+  
+  // Palabra clave
+  $form['keywords'] = array(
+    '#title' => t('Búsqueda por palabra'),
+    '#type' => 'textfield'
+  );
+  
+  // Estados
+  $estados = array( '-1' => '< Estado >' );
+  foreach ( taxonomy_get_tree('1') as $edo )
+  {
+    $estados[ $edo->tid ] = $edo->name;
+  }
+  $form['estado'] = array(
+    '#type' => 'select',
+    '#title' => t('Búsqueda por'),
+    '#options' => $estados
+  );
+  
+  // Marca y modelo
+  $marcas = array( '-1' => '< Marca y modelo >' );
+  foreach ( taxonomy_get_tree('3') as $m )
+  {
+    $p = ( $m->depth ) ? '- ' : ''; 
+    $marcas[ $m->tid ] = $p.$m->name;
+  }
+  $form['marcas'] = array(
+    '#type' => 'select',
+    '#options' => $marcas
+  );
+  
+  // Submit
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('¡Buscar!')
+  );
+  
+  return $form;
+}
+
+function motores_search_refine_form_submit( $form, &$form_state )
+{
+  // keywords
+  $s[] = $_POST['keywords'];
+  
+  // taxonomy
+  if ($_POST['estado'] != '-1') $t[] = $_POST['estado'];
+  if ($_POST['marcas'] != '-1') $t[] = $_POST['marcas'];
+  
+  if (count($t)) $s[] = 'taxonomy:'.implode(',', $t);
+  
+  drupal_goto('buscar-carros/results/'.implode(' ', $s));
+}

@@ -1,0 +1,12 @@
+; $Id: motores_search.info,v 1.4.2.1 2009/03/21 00:28:54 freso Exp $
+name = Motores Search
+description = Provides custom search blocks
+core = 6.x
+package = Techbase
+dependencies[] = faceted_search
+
+; Information added by drupal.org packaging script on 2010-02-27
+version = "6.x-1.3"
+core = "6.x"
+datestamp = "1267299906"
+

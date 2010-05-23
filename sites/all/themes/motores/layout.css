@@ -139,9 +139,9 @@
 
   .sidebar-left #content
   {
-    width: 760px;
-    margin-left: 200px; /* The width of #sidebar-left. */
-    margin-right: -960px; /* Negative value of #content's width + left margin. */
+    width: 660px;
+    margin-left: 300px; /* The width of #sidebar-left. */
+    margin-right: -660px; /* Negative value of #content's width + left margin. */
   }
 
   .sidebar-right #content
@@ -223,9 +223,9 @@
   #sidebar-left
   {
     float: left;
-    width: 200px;
-    margin-left: 0;
-    margin-right: -200px; /* Negative value of #sidebar-left's width + left margin. */
+    width: 300px;
+    margin-left: -300px;
+    margin-right: -300px; /* Negative value of #sidebar-left's width + left margin. */
     padding: 0; /* DO NOT CHANGE. Add padding or margin to #sidebar-left-inner. */
   }
 
