@@ -1,5 +1,9 @@
 <?php
 
+/************************
+ * HOOKS
+ ************************/
+
 function motores_search_block( $op = 'list', $delta = 0, $edit = array() )
 {
   switch($op)
@@ -20,6 +24,21 @@ function motores_search_block( $op = 'list', $delta = 0, $edit = array() )
   return $blocks;
 }
 
+// Used to allow exposed filters to work with faceted search
+function motores_search_form_alter( &$form, $form_state, $form_id )
+{
+  switch ( $form['#id'] )
+  {
+    case 'views-exposed-form-carros-search-default':
+      $form['#action'] = request_uri();
+    break;
+  }
+}
+
+/************************
+ * FORMS
+ ************************/
+
 function motores_search_refine_form( $form_state )
 {
   $form['top'] = array(
@@ -33,7 +52,7 @@ function motores_search_refine_form( $form_state )
   );
   
   // Estados
-  $estados = array( '-1' => '< Estado >' );
+  $estados = array( '-1' => 'Estado' );
   foreach ( taxonomy_get_tree('1') as $edo )
   {
     $estados[ $edo->tid ] = $edo->name;
@@ -45,7 +64,7 @@ function motores_search_refine_form( $form_state )
   );
   
   // Marca y modelo
-  $marcas = array( '-1' => '< Marca y modelo >' );
+  $marcas = array( '-1' => 'Marca' );
   foreach ( taxonomy_get_tree('3') as $m )
   {
     $p = ( $m->depth ) ? '- ' : ''; 
@@ -55,6 +74,82 @@ function motores_search_refine_form( $form_state )
     '#type' => 'select',
     '#options' => $marcas
   );
+  
+  // Precio desde y hasta
+  $precios = array(
+      '10000' => '10,000',
+      '20000' => '20,000',
+      '30000' => '30,000',
+      '40000' => '40,000',
+      '50000' => '50,000',
+      '60000' => '60,000',
+      '70000' => '70,000',
+      '80000' => '80,000',
+      '90000' => '90,000',
+      '100000' => '100,000',
+      '110000' => '110,000',
+      '120000' => '120,000',
+      '130000' => '130,000',
+      '140000' => '140,000',
+      '150000' => '150,000',
+      '175000' => '175,000',
+      '200000' => '200,000',
+      '220500' => '220,500',
+      '250000' => '250,000',
+      '300000' => '300,000'
+  );
+  $form['precio_min'] = array(
+    '#type' => 'select',
+    '#options' => array_merge(array('-1'=>'Precio desde'), $precios)
+  );
+  $form['precio_max'] = array(
+    '#type' => 'select',
+    '#options' => array_merge(array('-1'=>'Precio hasta'), $precios)
+  );  
+  
+  // Anio desde y hasta
+  $form['year_min'] = array(
+    '#type' => 'select',
+    '#options' => array('1995'=>'1995')
+  );
+  $form['year_max'] = array(
+    '#type' => 'select',
+    '#options' => array('2010'=>'2010')
+  ); 
+  
+  // KM desde y hasta
+  $kms = array(
+      '10000' => '10,000',
+      '20000' => '20,000',
+      '30000' => '30,000',
+      '40000' => '40,000',
+      '50000' => '50,000',
+      '60000' => '60,000',
+      '70000' => '70,000',
+      '80000' => '80,000',
+      '90000' => '90,000',
+      '100000' => '100,000',
+      '110000' => '110,000',
+      '120000' => '120,000',
+      '130000' => '130,000',
+      '140000' => '140,000',
+      '150000' => '150,000',
+      '175000' => '175,000',
+      '200000' => '200,000',
+      '220500' => '220,500',
+      '250000' => '250,000',
+      '300000' => '300,000',
+      '350000' => '350,000'
+  );
+  $form['km_min'] = array(
+    '#title' => t('Kilometraje'),
+    '#type' => 'select',
+    '#options' => array_merge(array('-1'=>'Desde'), $kms)
+  );
+  $form['km_max'] = array(
+    '#type' => 'select',
+    '#options' => array_merge(array('-1'=>'Hasta'), $kms)
+  );  
   
   // Submit
   $form['submit'] = array(
@@ -68,13 +163,24 @@ function motores_search_refine_form( $form_state )
 function motores_search_refine_form_submit( $form, &$form_state )
 {
   // keywords
-  $s[] = $_POST['keywords'];
+  if ( $_POST['keywords'] ) $s[] = $_POST['keywords'];
   
   // taxonomy
-  if ($_POST['estado'] != '-1') $t[] = $_POST['estado'];
-  if ($_POST['marcas'] != '-1') $t[] = $_POST['marcas'];
+  if ( $_POST['estado'] != '-1' )   $t[] = $_POST['estado'];
+  if ( $_POST['marcas'] != '-1' )   $t[] = $_POST['marcas'];
+  if ( count($t) )                  $s[] = 'taxonomy:'.implode(',', $t);
   
-  if (count($t)) $s[] = 'taxonomy:'.implode(',', $t);
+  // Build arguments
+  if ( count($s) ) $args = implode(' ', $s);
   
-  drupal_goto('buscar-carros/results/'.implode(' ', $s));
+  // Filters
+  $f = array();
+  if ( $_POST['precio_min'] ) $f['field_precio_value[min]'] = $_POST['precio_min'];
+  if ( $_POST['precio_max'] ) $f['field_precio_value[max]'] = $_POST['precio_max'];
+  if ( $_POST['year_min'] ) $f['field_anio_value[min]'] = $_POST['year_min'];
+  if ( $_POST['year_max'] ) $f['field_anio_value[max]'] = $_POST['year_max'];
+  if ( $_POST['km_min'] ) $f['field_km_value[min]'] = $_POST['km_min'];
+  if ( $_POST['km_max'] ) $f['field_km_value[max]'] = $_POST['km_max'];
+  
+  drupal_goto('buscar-carros/results/'.$args, http_build_query($f,'','&'));
 }
