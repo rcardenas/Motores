@@ -158,7 +158,6 @@ function motores_preprocess_page(&$vars, $hook) {
 
 function motores_preprocess_node(&$vars, $hook) {
   //print_r($vars['field_imagenes']);
-
   switch ( $vars['node']->type )
   {
     case 'page':
@@ -166,19 +165,19 @@ function motores_preprocess_node(&$vars, $hook) {
     
     default:
     
+      // nombre del vehiculo
+      $vars['nombre'] = $vars['field_anio'][0]['value'];
+      $carro = taxonomy_get_parents_all( $vars['field_marca'][0]['value'] );
+      $carro = array_reverse($carro);
+      foreach ( $carro as $c )
+      {
+        $vars['nombre'] .= ' '.$c->name;
+      }
+      
       if ( $vars['page'] )
       {
         // este es un anuncio
         $vars['anuncio'] = 1;
-        
-        // nombre del carro
-        $vars['nombre'] = $vars['field_anio'][0]['value'];
-        $carro = taxonomy_get_parents_all( $vars['field_marca'][0]['value'] );
-        $carro = array_reverse($carro);
-        foreach ( $carro as $c )
-        {
-          $vars['nombre'] .= ' '.$c->name;
-        }
       
         // small scrollable
         foreach ( $vars['field_imagenes'] as $i )
@@ -192,6 +191,14 @@ function motores_preprocess_node(&$vars, $hook) {
       }
       
       break;
+  }
+  
+  // If this node is being searched
+  if ( $vars['view']->name == 'busqueda' )
+  {
+    $vars['search_image'] = l(theme('imagecache', 'search_result', $vars['field_imagenes'][0]['filepath'] ),
+                              'node/'.$vars['nid'],
+                              array('html'=>true));
   }
 }
 // */

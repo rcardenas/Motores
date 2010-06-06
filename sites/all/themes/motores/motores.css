@@ -1502,5 +1502,57 @@
 	-webkit-border-radius: 8px;
 	border-radius: 8px;
 }
+#motores-search-refine-form #edit-precio-min,
+#motores-search-refine-form #edit-precio-max,
+#motores-search-refine-form #edit-year-min,
+#motores-search-refine-form #edit-year-max,
+#motores-search-refine-form #edit-km-min,
+#motores-search-refine-form #edit-km-max
+{
+	float: left;
+	width: 100px;
+	margin-right: 20px;
+}
+#motores-search-refine-form #edit-year-min,
+#motores-search-refine-form #edit-year-max
+{
+	margin-top: 10px;
+}
+#motores-search-refine-form #edit-submit
+{
+	clear: both;
+	margin-top: 10px;
+	margin-left: 165px;
+}
+#motores-search-refine-form #edit-km-min-wrapper
+{
+	clear: both;
+	padding-top: 10px;
+}
+.view-busqueda .imagecache-search_result
+{
+	float: left;
+	margin-right: 15px;
+}
+.view-busqueda h2
+{
+	font-size: 12px;
+}
+.view-busqueda .view-filters
+{
+	display: none;
+}
+.view-busqueda .field-field-precio
+{
+	float: right;
+	color: #FF0000;
+	font-weight: bold;
+}
+.view-busqueda .node
+{
+	border-bottom: 1px solid #CCCCCC;
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+}
 
 /* @end */

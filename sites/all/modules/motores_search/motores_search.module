@@ -100,21 +100,24 @@ function motores_search_refine_form( $form_state )
   );
   $form['precio_min'] = array(
     '#type' => 'select',
-    '#options' => array_merge(array('-1'=>'Precio desde'), $precios)
+    '#options' => array('-1'=>'Precio desde') + $precios
   );
   $form['precio_max'] = array(
     '#type' => 'select',
-    '#options' => array_merge(array('-1'=>'Precio hasta'), $precios)
+    '#options' => array('-1'=>'Precio hasta') + $precios
   );  
   
   // Anio desde y hasta
+  $anios = array();
+  for ( $a = '1950'; $a <= date('Y'); $a++ )
+    $anios[$a] = $a;
   $form['year_min'] = array(
     '#type' => 'select',
-    '#options' => array('1995'=>'1995')
+    '#options' => array('-1'=>'Año desde') + $anios
   );
   $form['year_max'] = array(
     '#type' => 'select',
-    '#options' => array('2010'=>'2010')
+    '#options' => array('-1'=>'Año hasta') + $anios
   ); 
   
   // KM desde y hasta
@@ -144,11 +147,11 @@ function motores_search_refine_form( $form_state )
   $form['km_min'] = array(
     '#title' => t('Kilometraje'),
     '#type' => 'select',
-    '#options' => array_merge(array('-1'=>'Desde'), $kms)
+    '#options' => array('-1'=>'Desde') + $kms
   );
   $form['km_max'] = array(
     '#type' => 'select',
-    '#options' => array_merge(array('-1'=>'Hasta'), $kms)
+    '#options' => array('-1'=>'Hasta') + $kms
   );  
   
   // Submit
@@ -162,25 +165,18 @@ function motores_search_refine_form( $form_state )
 
 function motores_search_refine_form_submit( $form, &$form_state )
 {
-  // keywords
-  if ( $_POST['keywords'] ) $s[] = $_POST['keywords'];
-  
-  // taxonomy
-  if ( $_POST['estado'] != '-1' )   $t[] = $_POST['estado'];
-  if ( $_POST['marcas'] != '-1' )   $t[] = $_POST['marcas'];
-  if ( count($t) )                  $s[] = 'taxonomy:'.implode(',', $t);
-  
-  // Build arguments
-  if ( count($s) ) $args = implode(' ', $s);
+  $f = array();
   
   // Filters
-  $f = array();
-  if ( $_POST['precio_min'] ) $f['field_precio_value[min]'] = $_POST['precio_min'];
-  if ( $_POST['precio_max'] ) $f['field_precio_value[max]'] = $_POST['precio_max'];
-  if ( $_POST['year_min'] ) $f['field_anio_value[min]'] = $_POST['year_min'];
-  if ( $_POST['year_max'] ) $f['field_anio_value[max]'] = $_POST['year_max'];
-  if ( $_POST['km_min'] ) $f['field_km_value[min]'] = $_POST['km_min'];
-  if ( $_POST['km_max'] ) $f['field_km_value[max]'] = $_POST['km_max'];
+  if ( $_POST['marcas'] != '-1' )     $f['marca'] = $_POST['marcas'];
+  if ( $_POST['keywords'] )           $f['keys'] = $_POST['keywords'];
+  if ( $_POST['estado'] != '-1' )     $f['edo'] = $_POST['estado'];
+  if ( $_POST['precio_min'] != '-1' ) $f['precio[min]'] = $_POST['precio_min'];
+  if ( $_POST['precio_max'] != '-1' ) $f['precio[max]'] = $_POST['precio_max'];
+  if ( $_POST['year_min'] != '-1' )   $f['anio[min]'] = $_POST['year_min'];
+  if ( $_POST['year_max'] != '-1' )   $f['anio[max]'] = $_POST['year_max'];
+  if ( $_POST['km_min'] != '-1' )     $f['km[min]'] = $_POST['km_min'];
+  if ( $_POST['km_max'] != '-1' )     $f['km[max]'] = $_POST['km_max'];
   
-  drupal_goto('buscar-carros/results/'.$args, http_build_query($f,'','&'));
+  drupal_goto('busqueda/carro'.$args, http_build_query($f,'','&'));
 }
