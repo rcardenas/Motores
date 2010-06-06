@@ -3,7 +3,7 @@ name = Motores Search
 description = Provides custom search blocks
 core = 6.x
 package = Techbase
-dependencies[] = faceted_search
+dependencies[] = views
 
 ; Information added by drupal.org packaging script on 2010-02-27
 version = "6.x-1.3"
