@@ -11,6 +11,10 @@ function motores_custom_menu () {
   return $items;
 }
 
+function motores_custom_init() {
+    drupal_add_js(drupal_get_path('module', 'motores_custom').'/taxonomy_engine.js', $type = 'module', 'header', FALSE, FALSE);
+}
+
 function motores_custom_block($op = 'list', $delta = 0, $edit = array()) {
 	/*
 	$jeep=explode(',','Caterpillar
@@ -83,6 +87,9 @@ function motores_custom_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL){
 	if($op=='insert' && $node->type=='mensaje'){
 	  drupal_get_messages($type = NULL, $clear_queue  = TRUE);
 	  drupal_set_message('Tu mensaje ha sido enviado al anunciante.');
+	  $user_inbox = user_load($node->field_inbox[0]['uid']);
+	  $params = array('Mensaje'=>$node->field_mensaje[0]['value']);
+	  drupal_mail('motores_custom', 'Mensaje', $user_inbox->mail, user_preferred_language($user_inbox), $params);
 	}
 	
 	if($op=='prepare'){
@@ -93,6 +100,14 @@ function motores_custom_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL){
 		}
 	}
 }
+
+function motores_custom_mail($key, &$message, $params) {
+    
+  $message['subject'] = 'Nuevo mensaje en el sitio de motores';
+  $message['body'][] = $params['Mensaje'];
+  
+}
+
 
 function motores_custom_get_misanuncios(){
 	global $user;

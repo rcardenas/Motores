@@ -162,7 +162,9 @@ function motores_preprocess_node(&$vars, $hook) {
   {
     case 'page':
       break;
-    
+    case 'productos':
+    case 'talleres':
+      break;
     default:
     
       // nombre del vehiculo
