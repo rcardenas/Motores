@@ -1453,6 +1453,29 @@
 {
 	color: #FF4C00;
 }
+/* @group Productos home view */
+.view-productos .views-row 
+{
+	float: left;
+	width: 156px;
+}
+.view-productos .views-row img
+{
+	display: block;
+	margin: 0 auto;
+}
+.view-productos .views-field-title
+{
+	font-weight: bold;
+	margin-top: 10px;
+}
+.view-productos .views-field-field-precio-value
+{
+	color: #FF0000;
+	font-weight: bold;
+}
+
+/* @end */
 /* @group Refine search */
 #block-motores_search-0 .content
 {
