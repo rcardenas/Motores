@@ -10,6 +10,7 @@ function motores_search_block( $op = 'list', $delta = 0, $edit = array() )
   {
   	case 'list':
         $blocks[0]['info'] = t('Refinar búsqueda');
+        $blocks[1]['info'] = t('Home search form');
         break;
       case 'view':
         switch ( $delta )
@@ -17,6 +18,10 @@ function motores_search_block( $op = 'list', $delta = 0, $edit = array() )
           case 0:
             $blocks['title'] = t('Refinar búsqueda');
             $blocks['content'] = drupal_get_form('motores_search_refine_form');
+            break;
+          case 1:
+            $blocks['title'] = t('¿Qué es lo que buscas?');
+            $blocks['content'] = motores_search_home_form();
             break;
         }
         break;
@@ -38,6 +43,24 @@ function motores_search_form_alter( &$form, $form_state, $form_id )
 /************************
  * FORMS
  ************************/
+
+function motores_search_home_form()
+{
+  $r = '<div id="search-tabs" class="clearfix">
+          <a href="javascript:void(0)" class="active">'.t('Usados').'</a>
+          <a href="javascript:void(0)">'.t('Nuevos').'</a>
+          <a href="javascript:void(0)">'.t('Motos').'</a>
+          <a href="javascript:void(0)">'.t('Servicios').'</a>
+          <a href="javascript:void(0)">'.t('Accesorios').'</a>
+        </div>
+        <div id="search-container">
+          <div id="form-1">
+          '.drupal_get_form('motores_search_refine_form').'
+          </div>
+        </div>
+        ';
+  return $r;
+}
 
 function motores_search_refine_form( $form_state )
 {

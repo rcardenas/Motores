@@ -862,7 +862,7 @@
 {
 	border-right: none;
 }
-#sidebar-right .block h2.title,
+.not-front #sidebar-right .block h2.title,
 #sidebar-left .block h2.title,
 .page-micuenta h2.title
 {
@@ -875,6 +875,19 @@
 	-webkit-border-top-right-radius: 8px;
 	border-top-left-radius: 8px;
 	border-top-right-radius: 8px;
+}
+.front #sidebar-right .block h2.title
+{
+	color: #FF0000;
+	padding: 6px 12px;
+	-moz-border-radius-topleft: 8px;
+	-moz-border-radius-topright: 8px;
+	-webkit-border-top-left-radius: 8px;
+	-webkit-border-top-right-radius: 8px;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+	border: 2px solid #CBCBCB;
+	border-bottom: none;
 }
 #sidebar-right .block .content,
 .page-micuenta #content-inner .block .content
@@ -1453,7 +1466,59 @@
 {
 	color: #FF4C00;
 }
-/* @group Productos home view */
+/* @group Home search */
+
+#block-motores_search-1
+{
+	background-color: #0093FF;
+	color: #FFFFFF;
+	padding: 6px 12px 12px 12px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+}
+#content #block-motores_search-1 .title
+{
+	color: #FFFFFF;
+}
+#search-container
+{
+	background-color: #FFFFFF;
+	padding: 10px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	color: #000000;
+}
+#search-tabs a.active
+{
+	background-color: #FFFFFF;
+}
+#search-tabs a
+{
+	display: block;
+	float: left;
+	background-color: #CBCBCB;
+	text-decoration: none;
+	width: 100px;
+	text-align: center;
+	line-height: 30px;
+	margin-right: 7px;
+	-moz-border-radius-topleft: 8px;
+	-moz-border-radius-topright: 8px;
+	-webkit-border-top-left-radius: 8px;
+	-webkit-border-top-right-radius: 8px;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+}
+#search-tabs
+{
+	margin-top: 10px;
+	padding-left: 20px;
+}
+
+/* @end */
+/* @group Vistas home */
 .view-productos .views-row 
 {
 	float: left;
@@ -1474,7 +1539,18 @@
 	color: #FF0000;
 	font-weight: bold;
 }
-
+.view-Talleres .view-header p
+{
+	font-weight: bold;
+	color: #999999;
+	margin-top: 0;
+}
+.view-Talleres .views-row
+{
+	text-align: center;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
 /* @end */
 /* @group Refine search */
 #block-motores_search-0 .content
