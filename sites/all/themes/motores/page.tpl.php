@@ -134,25 +134,14 @@
 
     </div></div> <!-- /#header-inner, /#header -->
 
-    <?php if ($search_box || $primary_links || $secondary_links || $navbar): ?>
+    <?php if ($secondary_links || $navbar): ?>
       <div id="navbar"><div id="navbar-inner" class="clear-block region region-navbar">
 
         <a name="navigation" id="navigation"></a>
 
         <div id="navbar-blocks">
-          <?php if ($search_box): ?>
-            <div id="search-box">
-              <?php print $search_box; ?>
-            </div> <!-- /#search-box -->
-          <?php endif; ?>
           <?php print $navbar; ?>
         </div>
-
-        <?php if ($primary_links): ?>
-          <div id="primary" class="clear-block">
-            <?php print theme('links', $primary_links); ?>
-          </div> <!-- /#primary -->
-        <?php endif; ?>
 
         <?php if ($secondary_links): ?>
           <div id="secondary" class="clear-block">

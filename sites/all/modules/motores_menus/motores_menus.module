@@ -1,0 +1,71 @@
+<?php
+
+function motores_menus_block($op = 'list', $delta = 0, $edit = array()) 
+{
+	switch( $op )
+	{
+		case 'list':
+	      $blocks[0]['info'] = t('Menus scroll');
+	      return $blocks;
+	      break;
+	    case 'view':
+	      switch ( $delta )
+	      {
+			    case 0:
+	          $blocks['title'] = '';
+	          $blocks['content'] = motores_menus_markup();
+	          break;
+	      }
+	      return $blocks;
+	      break;
+	}
+}
+
+function motores_menus_markup()
+{
+  drupal_add_js(drupal_get_path('module', 'motores_menus').'/menus_engine.js', $type = 'module', 'header', FALSE, FALSE);
+  
+  
+  
+  // // // // // 
+  
+  $r = '<div id="motores-menus" class="clearfix">
+          <a id="1" href="javascript:void(0)">'.t('Autos & Camionetas').'</a>
+          <a id="2" href="javascript:void(0)">'.t('Accesorios').'</a>
+          <a id="3" href="javascript:void(0)">'.t('Motocicletas').'</a>
+          <a id="4" href="javascript:void(0)">'.t('Extremo').'</a>
+          <a id="5" href="javascript:void(0)">'.t('Lanchas').'</a>
+          <a id="6" href="javascript:void(0)">'.t('Otros veh&iacute;culos').'</a>
+        </div>
+        <div id="autos-camionetas" class="clearfix panel">'.motores_menus_vocabulary('3').'</div>
+        <div id="motos" class="clearfix panel">'.motores_menus_vocabulary('4').'</div>
+        <div id="lanchas" class="clearfix panel">'.motores_menus_vocabulary('5').'</div>
+        <div id="extremo" class="clearfix panel">'.motores_menus_vocabulary('9').'</div>
+        <div id="otros" class="clearfix panel">'.motores_menus_vocabulary('8').'</div>
+        ';
+  return $r;
+}
+
+function motores_menus_vocabulary( $vid )
+{
+  $v = taxonomy_get_tree($vid, 0, -1, 1);
+  $carros = '<div class="col">';
+  foreach ( $v as $i => $car )
+  {
+    $attr = array();
+    
+    $first = $i < 10;
+    $last = ($i+1) % 10 == 0 && $i < count($v)-1;
+    
+    if ( $first ) $attr['class'] = 'first'; 
+    if ( $last ) $attr['class'] .= ' last';
+    
+    $neim = ( strlen($car->name) > 13 ) ? substr($car->name,0,10).'...' : $car->name;
+    
+    $carros .= l( $neim, 'busqueda/carro', array('attributes'=>$attr) );
+    if ( $last ) $carros .= '</div><div class="col">';
+  }
+  $carros .= '</div>';
+  
+  return $carros;
+}

@@ -799,12 +799,81 @@
     padding-right: 1em;
     border-bottom: 3px solid #ccc;
   }
-
-#primary
+/* @group Primary links */
+#block-motores_menus-0
 {
 	border-top: 1px solid #BABABA;
+	margin: 0;
+	position: relative;
 }
-#primary a,
+#motores-menus
+{
+	margin-left: 140px;
+}
+#autos-camionetas
+{
+	left: 141px;
+}
+#otros
+{
+	right: 81px;
+}
+#lanchas
+{
+	right: 272px;
+}
+#extremo
+{
+	right: 350px;
+}
+#motos
+{
+	left: 279px;
+}
+#block-motores_menus-0 .panel
+{
+	display: none;
+	position: absolute;
+	background: #D2D2D2 url(img/primarybg.gif) repeat-x 0 bottom;
+	z-index: 1;
+	border: 1px solid #807F7F;
+	-moz-border-radius-bottomleft: 8px;
+	-moz-border-radius-bottomright: 8px;
+	-webkit-border-bottom-left-radius: 8px;
+	-webkit-border-bottom-right-radius: 8px;
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+}
+#block-motores_menus-0 .panel a
+{
+	float: none;
+	width: 110px;
+	font-size: 12px;
+	padding: 10px 0;
+	text-align: center;
+	border-bottom: 1px solid #A6A6A6;
+}
+#block-motores_menus-0 .panel a.first
+{
+	border-left: none;
+}
+#block-motores_menus-0 .panel a.last
+{
+	border-bottom: none;
+}
+#block-motores_menus-0 .panel a:hover,
+#block-motores_menus-0 a.active
+{
+	background: url(img/home_btn_roll.gif) repeat-x 0 bottom;
+	color: #FFFFFF;
+	background-color: #9A9A9A;
+	text-shadow: 1px 1px 0px #333333;
+}
+.panel .col
+{
+	float: left;
+}
+#block-motores_menus-0 a,
 #header-blocks a
 {
 	text-decoration: none;
@@ -816,18 +885,23 @@
 	border-right: 1px solid #BABABA;
 	text-shadow: 1px 1px 0px #DDDDDD;
 }
-#primary ul
+#block-motores_menus-0 a
+{
+	float: left;
+}
+#block-motores_menus-0 ul
 {
 	border-left: 1px solid #BABABA;
 	margin-left: 12px;
 }
-#primary li.last
+#block-motores_menus-0 li.last
 {
 	border-right: 1px solid #D8D6D6;
 }
+/* @end */
 #navbar-blocks
 {
-	padding: 12px;
+	
 }
 #header-blocks ul
 {
@@ -1466,6 +1540,34 @@
 {
 	color: #FF4C00;
 }
+/* @group Home top search */
+#motores-search-top-form .form-item
+{
+	margin: 0;
+	margin-right: 12px;
+	float: left;
+}
+#motores-search-top-form .form-submit
+{
+	border:medium none;
+	color:#FFFFFF;
+	font-weight:bold;
+	padding: 2px 6px;
+	-moz-border-radius: 8px;
+	text-decoration: none;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	background: #5e5e5e;
+}
+#motores-search-top-form
+{
+	padding: 12px;
+}
+#block-motores_search-2
+{
+	margin: 0;
+}
+/* @end */
 /* @group Home search */
 
 #block-motores_search-1

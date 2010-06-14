@@ -11,8 +11,9 @@ function motores_search_block( $op = 'list', $delta = 0, $edit = array() )
   	case 'list':
         $blocks[0]['info'] = t('Refinar búsqueda');
         $blocks[1]['info'] = t('Home search form');
+        $blocks[2]['info'] = t('Search navbar form');
         break;
-      case 'view':
+    case 'view':
         switch ( $delta )
         {
           case 0:
@@ -22,6 +23,10 @@ function motores_search_block( $op = 'list', $delta = 0, $edit = array() )
           case 1:
             $blocks['title'] = t('¿Qué es lo que buscas?');
             $blocks['content'] = motores_search_home_form();
+            break;
+          case 2:
+            $blocks['title'] = '';
+            $blocks['content'] = drupal_get_form('motores_search_top_form');
             break;
         }
         break;
@@ -43,6 +48,31 @@ function motores_search_form_alter( &$form, $form_state, $form_id )
 /************************
  * FORMS
  ************************/
+
+function motores_search_top_form()
+{
+  $form['keys'] = array(
+    '#type' => 'textfield'
+  );
+  $options = array(
+    '1' => t('Autos & Camionetas'),
+    '2' => t('Accesorios'),
+    '3' => t('Motocicletas'),
+    '4' => t('Extremo'),
+    '5' => t('Lanchas'),
+    '6' => t('Otros veh&iacute;culos')
+  );
+  $form['option'] = array(
+    '#type' => 'select',
+    '#options' => $options
+  );
+  $form['submit'] = array(
+    '#value' => t('¡Buscar!'),
+    '#type' => 'submit'
+  );
+  
+  return $form;
+}
 
 function motores_search_home_form()
 {
