@@ -1,0 +1,9 @@
+<?php
+
+function motores_register_form_alter( &$form, &$form_state, $form_id )
+{
+  if ( $form_id == 'user_register' )
+  {
+    print_r($form);
+  }
+}
