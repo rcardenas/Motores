@@ -135,9 +135,9 @@ function motores_preprocess_page(&$vars, $hook) {
     break;
   }
 
-  if(arg(1)=='register' && $user->uid==0){
+  /*if(arg(1)=='register' && $user->uid==0){
     $vars['content'] .=drupal_get_form('user_login');	
-  }
+  }*/
   
   // Agregar body class para multistep en node creation
   if ( $_GET['q'] == 'node/add/vehiculo' )

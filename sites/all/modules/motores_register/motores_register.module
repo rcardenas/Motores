@@ -4,6 +4,52 @@ function motores_register_form_alter( &$form, &$form_state, $form_id )
 {
   if ( $form_id == 'user_register' )
   {
-    print_r($form);
+    drupal_add_js(drupal_get_path('module', 'motores_register').'/register_engine.js', $type = 'module', 'header', FALSE, FALSE);
+    
+    // weights
+    $form['account']['#weight'] = 29;
+    
+    // Prefix de forma
+    if (isset($_GET['destination'])) $params = array('query'=>'destination='.$_GET['destination']);
+    $form['#prefix'] = 
+      '<div id="register-msg">'.
+      t('&iquest;Est&aacute;s registrado y quieres hacer un cambio a tu cuenta?').' '.
+      l( t('Accede a tu cuenta'), 'user/login', $params ).
+      '</div>';
+    
+    // titles
+    unset( $form['account']['#title'] );
+    unset( $form['Datos personales']['#title'] );
+    unset( $form['Datos personales']['profile_tel1_codigo']['#title'] );
+    unset( $form['Datos personales']['profile_tel1_num']['#title'] );
+    unset( $form['Datos personales']['profile_tel2_codigo']['#title'] );
+    unset( $form['Datos personales']['profile_tel2_num']['#title'] );
+    
+    $form['Datos personales']['profile_nombre']['#prefix'] = '<h2>'.t('Cu&eacute;ntanos de ti').'</h2>';
+    $form['account']['name']['#prefix'] = '<h2>'.t('Escoge tu contrase&ntilde;a').'</h2>';
+    
+    $form['account']['pass']['#suffix'] = '<div id="usa">* '.t('Usa un password diferente al de tu cuenta de correo.').'</div>';
+    
+    $form['Datos personales']['profile_tel1_tipo']['#prefix'] = '<div id="tel1" class="clearfix">';
+    $form['Datos personales']['profile_tel1_num']['#suffix'] = '</div>';
+    
+    $form['Datos personales']['profile_tel2_tipo']['#prefix'] = '<div id="tel2" class="clearfix">';
+    $form['Datos personales']['profile_tel2_num']['#suffix'] = '</div>';
+    
+    $form['Datos personales']['profile_sexo']['#type'] = 'radios';
+    
+    $form['Datos personales']['profile_estado']['#prefix'] = '<div id="bar"></div>';
+    
+    // Submit
+    $form['submit']['#prefix'] = '<div id="bar"></div><div id="btns">';
+    $form['submit']['#value'] = t('Continuar');
+    
+    $form['borrar'] = array(
+      '#weight' => $form['submit']['#weight']+1,
+      '#value' => t('Borrar'),
+      '#type' => 'button',
+      '#suffix' => '</div>',
+      '#submit' => false
+    );
   }
 }

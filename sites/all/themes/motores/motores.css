@@ -1540,6 +1540,123 @@
 {
 	color: #FF4C00;
 }
+/* @group User register */
+.page-user-register fieldset
+{
+	border: none;
+	margin: 0;
+	padding: 0;
+	padding-bottom: 20px;
+}
+.page-user-register #user-register
+{
+	border: 2px solid #CFCFCF;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+.page-user-register #user-register fieldset div
+{
+	width: 600px;
+	margin: 10px auto;
+	height: 30px;
+}
+.page-user-register #user-register fieldset #usa
+{
+	margin: 0;
+	margin-left: 150px;
+	font-size: 11px;
+	height: 13px;
+	color: #FF0000;
+}
+.page-user-register #user-register #edit-pass-pass1-wrapper
+{
+	margin-bottom: 0;
+}
+.page-user-register .tabs
+{
+	display: none;
+}
+#register-msg
+{
+	margin: 10px 0;
+}
+#register-msg a
+{
+	color: #0093FF;
+	font-weight: bold;
+	text-decoration: none;
+}
+.page-user-register #user-register .description
+{
+	display: none;
+}
+.page-user-register #user-register #btns
+{
+	text-align: right;
+	margin: 12px;
+	margin-top: 0;
+}
+.page-user-register #main #bar
+{
+	margin: 0;
+	height: 10px;
+	width: 100%;
+	border-top: 1px solid #CFCFCF;
+}
+.page-user-register #main #edit-profile-sexo-Hombre-wrapper,
+.page-user-register #main #edit-profile-sexo-Mujer-wrapper
+{
+	float: left;
+	width: auto;
+	margin: 0;
+}
+#edit-profile-tel1-num,
+#edit-profile-tel2-num
+{
+	width: 150px;
+}
+#edit-profile-cp
+{
+	width: 150px;
+}
+.page-user-register #main #edit-profile-tel1-tipo-wrapper,
+.page-user-register #main #edit-profile-tel1-codigo-wrapper,
+.page-user-register #main #edit-profile-tel1-num-wrapper,
+.page-user-register #main #edit-profile-tel2-tipo-wrapper,
+.page-user-register #main #edit-profile-tel2-codigo-wrapper,
+.page-user-register #main #edit-profile-tel2-num-wrapper
+{
+	float: left;
+	width: auto;
+}
+.page-user-register #user-register label
+{
+	float: left;
+	width: 150px;
+	color: #000000;
+}
+#edit-profile-tel1-codigo-wrapper,
+#edit-profile-tel2-codigo-wrapper
+{
+	background: url(img/paren.gif) no-repeat;
+	padding: 0 14px;
+}
+#edit-profile-tel1-codigo,
+#edit-profile-tel2-codigo
+{
+	width: 70px;	
+}
+.page-user-register #user-register h2
+{
+	background-color: #0093FF;
+	color: #FFFFFF;
+	padding: 10px 12px;
+	margin-top: 0;
+	margin-bottom: 20px;
+	text-align: center;
+}
+/* @end */
 /* @group Home top search */
 #motores-search-top-form .form-item
 {
