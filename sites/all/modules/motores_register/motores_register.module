@@ -2,7 +2,27 @@
 
 function motores_register_form_alter( &$form, &$form_state, $form_id )
 {
-  if ( $form_id == 'user_register' )
+  if ( $form_id == 'user_login' )
+  {
+    drupal_add_js(drupal_get_path('module', 'motores_register').'/login_engine.js', $type = 'module', 'header', FALSE, FALSE);
+    
+    $form['#prefix'] = 
+      '<div id="login-before">
+          <h2>'.t('&iquest;Buscas anunciar? Reg&iacute;strate').'</h2>
+          <div class="help">'.t('Estimado cliente, para que puedas publicar tus anuncios necesitas registrarte.').'</div>
+          '.l( t('Reg&iacute;strate'), 'user/register', array('html'=>true)).'
+       </div>';
+    $form['help'] = array(
+      '#value' => '<h2>'.t('Accede a tu cuenta').'</h2><div class="help">'.t('Estimado cliente, para hacer uso de nuestros sistemas de publicaci&oacute;n es necesario que ingreses tu correo electr&oacute;nico y tu contrase&ntilde;a.').'</div>',
+      '#weight' => -99
+    );
+    $form['forgot'] = array(
+      '#value' => '<div class="forgot">'.l( t('&iquest;Haz olvidado tu contrase&ntilde;a?'), 'user/password', array('html'=>true)).'</div>',
+      '#weight' => 1
+    );
+    $form['submit']['#value'] = t('Continuar');
+  }
+  else if ( $form_id == 'user_register' )
   {
     drupal_add_js(drupal_get_path('module', 'motores_register').'/register_engine.js', $type = 'module', 'header', FALSE, FALSE);
     

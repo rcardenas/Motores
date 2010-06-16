@@ -716,10 +716,12 @@
   }
 
   #main .form-submit,
-  .page-crear-anuncio .quiero a
+  .page-crear-anuncio .quiero a,
+  .page-user-login #login-before a
   {
 	border:medium none;
 	color:#FFFFFF;
+	font-size: 12px;
 	font-weight:bold;
 	padding:4px 12px;
 	-moz-border-radius: 8px;
@@ -1540,6 +1542,184 @@
 {
 	color: #FF4C00;
 }
+/* @group User login */
+.page-user-login #login-before,
+.page-user-login #user-login
+{
+	float: left;
+	width: 436px;
+	border: 2px solid #CFCFCF;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	padding: 12px;
+}
+.page-user-login #login-before
+{
+	width: 448px;
+	margin-right: 20px;
+	position: relative;
+}
+.page-user-login .tabs
+{
+	display: none;
+}
+.page-user-login h1
+{
+	margin-bottom: 12px;
+}
+#login-before a
+{
+	position: absolute;
+	bottom: 12px;
+	right: 12px;
+}
+.page-user-login h2
+{
+	margin: 0;
+	font-size: 12px;
+	color: #0093FF;
+}
+.page-user-login #user-login label
+{
+	float: left;
+	width: 130px;
+	color: #000000;
+	margin-left: 10px;
+}
+.page-user-login #user-login #edit-remember-me-wrapper
+{
+	margin-left: 140px;
+}
+.page-user-login #user-login #edit-remember-me-wrapper label
+{
+	float: none;
+	margin: 0;
+	color: #757979;
+}
+.page-user-login #user-login .forgot
+{
+	margin-left: 140px;
+	margin-bottom: 20px;
+}
+.page-user-login #user-login .forgot a
+{
+	text-decoration: none;
+	color: #0093FF;
+	font-weight: bold;
+	font-size: 11px;
+}
+.page-user-login #user-login #edit-submit
+{
+	display: block;
+	margin-left: auto;
+}
+.page-user-login #user-login .form-text
+{
+	width: 230px;
+}
+.page-user-login #user-login #edit-name-wrapper
+{
+	margin-top: 20px;
+}
+.page-user-login #user-login .description
+{
+	display: none;
+}
+/* @end */
+/* @group Proceso de anuncio */
+.view-anuncio-tipo,
+.view-anuncio-vehiculo
+{
+	background-color: #0093FF;
+	width: 640px;
+	padding: 12px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+}
+.view-anuncio-tipo h2,
+.view-anuncio-vehiculo h2
+{
+	margin-top: 0;
+	color: #FFFFFF;
+}
+.view-anuncio-tipo a
+{
+	display: block;
+	padding-top: 115px;
+	height: 20px;
+	width: 170px;
+	text-align: center;
+	font-weight: bold;
+	float: left;
+}
+.view-anuncio-vehiculo a
+{
+	display: block;
+	padding-top: 115px;
+	height: 20px;
+	width: 205px;
+	text-align: center;
+	font-weight: bold;
+	float: left;
+}
+.view-anuncio-vehiculo .views-field-nothing a
+{
+	background: url(img/anuncios/carro_2.gif) no-repeat center;
+}
+.view-anuncio-vehiculo .views-field-nothing-1 a
+{
+	background: url(img/anuncios/moto.gif) no-repeat center;
+}
+.view-anuncio-vehiculo .views-field-nothing-2 a
+{
+	background: url(img/anuncios/extremo.gif) no-repeat center;
+}
+.view-anuncio-vehiculo .views-field-nothing-3 a
+{
+	background: url(img/anuncios/lancha.gif) no-repeat center;
+}
+.view-anuncio-vehiculo .views-field-nothing-4 a
+{
+	background: url(img/anuncios/troca.gif) no-repeat center;
+}
+.view-anuncio-vehiculo .views-field-nothing-5 a
+{
+	background: url(img/anuncios/tractor.gif) no-repeat center;
+}
+.view-anuncio-tipo .views-field-nothing a
+{
+	background: url(img/anuncios/carro.gif) no-repeat center;
+	margin-left: 60px;
+}
+.view-anuncio-tipo .views-field-nothing-1 a
+{
+	background: url(img/anuncios/llanta.gif) no-repeat center;
+}
+.view-anuncio-tipo .views-field-nothing-2 a
+{
+	background: url(img/anuncios/cosa.gif) no-repeat center;
+}
+.view-anuncio-tipo .views-field-nothing-3 a
+{
+	background: url(img/anuncios/tuerca.gif) no-repeat center;
+	margin-left: 147px;
+}
+.view-anuncio-tipo .views-field-nothing-4 a
+{
+	background: url(img/anuncios/papel.gif) no-repeat center;
+}
+.view-anuncio-tipo .view-content,
+.view-anuncio-vehiculo .view-content
+{
+	background-color: #FFFFFF;
+	-moz-border-radius: 8px;
+	height: 300px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+}
+/* @end */
 /* @group User register */
 .page-user-register fieldset
 {
