@@ -1,5 +1,43 @@
 <?php
 
+function motores_register_block( $op = 'list', $delta = 0, $edit = array() )
+{
+  switch( $op )
+  {
+  	case 'list':
+        $blocks[0]['info'] = t('Login stuff');
+        return $blocks;
+        break;
+      case 'view':
+        switch ( $delta )
+        {
+  		    case 0:
+            $blocks['title'] = '';
+            $blocks['content'] = motores_register_markup();
+            break;
+        }
+        return $blocks;
+        break;
+  }
+}
+
+function motores_register_markup()
+{
+  global $user;
+  
+  if ( $user->uid )
+  {
+    $dude = user_load($user->uid);
+    $r = 'Hola <strong>'.$dude->profile_nombre.'</strong> | '.l( t('Cerrar sesi&oacute;n'), 'logout', array('html'=>true) );
+  }
+  else
+  {
+    $r = l( t('Iniciar sesi&oacute;n'), 'user/login', array('html'=>true) );
+  }
+  
+  return $r;
+}
+
 function motores_register_form_alter( &$form, &$form_state, $form_id )
 {
   if ( $form_id == 'user_login' )
@@ -58,10 +96,10 @@ function motores_register_form_alter( &$form, &$form_state, $form_id )
     
     $form['Datos personales']['profile_sexo']['#type'] = 'radios';
     
-    $form['Datos personales']['profile_estado']['#prefix'] = '<div id="bar"></div>';
+    $form['Datos personales']['profile_estado']['#prefix'] = '<div class="bar">&nbsp;</div>';
     
     // Submit
-    $form['submit']['#prefix'] = '<div id="bar"></div><div id="btns">';
+    $form['submit']['#prefix'] = '<div class="bar">&nbsp;</div><div id="btns">';
     $form['submit']['#value'] = t('Continuar');
     
     $form['borrar'] = array(
@@ -71,5 +109,36 @@ function motores_register_form_alter( &$form, &$form_state, $form_id )
       '#suffix' => '</div>',
       '#submit' => false
     );
+  }
+  else if ( $form_id == 'user_profile_form' )
+  {
+    drupal_add_js(drupal_get_path('module', 'motores_register').'/modif_engine.js', $type = 'module', 'header', FALSE, FALSE);
+    
+    //print_r($form);
+    unset( $form['enable_pm_mail'] );
+    unset( $form['account']['#title'] );
+    unset( $form['Datos personales']['#title'] );
+    unset( $form['Datos personales']['profile_tel1_codigo']['#title'] );
+    unset( $form['Datos personales']['profile_tel1_num']['#title'] );
+    unset( $form['Datos personales']['profile_tel2_codigo']['#title'] );
+    unset( $form['Datos personales']['profile_tel2_num']['#title'] );
+    
+    $form['account']['mail']['#type'] = 'hidden';
+    
+    $form['Datos personales']['profile_tel1_tipo']['#prefix'] = '<div id="tel1" class="clearfix">';
+    $form['Datos personales']['profile_tel1_num']['#suffix'] = '</div>';
+    
+    $form['Datos personales']['profile_tel2_tipo']['#prefix'] = '<div id="tel2" class="clearfix">';
+    $form['Datos personales']['profile_tel2_num']['#suffix'] = '</div>';
+    
+    $form['Datos personales']['profile_sexo']['#type'] = 'radios';
+    
+    $form['Datos personales']['profile_estado']['#prefix'] = '<div class="bar"></div>';
+    $form['account']['pass']['#prefix'] = '<div class="bar"></div>';
+    
+    $form['Datos personales']['profile_nombre']['#prefix'] = '<h2>'.t('Datos personales').'</h2>';
+    
+    $form['submit']['#prefix'] = '<div class="bar">&nbsp;</div>';
+    $form['submit']['#value'] = t('Actualizar datos');
   }
 }

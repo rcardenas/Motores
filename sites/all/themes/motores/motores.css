@@ -903,7 +903,7 @@
 /* @end */
 #navbar-blocks
 {
-	
+	position: relative;
 }
 #header-blocks ul
 {
@@ -940,7 +940,7 @@
 }
 .not-front #sidebar-right .block h2.title,
 #sidebar-left .block h2.title,
-.page-micuenta h2.title
+.block-motores_custom h2.title
 {
 	background-color: #0093FF;
 	color: #FFFFFF;
@@ -966,7 +966,7 @@
 	border-bottom: none;
 }
 #sidebar-right .block .content,
-.page-micuenta #content-inner .block .content
+.section-micuenta #content-inner .block .content
 {
 	border: 2px solid #CBCBCB;
 	border-top: none;
@@ -1487,17 +1487,17 @@
 	color: #B2B2B2;
 }
 
-.page-micuenta .block
+.block-motores_custom
 {
 	font-size: 13px;
 }
-.page-micuenta #block-motores_custom-1
+#block-motores_custom-1
 {
 	width: 300px;
 	margin-right: 20px;
 	float: left;
 }
-.page-micuenta #block-motores_custom-2
+#block-motores_custom-2
 {
 	float: left;
 	width: 640px;
@@ -1534,14 +1534,24 @@
 {
 	background: url(img/accesorios.gif) no-repeat;
 }
-.page-micuenta .item-mis-mensajes
+.block-motores_custom .item-mis-mensajes
 {
 	margin-bottom: 20px;
 }
-.page-micuenta .item-centro-seguridad a
+.block-motores_custom .item-centro-seguridad a
 {
 	color: #FF4C00;
 }
+/* @group Inbox */
+.view-inbox
+{
+	clear: both;
+}
+.view-inbox table
+{
+	width: 100%;
+}
+/* @end */
 /* @group User login */
 .page-user-login #login-before,
 .page-user-login #user-login
@@ -1625,6 +1635,14 @@
 .page-user-login #user-login .description
 {
 	display: none;
+}
+
+#block-motores_register-0
+{
+	position: absolute;
+	margin: 0;
+	right: 0;
+	top: -25px;
 }
 /* @end */
 /* @group Proceso de anuncio */
@@ -1721,21 +1739,24 @@
 }
 /* @end */
 /* @group User register */
-.page-user-register fieldset
+.page-user-register fieldset,
+#user-profile-form fieldset
 {
 	border: none;
 	margin: 0;
 	padding: 0;
 	padding-bottom: 20px;
 }
-.page-user-register #user-register
+.page-user-register #user-register,
+#user-profile-form
 {
 	border: 2px solid #CFCFCF;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
 }
-.page-user-register #user-register fieldset div
+.page-user-register #user-register fieldset div,
+#user-profile-form fieldset div
 {
 	width: 600px;
 	margin: 10px auto;
@@ -1753,7 +1774,8 @@
 {
 	margin-bottom: 0;
 }
-.page-user-register .tabs
+.page-user-register .tabs,
+.section-user .tabs
 {
 	display: none;
 }
@@ -1767,7 +1789,8 @@
 	font-weight: bold;
 	text-decoration: none;
 }
-.page-user-register #user-register .description
+.page-user-register #user-register .description,
+#user-profile-form .description
 {
 	display: none;
 }
@@ -1777,7 +1800,8 @@
 	margin: 12px;
 	margin-top: 0;
 }
-.page-user-register #main #bar
+.page-user-register #main .bar,
+#user-profile-form .bar
 {
 	margin: 0;
 	height: 10px;
@@ -1785,7 +1809,9 @@
 	border-top: 1px solid #CFCFCF;
 }
 .page-user-register #main #edit-profile-sexo-Hombre-wrapper,
-.page-user-register #main #edit-profile-sexo-Mujer-wrapper
+.page-user-register #main #edit-profile-sexo-Mujer-wrapper,
+#user-profile-form #edit-profile-sexo-Hombre-wrapper,
+#user-profile-form #edit-profile-sexo-Mujer-wrapper
 {
 	float: left;
 	width: auto;
@@ -1805,12 +1831,26 @@
 .page-user-register #main #edit-profile-tel1-num-wrapper,
 .page-user-register #main #edit-profile-tel2-tipo-wrapper,
 .page-user-register #main #edit-profile-tel2-codigo-wrapper,
-.page-user-register #main #edit-profile-tel2-num-wrapper
+.page-user-register #main #edit-profile-tel2-num-wrapper,
+#user-profile-form #edit-profile-tel1-tipo-wrapper,
+#user-profile-form #edit-profile-tel1-codigo-wrapper,
+#user-profile-form #edit-profile-tel1-num-wrapper,
+#user-profile-form #edit-profile-tel2-tipo-wrapper,
+#user-profile-form #edit-profile-tel2-codigo-wrapper,
+#user-profile-form #edit-profile-tel2-num-wrapper
 {
 	float: left;
 	width: auto;
 }
-.page-user-register #user-register label
+#user-profile-form #edit-submit
+{
+	display: block;
+	margin-left: auto;
+	margin-right: 12px;
+	margin-bottom: 12px;
+}
+.page-user-register #user-register label,
+#user-profile-form label
 {
 	float: left;
 	width: 150px;
@@ -1827,7 +1867,8 @@
 {
 	width: 70px;	
 }
-.page-user-register #user-register h2
+.page-user-register #user-register h2,
+#user-profile-form h2
 {
 	background-color: #0093FF;
 	color: #FFFFFF;

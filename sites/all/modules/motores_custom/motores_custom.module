@@ -39,12 +39,7 @@ function motores_custom_block($op = 'list', $delta = 0, $edit = array()) {
 	      switch ( $delta )
 	      {
 			case 0:
-			  drupal_add_js("$(document).ready(function(){
-				var user=$('#edit-nuevo-field').val();
-				$('#edit-field-inbox-0-uid-uid').val(user);
-				$('#edit-field-inbox-0-uid-uid-wrapper').hide();
-				$('#edit-preview').hide();
-			});",'inline');
+    			  drupal_add_js(drupal_get_path('module', 'motores_custom').'/mensajes_engine.js', $type = 'module', 'header', FALSE, FALSE);
 	          $blocks['title'] = t('¿Quieres más info?');
 	          $blocks['content'] = motores_custom_get_mensaje_form();
 	          break;
@@ -73,10 +68,14 @@ function motores_custom_get_mensaje_form(){
 	
 	return drupal_get_form('mensaje_node_form',$node);
 }
-function motores_custom_form_alter(&$form, &$form_state, $form_id){
-	if($form_id=='mensaje_node_form'){
+function motores_custom_form_alter(&$form, &$form_state, $form_id)
+{
+	if($form_id=='mensaje_node_form')
+	{
 		$node = node_load(arg(1));
 		$form['nuevo_field']=array('#value'=>$node->name,
+		                           '#type'=>'hidden');
+		$form['nuevo_nid_field']=array('#value'=>$node->title,
 		                           '#type'=>'hidden');
 		$form['#redirect']='node/'.$node->nid;
 	}
@@ -127,7 +126,7 @@ function motores_custom_get_micuenta(){
 	global $user;
 	
 	$output = '<div class="item-mis-datos">'.l('Modificar mis datos','user/'.$user->uid.'/edit').'</div>';
-	$output .='<div class="item-mis-mensajes">'.l('Mis mensajes ('.motores_custom_get_inbox_total().')','inbox').'</div>';
+	$output .='<div class="item-mis-mensajes">'.l('Mis mensajes ('.motores_custom_get_inbox_total().')','micuenta/inbox').'</div>';
 	$output .='<div class="item-ayuda">'.l('Ayuda','ayuda').'</div>';
 	$output .='<div class="item-centro-seguridad">'.l('Centro de seguridad','seguridad').'</div>';
 	
