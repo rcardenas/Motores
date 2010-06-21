@@ -1,4 +1,4 @@
-$Id: README.txt,v 1.39 2009/08/15 10:44:59 wimleers Exp $
+$Id: README.txt,v 1.40 2010/03/01 01:09:48 wimleers Exp $
 
 Description
 -----------
@@ -16,11 +16,10 @@ and levels through Hierarchical Select!
 
 Integrates with
 ---------------
-* Book (Drupal core) – NOT YET PORTED TO DRUPAL 6
 * Forum (Drupal core)
 * Menu (Drupal core)
 * Taxonomy (Drupal core)
-* Content Taxonomy (http://drupal.org/project/content_taxonomy) – NOT YET PORTED TO DRUPAL 6
+* Content Taxonomy (http://drupal.org/project/content_taxonomy)
 * Views
 
 
@@ -44,14 +43,20 @@ Troubleshooting
 If you ever have problems, make sure to go through these steps:
 
 1) Go to admin/logs/status (i.e. the Status Report). Ensure that the status
-   of the following modules is ok:
-   - Hierarchical Select
-   - Hierarchical Select Taxonomy Views (if installed)
-   - Hierarchical Select Content Taxonomy Views (if installed)
+   of the Hierarchical Select module is ok.
 
 2) Ensure that the page isn't being served from your browser's cache. Use
    CTRL+R in Windows/Linux browsers, CMD+R in Mac OS X browsers to enforce the
    browser to reload everything, preventing it from using its cache.
+
+3) When Hierarchical Select seems to be misbehaving in a certain use case in
+   which terms with multiple parents are being used, make sure to enable the
+   "Save term lineage" setting.
+   Note: you may have to repeat this for every configuration in which the
+   vocabulary with terms that have multiple parents are being used. E.g. if
+   such a vocabulary is called "A", then go to 
+      admin/settings/hierarchical_select/configs
+   and edit all configuration that have "A" in the "Hierarchy" column.
 
 In case of problems, don't forget to try a hard refresh in your browser!
 

@@ -1,5 +1,5 @@
 <?php
-// $Id: hs_content_taxonomy.admin.inc,v 1.4 2009/10/30 23:59:33 wimleers Exp $
+// $Id: hs_content_taxonomy.admin.inc,v 1.5 2010/03/01 00:49:43 wimleers Exp $
 
 /**
  * Form definition; configuration form for Hierarchical Select as the widget
@@ -90,12 +90,10 @@ function hs_content_taxonomy_config_form($form_state, $content_type_name, $field
 function hs_content_taxonomy_common_config_form_submit( &$form, &$form_state) {
   $config = $form_state['values']['hierarchical_select_config'];
   $multiple_values = ($config['save_lineage'] | $config['dropbox']['status']);
-  $content_type = content_types($form['#content_type_name']);
-  $field = $content_type['fields'][$form['#field_name']];
-  $form_state_new = array();
-  $form_state_new['values'] = array(
-    'multiple'    => $multiple_values,
-  );
-  require_once(drupal_get_path('module', 'content') .'/includes/content.admin.inc');
-  drupal_execute('content_field_edit_form', $form_state_new, $field['type_name'], $form['#field_name']);
+  require_once(drupal_get_path('module', 'content') . '/includes/content.crud.inc');
+  $fields = content_field_instance_read(array('type_name' => $form['#content_type_name'], 'field_name' => $form['#field_name']));
+  foreach ($fields as $field) {
+    $field['multiple'] = $multiple_values;
+    content_field_instance_update($field);
+  }
 }

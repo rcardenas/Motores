@@ -1,5 +1,5 @@
 <?php
-// $Id: hs_content_taxonomy.module,v 1.37 2009/11/21 15:24:20 wimleers Exp $
+// $Id: hs_content_taxonomy.module,v 1.38 2010/02/28 18:03:00 wimleers Exp $
 
 /**
  * @file
@@ -102,8 +102,9 @@ function hs_content_taxonomy_widget_info() {
       'field types' => array('content_taxonomy'),
       // Set multiple settings to be handled by widget rather than by CCK itself
       'multiple values' => CONTENT_HANDLE_MODULE,
-      // No default value callback for this widget
-      'callbacks' => array('default value' => CONTENT_CALLBACK_NONE),
+      'callbacks' => array(
+        'default value' => CONTENT_CALLBACK_DEFAULT,
+      ),
     ),
   );
 }
@@ -157,9 +158,31 @@ function hs_content_taxonomy_widget(&$form, &$form_state, $field, $items, $delta
   $depth      = (empty($field['depth'])) ? 0 : $field['depth'];
   require_once(drupal_get_path('module', 'hierarchical_select') .'/includes/common.inc');
   $node = &$form['#node'];
-  foreach ($items as $item) {
-    $selected_items[] = $item['value'];
+
+  // Extremely ugly checks because CCK/Content Taxonomy is a big failure.
+  $selected_items = array();
+  if (isset($items[$field_name])) {
+    // New node: "default value" is the default value from field settings.
+    if (isset($items[$field_name]['tids'])) {
+      // Multiple default values as a field setting.
+      if (is_array($items[$field_name]['tids'])) {
+        foreach ($items[$field_name]['tids'] as $item) {
+          $selected_items[] = $item['value'];
+        }
+      }
+      // Single default value as a field setting.
+      else {
+        $selected_items[] = $items[$field_name]['tids'];
+      }
+    }
   }
+  else {
+    // Existing node: "default value" are the previously selected terms. 
+    foreach ($items as $item) {
+      $selected_items[] = $item['value'];
+    }
+  }
+
   $node_field = &$node->$field_name;
   $form[$field_name]['#tree'] = TRUE;
   $form[$field_name]['#weight'] = $field['widget']['weight'];
@@ -177,7 +200,7 @@ function hs_content_taxonomy_widget(&$form, &$form_state, $field, $items, $delta
     ),
     '#required' => $field['required'],
     '#description' => t($field['widget']['description']),
-	'#default_value' => !empty($selected_items) ? array_values($selected_items) : array(),
+    '#default_value' => !empty($selected_items) ? array_values($selected_items) : array(),
   );
   unset($form[$field_name]['#options']); // Unset to prevent passing around of possibly huge HTML.
   unset($form[$field_name]['#theme']);   // Unset to prevent theme_taxonomy_term_select() from running.

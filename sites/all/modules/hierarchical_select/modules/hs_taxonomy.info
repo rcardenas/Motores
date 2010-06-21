@@ -6,9 +6,9 @@ dependencies[] = taxonomy
 package = Form Elements
 core = 6.x
 
-; Information added by drupal.org packaging script on 2009-12-31
-version = "6.x-3.0"
+; Information added by drupal.org packaging script on 2010-04-06
+version = "6.x-3.1"
 core = "6.x"
 project = "hierarchical_select"
-datestamp = "1262263536"
+datestamp = "1270586711"
 

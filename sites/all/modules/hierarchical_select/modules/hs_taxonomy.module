@@ -1,5 +1,5 @@
 <?php
-// $Id: hs_taxonomy.module,v 1.37 2009/12/23 01:59:48 wimleers Exp $
+// $Id: hs_taxonomy.module,v 1.43 2010/03/18 09:53:07 wimleers Exp $
 
 /**
  * @file
@@ -227,7 +227,7 @@ function hs_taxonomy_form($vid, $value = 0, $help = NULL) {
 /**
  * Implementation of hook_form_alter().
  */
-function hs_taxonomy_form_alter(&$form, &$form_state, $form_id) {
+function hs_taxonomy_form_alter(&$form, $form_state, $form_id) {
   // Change the term selection of nodes. Only affects hierarchical
   // vocabularies.
   if (isset($form['type']) && isset($form['#node']) && (variable_get('taxonomy_override_selector', FALSE)) && $form['type']['#value'] .'_node_form' == $form_id) {
@@ -273,6 +273,12 @@ function hs_taxonomy_form_alter(&$form, &$form_state, $form_id) {
         );
       }
       else {
+        // Just looking at $vocabulary->required is not sufficient: the forum
+        // module does not correctly set $vocabulary->required and hence the
+        // forum vocabulary does not have it set. It's made required through
+        // some hardcoded piece of Forms API logic. Therefore we have to do
+        // more extensive checks to decide to make the form item required.
+        $required = (isset($form['taxonomy'][$vocabulary->vid]['#required'])) ? $form['taxonomy'][$vocabulary->vid]['#required'] : $vocabulary->required;
         // Extract terms belonging to the vocabulary in question.
         $default_terms = array();
         foreach ($terms as $term) {
@@ -284,7 +290,7 @@ function hs_taxonomy_form_alter(&$form, &$form_state, $form_id) {
         $form_function = variable_get("taxonomy_hierarchical_select_$vocabulary->vid", 0) ? 'hs_taxonomy_form' : 'taxonomy_form';
         $form['taxonomy'][$vocabulary->vid] = $form_function($vocabulary->vid, array_keys($default_terms), $vocabulary->help);
         $form['taxonomy'][$vocabulary->vid]['#weight'] = $vocabulary->weight;
-        $form['taxonomy'][$vocabulary->vid]['#required'] = $vocabulary->required;
+        $form['taxonomy'][$vocabulary->vid]['#required'] = $required;
       }
     }
     if (!empty($form['taxonomy']) && is_array($form['taxonomy'])) {
@@ -342,6 +348,16 @@ function hs_taxonomy_hierarchical_select_root_level($params) {
     }
   }
 
+  // If the Term Permissions module is installed, honor its settings.
+  if (function_exists('term_permissions_allowed')) {
+    global $user;
+    foreach ($terms as $key => $term) {
+      if (!term_permissions_allowed($term->tid, $user) ) {
+        unset($terms[$key]);
+      }
+    }
+  }
+
   return _hs_taxonomy_hierarchical_select_terms_to_options($terms);
 }
 
@@ -358,6 +374,16 @@ function hs_taxonomy_hierarchical_select_children($parent, $params) {
   // Unset the term that's being excluded, if it is among the children.
   unset($terms[$params['exclude_tid']]);
 
+  // If the Term Permissions module is installed, honor its settings.
+  if (function_exists('term_permissions_allowed')) {
+    global $user;
+    foreach ($terms as $key => $term) {
+      if (!term_permissions_allowed($term->tid, $user) ) {
+        unset($terms[$key]);
+      }
+    }
+  }
+
   return _hs_taxonomy_hierarchical_select_terms_to_options($terms);
 }
 
@@ -371,11 +397,29 @@ function hs_taxonomy_hierarchical_select_lineage($item, $params) {
     return array(0);
   }
 
-  $terms = array_reverse(taxonomy_get_parents_all($item));
+  $terms = array_reverse(hs_taxonomy_get_parents_all($item));
   foreach ($terms as $term) {
     $lineage[] = $term->tid;
   }
   return $lineage;
+}
+
+/**
+ * Alternative version of taxonomy_get_parents_all(): instead of using all
+ * parents of a term (i.e. when multiple parents are being used), only the
+ * first is kept.
+ */
+function hs_taxonomy_get_parents_all($tid) {
+  $parents = array();
+  if ($tid) {
+    $parents[] = taxonomy_get_term($tid);
+    $n = 0;
+    while ($parent = taxonomy_get_parents($parents[$n]->tid)) {
+      $parents = array_merge($parents, array(reset($parent)));
+      $n++;
+    }
+  }
+  return $parents;
 }
 
 /**
@@ -389,6 +433,17 @@ function hs_taxonomy_hierarchical_select_valid_item($item, $params) {
     return FALSE;
   }
   $term = taxonomy_get_term($item);
+
+  // If the Term Permissions module is installed, honor its settings.
+  if (function_exists('term_permissions_allowed')) {
+    global $user;
+    foreach ($terms as $key => $term) {
+      if (!term_permissions_allowed($term->tid, $user) ) {
+        return FALSE;
+      }
+    }
+  }
+
   return ($term->vid == $params['vid']);
 }
 
@@ -536,6 +591,7 @@ function hs_taxonomy_token_values($type, $object = NULL, $options = array()) {
       // when a token is requested for a vocabulary that's not associated with
       // the current content type.
       if (!isset($all_vids)) {
+        $all_vids = array();
         $result = db_query("SELECT vid FROM {vocabulary}");
         while ($row = db_fetch_object($result)) {
           $all_vids[] = $row->vid;
@@ -545,7 +601,7 @@ function hs_taxonomy_token_values($type, $object = NULL, $options = array()) {
       // Generate the per-vid "save-lineage-termpath" tokens.
       foreach ($all_vids as $vid) {
         $terms = array();
-        if (in_array($vid, $hs_vids)) {
+        if (in_array($vid, $hs_vids) && isset($node->taxonomy[$vid])) {
           $selection = $node->taxonomy[$vid];
           $terms = _hs_taxonomy_token_termpath_for_vid($selection, $vid);
         }
