@@ -1,5 +1,5 @@
 <?php
-// $Id: privatemsgapi.test,v 1.1.2.5 2009/11/29 22:31:24 berdir Exp $
+// $Id: privatemsgapi.test,v 1.1.2.7 2010/03/25 22:29:31 berdir Exp $
 
 /**
  * @file
@@ -54,7 +54,7 @@ class PrivatemsgAPITestCase extends DrupalWebTestCase {
     $this->assertEqual('Disallowed to send a message without subject', $resultf1['messages']['error'][0], 'API denied to send message without subject');
 
     $resultf2 = privatemsg_new_thread(array(), 'no recipients', 'Body text', array('author' => $author));
-    $this->assertEqual('Disallowed to send a message without atleast one valid recipient', $resultf2['messages']['error'][0], 'API denied to send message without recipients');
+    $this->assertEqual('Disallowed to send a message without at least one valid recipient', $resultf2['messages']['error'][0], 'API denied to send message without recipients');
     $message = $this->getMessageFromSubject('no recipients');
     $this->assertTrue(empty($message), 'Message was not saved in database');
 
@@ -73,7 +73,7 @@ class PrivatemsgAPITestCase extends DrupalWebTestCase {
 
     // Send a message through the api to the same user and check if it marked
     // as new.
-    privatemsg_new_thread(array($author), $subject = $this->randomString(10), $this->randomString(20), array('author' => $author));
+    privatemsg_new_thread(array($author), $subject = $this->randomName(10), $this->randomString(20), array('author' => $author));
     $this->drupalLogin($author);
     $this->drupalGet('messages');
     $this->clickLink($subject);

@@ -474,7 +474,7 @@ function flag_page($action = NULL, $flag_name = NULL, $content_id = NULL) {
     drupal_set_header('Content-Type: text/javascript; charset=utf-8');
     $flag = flag_get_flag($flag_name);
     $flag->link_type = 'toggle';
-    print json_encode(array(
+    print drupal_to_js(array(
       'status' => TRUE,
       'newLink' => $flag->theme($flag->is_flagged($content_id) ? 'unflag' : 'flag', $content_id, TRUE),
       // Further information for the benefit of custom JavaScript event handlers:

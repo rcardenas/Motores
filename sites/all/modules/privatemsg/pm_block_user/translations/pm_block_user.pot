@@ -1,16 +1,16 @@
-# $Id: pm_block_user.pot,v 1.1.2.2 2009/11/23 19:52:40 berdir Exp $
+# $Id: pm_block_user.pot,v 1.1.2.3 2010/04/12 12:10:41 berdir Exp $
 #
 # LANGUAGE translation of Privatemsg (pm_block_user)
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 # Generated from files:
-#  pm_block_user.module,v 1.1.2.13 2009/11/06 13:06:26 berdir
+#  pm_block_user.module,v 1.1.2.15 2010/02/18 18:15:33 berdir
 #  pm_block_user.info,v 1.2.2.1 2009/04/10 15:52:48 litwol
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2009-11-23 16:31+0100\n"
+"POT-Creation-Date: 2010-04-12 13:53+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -99,15 +99,19 @@ msgstr ""
 msgid "@author is now allowed to send you new messages."
 msgstr ""
 
-#: pm_block_user/pm_block_user.module:521
+#: pm_block_user/pm_block_user.module:522
 msgid "Sorry, private messaging rules forbid sending messages to !name."
 msgstr ""
 
-#: pm_block_user/pm_block_user.module:566
+#: pm_block_user/pm_block_user.module:537
+msgid "%name has chosen to not recieve any more messages from you."
+msgstr ""
+
+#: pm_block_user/pm_block_user.module:567
 msgid "Unblock author"
 msgstr ""
 
-#: pm_block_user/pm_block_user.module:569
+#: pm_block_user/pm_block_user.module:570
 msgid "Block author"
 msgstr ""
 
