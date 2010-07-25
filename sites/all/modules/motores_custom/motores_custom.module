@@ -2,7 +2,7 @@
 
 function motores_custom_menu () {
   $items['crear/anuncio'] = array( 
-    'title' => 'Servicios y Tarifas para anunciar tu Carro', 
+    'title' => t('Servicios y Tarifas para anunciar tu Vehículo'), 
     'page callback' => 'motores_custom_crear_anuncio', 
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK

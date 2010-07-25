@@ -1325,18 +1325,8 @@
 	margin-right: 15px;
 }
 
-.multistep form
-{
-	width: 590px;
-	margin: 0 auto;
-	margin-top: 60px;
-}
-.multistep form .form-item
-{
-	float: right;
-	margin-top: 0;
-	width: 535px;
-}
+/* @group Multistep */
+
 .multistep form .tips,
 .multistep form .body-field-wrapper p,
 .multistep form .body-field-wrapper .teaser-button-wrapper
@@ -1347,6 +1337,10 @@
 {
 	
 }
+.multistep fieldset legend
+{
+	display: none;
+}
 .multistep fieldset
 {
 	border: 2px solid #CFCFCF;
@@ -1354,12 +1348,108 @@
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
 }
-.multistep fieldset legend
+.multistep .form-item
 {
-	position: absolute;
-	margin-top: -40px;
-	font-size: 16px;
+	margin-left: 20px;
+	margin-right: 20px;
+	color: #000000;
 }
+.anuncio600
+{
+	width: 600px;
+	margin: 0 auto;
+	margin-top: 60px;
+}
+.multistep .messages
+{
+	display: none;
+}
+.multistep #eula
+{
+	height: 200px;
+	font-size: 12px;
+	color: #666666;
+	margin-bottom: 10px;
+}
+.multistep #edit-field-anio-value
+{
+	width: 50%;
+}
+.multistep #edit-body
+{
+	height: 200px;
+}
+.multistep .nn.form-item
+{
+	border-bottom: 1px solid #CFCFCF;
+}
+.multistep .nn.form-item .preview-field
+{
+	font-weight: bold;
+	width: 50%;
+	float: left;
+	margin-bottom: 5px;
+}
+.multistep .nn.form-item .preview-field span
+{
+	font-weight: normal;
+	color: #999;
+}
+.multistep .teaser-checkbox
+{
+	display: none;
+}
+#multistep-group_detalles label
+{
+	float: left;
+	width: 200px;
+	height: 30px;
+}
+#multistep-group_equipo .form-item
+{
+
+}
+.nn p
+{
+	margin: 0;
+	font-weight: bold;
+	padding-top: 4px;
+}
+#edit-field-marca-value-wrapper select
+{
+	margin-right: 20px;
+	width: 250px;
+}
+.multistep #edit-next
+{
+	display: block;
+	margin-left: auto;
+}
+.multistep-tabs ul
+{
+	padding: 0;
+	background: url(img/multi_line.gif) no-repeat 35px 24px;
+}
+.multistep-tabs li.active
+{
+	background-image: url(img/multi_active.gif);
+}
+.multistep-tabs li
+{
+	float: left;
+	width: 100px;
+	padding: 0 10px;
+	padding-top: 60px;
+	list-style-image: none;
+	list-style-type: none;
+	background: url(img/multi_inactive.gif) no-repeat center top;
+	text-align: center;
+	font-size: 12px;
+	line-height: 13px;
+	color: #B2B2B2;
+}
+
+/* @end */
 
 .anuncio .content .descripcion p
 {
@@ -1461,30 +1551,6 @@
 {
 	height: 48px;
 	color: #0093FF;
-}
-
-.multistep-tabs ul
-{
-	padding: 0;
-	background: url(img/multi_line.gif) no-repeat 35px 24px;
-}
-.multistep-tabs li.active
-{
-	background-image: url(img/multi_active.gif);
-}
-.multistep-tabs li
-{
-	float: left;
-	width: 100px;
-	padding: 0 10px;
-	padding-top: 60px;
-	list-style-image: none;
-	list-style-type: none;
-	background: url(img/multi_inactive.gif) no-repeat center top;
-	text-align: center;
-	font-size: 12px;
-	line-height: 13px;
-	color: #B2B2B2;
 }
 
 .block-motores_custom

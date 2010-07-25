@@ -140,9 +140,10 @@ function motores_preprocess_page(&$vars, $hook) {
   }*/
   
   // Agregar body class para multistep en node creation
-  if ( $_GET['q'] == 'node/add/vehiculo' )
+  if ( $_GET['q'] == 'node/add/carro' )
   {
-    $vars['body_classes'] .= ' multistep-1';
+    $vars['body_classes'] .= ' multistep multistep-1';
+    unset($vars['title']);
   }
 }
 // */
