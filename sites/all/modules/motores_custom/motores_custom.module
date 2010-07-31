@@ -271,7 +271,7 @@ function motores_custom_crear_anuncio(){
   <tr class="lastrow">
     <td>&nbsp;</td>
     <td class="quiero">'.l('¡Quiero esto!','node/add/'.$_GET['t']).'</td>
-    <td class="quiero"><a href="#">¡Quiero esto!</a></td>
+    <td class="quiero">'.l('¡Quiero esto!','node/add/'.$_GET['t'], array('query'=>'p=basico')).'</td>
     <td class="quiero lastcol"><a href="#">¡Quiero esto!</a></td>
    </tr>
 	 </tbody>

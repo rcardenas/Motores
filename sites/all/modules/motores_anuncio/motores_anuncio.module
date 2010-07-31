@@ -35,6 +35,9 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
   {
     case 'carro_node_form':
     
+      // add anuncio to cart (if we'll charge)
+      _motores_anuncio_configure_cart();
+      
       drupal_add_js(drupal_get_path('module', 'motores_anuncio').'/anuncio_engine.js', $type = 'module', 'header', FALSE, FALSE);
       
       //print_r($form);exit;
@@ -46,7 +49,15 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
       // botones
       unset($form['buttons']['save']);
       unset($form['buttons']['previous']);
-      $form['buttons']['next']['#value'] = t('Continuar');
+      if (isset($form['buttons']['next']))
+      { 
+        $form['buttons']['next']['#value'] = t('Continuar');
+      }
+      else
+      {
+        $form['buttons']['done']['#value'] = t('Continuar');
+        $form['#redirect'] = 'anuncio_preview/'.$form['#node']->nid;
+      }
       
       
       /**********
@@ -98,6 +109,26 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
       $form['group_describe']['field_especiales']['#prefix'] = 
        '<div class="nn clear-block"><div class="num">3</div><p>'.t('Opciones especiales de venta').'</p></div>';
       
+      
+      /**********
+      PASO 4
+      **********/
+      //$form[]
+      
       break;
+  }
+}
+
+function _motores_anuncio_configure_cart()
+{
+  $cid = uc_cart_get_id();
+  uc_cart_empty($cid);
+  
+  switch( $_GET['p'] )
+  {
+    case 'basico':
+      uc_cart_add_item('53');
+    
+    break;
   }
 }

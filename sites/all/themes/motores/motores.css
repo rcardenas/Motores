@@ -308,7 +308,7 @@
 
   .node-unpublished /* Unpublished nodes */
   {
-    /* background-color: #fff4f4; */ /* Drupal core uses a #fff4f4 background */
+    background-color: #FFFFFF;
   }
 
   .node-unpublished div.unpublished, /* The word "Unpublished" displayed beneath the content. */
@@ -1327,6 +1327,38 @@
 
 /* @group Multistep */
 
+/* @group Preview */
+
+.section-anuncio-preview .preview-block
+{
+	margin: 10px 20px;
+}
+.section-anuncio-preview .field
+{
+	margin-bottom: 5px;
+}
+.section-anuncio-preview .preview-block.fl .field-label
+{
+	float: left;
+	width: 200px;
+}
+.section-anuncio-preview .field-label
+{
+	color: #000000;
+}
+.section-anuncio-preview .change
+{
+	color: #0099FF;
+	font-size: 11px;
+	text-align: right;
+}
+.section-anuncio-preview #main .change a
+{
+	color: #0099FF;
+}
+
+/* @end */
+
 .multistep form .tips,
 .multistep form .body-field-wrapper p,
 .multistep form .body-field-wrapper .teaser-button-wrapper
@@ -1341,12 +1373,21 @@
 {
 	display: none;
 }
-.multistep fieldset
+.multistep fieldset,
+.view-anuncio-preview .attachment
 {
 	border: 2px solid #CFCFCF;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
+}
+.view-anuncio-preview .attachment .view-anuncio-preview
+{
+	padding: 0.5em;
+}
+.view-anuncio-preview .imagecache
+{
+	margin-right: 10px;
 }
 .multistep .form-item
 {
@@ -1359,6 +1400,11 @@
 	width: 600px;
 	margin: 0 auto;
 	margin-top: 60px;
+}
+.view-anuncio-preview .attachment
+{
+	width: 596px;
+	margin: 0 auto;
 }
 .multistep .messages
 {
@@ -1405,9 +1451,9 @@
 	width: 200px;
 	height: 30px;
 }
-#multistep-group_equipo .form-item
+#field_imagenes_values
 {
-
+	width: 100%;
 }
 .nn p
 {
@@ -1420,10 +1466,17 @@
 	margin-right: 20px;
 	width: 250px;
 }
-.multistep #edit-next
+.multistep #edit-next,
+.multistep #edit-done,
+.section-anuncio-preview .form-submit
 {
 	display: block;
 	margin-left: auto;
+}
+.section-anuncio-preview .form-submit
+{
+	width: 60px;
+	text-align: center;
 }
 .multistep-tabs ul
 {
@@ -1608,6 +1661,41 @@
 {
 	color: #FF4C00;
 }
+
+/* @group Checkout */
+
+#checkout-form-bottom
+{
+	border: none;
+}
+#uc-cart-checkout-form #checkout-form-bottom input
+{
+	margin-right: 0;
+}
+#uc-cart-checkout-form .form-radios
+{
+	border: 1px solid #CCCCCC;
+	margin: 20px 40px;
+}
+#uc-cart-checkout-form .form-radios div
+{
+	margin: 0;
+	height: 60px;
+	padding-top: 20px;
+	padding-left: 30px;
+	padding-bottom: 20px;
+}
+#uc-cart-checkout-form .realizado
+{
+	color: #09f;
+	text-align: center;
+}
+#edit-panes-payment-payment-method-paypal-wps-wrapper
+{
+	border-bottom: 1px solid #CCCCCC;
+}
+
+/* @end */
 /* @group Inbox */
 .view-inbox
 {
@@ -2134,10 +2222,53 @@
 	clear: both;
 	padding-top: 10px;
 }
-.view-busqueda .imagecache-search_result
+
+/* @group Results */
+
+.view-busqueda .left
 {
 	float: left;
+	width: 160px;
 	margin-right: 15px;
+}
+.view-busqueda .left img
+{
+	display: block;
+}
+.view-busqueda .right
+{
+	float: left;
+	width: 485px;
+}
+.view-busqueda .title
+{
+	margin-bottom: 10px;
+}
+.view-busqueda .field-field-precio .field-label
+{
+	display: none;
+}
+.view-busqueda .view-header .total
+{
+	color: #FF3300;	
+}
+.view-busqueda .view-header
+{
+	border-bottom: 1px solid #CCCCCC;
+	font-size: 16px;
+	color: #000000;
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+}
+.section-busqueda h1
+{
+	color: #FF3300;
+	margin-bottom: 10px;
+}
+.view-busqueda .right .field-label
+{
+	float: left;
+	width: 100px;
 }
 .view-busqueda h2
 {
@@ -2159,5 +2290,7 @@
 	margin-bottom: 10px;
 	padding-bottom: 10px;
 }
+
+/* @end */
 
 /* @end */

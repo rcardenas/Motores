@@ -50,17 +50,20 @@
 ?>
 <div id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?> clearfix"><div class="node-inner">
 
-  <?=$search_image?>
-
-  <?=$field_precio_rendered?>
-  <h2 class="title">
-    <a href="<?php print $node_url; ?>" title="<?php print $nombre ?>"><?php print $nombre; ?></a>
-  </h2>
-
-  <div class="content">
-    <?php print $content; ?>
+  <div class="left">
+    <?=$search_image?>
   </div>
-
-  <?php print $links; ?>
+  
+  <div class="right">
+    <?=$field_precio_rendered?>
+    <h2 class="title">
+      <a href="<?php print $node_url; ?>" title="<?php print $nombre ?>"><?php print $nombre; ?></a>
+    </h2>
+  
+    <?=$field_ciudad_rendered?>
+    <?=$field_color_rendered?>
+    <?=$field_km_rendered?>
+    
+  </div>
 
 </div></div> <!-- /node-inner, /node -->

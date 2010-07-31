@@ -67,8 +67,16 @@ function motores_register_form_alter( &$form, &$form_state, $form_id )
     // weights
     $form['account']['#weight'] = 29;
     
+    
     // Prefix de forma
-    if (isset($_GET['destination'])) $params = array('query'=>'destination='.$_GET['destination']);
+    if (isset($_GET['destination'])) 
+    {
+      $params = array('query'=>'destination='.$_GET['destination']);
+    }
+    else
+    {
+      $params = array();
+    }
     $form['#prefix'] = 
       '<div id="register-msg">'.
       t('&iquest;Est&aacute;s registrado y quieres hacer un cambio a tu cuenta?').' '.

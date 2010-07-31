@@ -117,6 +117,7 @@ function motores_preprocess(&$vars, $hook) {
  */
 function motores_preprocess_page(&$vars, $hook) {
 	global $user;
+	
   switch ( $vars['node']->type )
   {
     case 'vehiculo':
@@ -134,19 +135,45 @@ function motores_preprocess_page(&$vars, $hook) {
     
     break;
   }
-
-  /*if(arg(1)=='register' && $user->uid==0){
-    $vars['content'] .=drupal_get_form('user_login');	
-  }*/
   
-  // Agregar body class para multistep en node creation
+  // Agregar body class para multistep en node creation y otras ondas
   if ( $_GET['q'] == 'node/add/carro' )
   {
     $vars['body_classes'] .= ' multistep multistep-1';
     unset($vars['title']);
   }
+  // if this node is being previewed
+  if ( arg(0) == 'anuncio_preview' )
+  {
+    $vars['body_classes'] .= ' multistep multistep-5';
+    unset($vars['breadcrumb']);
+  }
+  // if we're at the cart
+  if ( arg(0) == 'cart' )
+  {
+    unset($vars['title']);
+    $vars['body_classes'] .= ' multistep multistep-7';
+    unset($vars['breadcrumb']);
+  }
 }
 // */
+
+function motores_uc_cart_checkout_review( $panes, &$form )
+{
+  global $user;
+  
+  $normal = theme_uc_cart_checkout_review( $panes, &$form );
+  
+  $normal = $user->mail;
+  
+  $r = '<div class="anuncio600">
+    <h2>'.t('Paso 7: Pago: Revisi&oacute;n de datos').'</h2>
+    <p>'.t('Su pedido est&aacute; casi completo. Por favor revise los datos abajo y pulse "Pagar" si toda la informaci&oacute;n es correcta.
+    ').'</p>
+    <fieldset>'.$normal.'</fieldset>'.$form.'</div>';
+  
+  return $r;
+}
 
 /**
  * Override or insert variables into the node templates.
@@ -202,6 +229,15 @@ function motores_preprocess_node(&$vars, $hook) {
     $vars['search_image'] = l(theme('imagecache', 'search_result', $vars['field_imagenes'][0]['filepath'] ),
                               'node/'.$vars['nid'],
                               array('html'=>true));
+  }
+  
+  // if this node is being previewed
+  if ( $vars['view']->name == 'anuncio_preview' )
+  {
+    foreach ( $vars['field_imagenes'] as $img )
+    {
+      $vars['imagenes'] .= theme('imagecache', 'preview_thumb', $img['filepath'] );
+    }
   }
 }
 // */

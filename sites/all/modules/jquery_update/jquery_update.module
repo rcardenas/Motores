@@ -47,7 +47,9 @@ function jquery_update_theme_registry_alter(&$theme_registry) {
 function jquery_update_preprocess_page(&$variables) {
   // Only do this for pages that have JavaScript on them.
 
-  if (!empty($variables['scripts']) && $variables['directory']!='themes/garland' && $_GET['q']!='admin/build/block/list') {
+  if (!empty($variables['scripts']) && $variables['directory']!='themes/garland' 
+    && $_GET['q']!='admin/build/block/list'
+    && !(arg(0) == 'node' && arg(3) == '4') ) {
   
     // Perform the logic if either jQuery Update's jquery.js is newer than
     // core's, or if we're using a different compression type.
