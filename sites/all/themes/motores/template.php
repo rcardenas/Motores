@@ -192,6 +192,7 @@ function motores_preprocess_node(&$vars, $hook) {
       break;
     case 'productos':
     case 'talleres':
+    case 'tarifa':
       break;
     default:
     

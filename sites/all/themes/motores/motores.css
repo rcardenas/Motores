@@ -108,6 +108,7 @@
   #content
   {
 	font-size: 12px;
+	min-height: 700px;
   }
 
   #content-inner
@@ -716,7 +717,6 @@
   }
 
   #main .form-submit,
-  .page-crear-anuncio .quiero a,
   .page-user-login #login-before a
   {
 	border:medium none;
@@ -1210,11 +1210,42 @@
 	font-size: 12px;
 }
 
-.page-crear-anuncio h2
+/* @group Tarifas */
+
+/* @group Contratacion */
+
+.view-tarifa-contratacion
+{
+	width: 600px;
+	margin: 0 auto;
+}
+.view-tarifa-contratacion h1
+{
+	color: #000000;
+}
+.view-tarifa-contratacion .view-content
+{
+	border: 2px solid #CFCFCF;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	padding: 0 10px;
+	height: 250px;
+}
+.view-tarifa-contratacion a
+{
+	color: #09f;
+}
+
+/* @end */
+
+.page-crear-anuncio h2,
+.section-tarifas h2
 {
 	color: #757979;
 }
-.page-crear-anuncio h3
+.page-crear-anuncio h3,
+.section-tarifas h3
 {
 	color: #0093FF;
 }
@@ -1227,49 +1258,58 @@
 	color: #0093FF;
 	margin-right: 5px;
 }
-.page-crear-anuncio table
+.page-crear-anuncio table,
+.section-tarifas table
 {
 	color: #000000;
 	font-weight: bold;
 	width: 100%;
 	margin: 0;
 }
-.page-crear-anuncio .table
+.page-crear-anuncio .table,
+.section-tarifas .table
 {
 	border: 2px solid #CFCFCF;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
-	width: 650px;
 }
-.page-crear-anuncio th
+.page-crear-anuncio th,
+.section-tarifas th
 {
 	font-size: 14px;	
 	color: #0093FF;
 }
-.page-crear-anuncio th.tipo
+.page-crear-anuncio th.tipo,
+.section-tarifas th.tipo
 {
 	color: #FF4C00;
 }
-.page-crear-anuncio tr
+.page-crear-anuncio tr,
+.section-tarifas tr
 {
 	height: 35px;
 }
 .page-crear-anuncio table td,
-.page-crear-anuncio table th
+.page-crear-anuncio table th,
+.section-tarifas table td,
+.section-tarifas table th
 {
 	padding: 10px;
 	text-align: center;
 	border-bottom: 2px solid #CFCFCF;
 	border-right: 2px solid #CFCFCF;
 }
-.page-crear-anuncio tr.lastrow td
+.page-crear-anuncio tr.lastrow td,
+.section-tarifas tr.lastrow td
 {
 	border-bottom: none;
 }
-.page-crear-anuncio .lastcol
+.page-crear-anuncio .lastcol,
+.section-tarifas .lastcol
 {
 	border-right: none;
+	width: 100px;
 }
 .page-crear-anuncio .checked
 {
@@ -1281,6 +1321,25 @@
 	text-indent: -99em;
 	overflow: hidden;
 }
+
+  .page-crear-anuncio .quiero a,
+.section-tarifas #content .content table a
+  {
+	border:medium none;
+	color:#FFFFFF;
+	font-size: 12px;
+	font-weight:bold;
+	padding:4px 12px;
+	-moz-border-radius: 8px;
+	text-decoration: none;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	background: #FF4C00;
+	display: block;
+	width: 80px;
+}
+
+/* @end */
 
 .front #content .view
 {
@@ -1301,6 +1360,33 @@
 	width: 313px;
 	margin-bottom: 15px;
 }
+
+/* @group Ayuda */
+
+.section-ayuda h1.title
+{
+	display: none;
+}
+.section-ayuda .bordes
+{
+	border: 2px solid #CFCFCF;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	background:url("img/ayuda.jpg") no-repeat scroll 570px 20px transparent;
+	padding:15px 75px 15px 15px;
+	width:600px;
+}
+.section-ayuda p
+{
+	color: #000000;
+}
+.section-ayuda h1
+{
+	color: #fd3500;
+}
+
+/* @end */
 .view-home .views-field-field-anio-value
 {
 	font-weight: bold;
@@ -1799,43 +1885,70 @@
 	top: -25px;
 }
 /* @end */
-/* @group Proceso de anuncio */
+/* @group Eleccion de anuncio */
 .view-anuncio-tipo,
-.view-anuncio-vehiculo
+.view-anuncio-vehiculo,
+.view-anuncio-agencia
 {
-	background-color: #0093FF;
 	width: 640px;
 	padding: 12px;
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
 	border-radius: 8px;
+	background: #0093FF url(img/bluetop.png) repeat-x;
 }
 .view-anuncio-tipo h2,
-.view-anuncio-vehiculo h2
+.view-anuncio-vehiculo h2,
+.view-anuncio-agencia h2
 {
 	margin-top: 0;
 	color: #FFFFFF;
 }
-.view-anuncio-tipo a
-{
-	display: block;
-	padding-top: 115px;
-	height: 20px;
-	width: 170px;
-	text-align: center;
-	font-weight: bold;
-	float: left;
-}
+.view-anuncio-tipo a,
+.view-anuncio-agencia a,
 .view-anuncio-vehiculo a
 {
 	display: block;
 	padding-top: 115px;
-	height: 20px;
-	width: 205px;
 	text-align: center;
 	font-weight: bold;
 	float: left;
 }
+.view-anuncio-tipo a
+{
+	height: 20px;
+	width: 170px;
+}
+.view-anuncio-agencia a
+{
+	height: 20px;
+	width: 300px;
+}
+.view-anuncio-vehiculo a
+{
+	height: 20px;
+	width: 205px;
+}
+
+/* @group Iconos */
+
+.view-anuncio-agencia .views-field-nothing a
+{
+	background: url(img/anuncios/agencias/ag1.gif) no-repeat center;
+}
+.view-anuncio-agencia .views-field-nothing-1 a
+{
+	background: url(img/anuncios/agencias/ag2.gif) no-repeat center;
+}
+.view-anuncio-agencia .views-field-nothing-2 a
+{
+	background: url(img/anuncios/agencias/ag3.gif) no-repeat center;
+}
+.view-anuncio-agencia .views-field-nothing-3 a
+{
+	background: url(img/anuncios/agencias/ag4.gif) no-repeat center;
+}
+
 .view-anuncio-vehiculo .views-field-nothing a
 {
 	background: url(img/anuncios/carro_2.gif) no-repeat center;
@@ -1882,8 +1995,11 @@
 {
 	background: url(img/anuncios/papel.gif) no-repeat center;
 }
+
+/* @end */
 .view-anuncio-tipo .view-content,
-.view-anuncio-vehiculo .view-content
+.view-anuncio-vehiculo .view-content,
+.view-anuncio-agencia .view-content
 {
 	background-color: #FFFFFF;
 	-moz-border-radius: 8px;
