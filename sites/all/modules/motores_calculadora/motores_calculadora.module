@@ -1,0 +1,227 @@
+<?php
+
+function motores_calculadora_menu () {
+  $items['calcular/seguros'] = array(  
+    'page callback' => 'calcular_seguros', 
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK
+  );
+
+  return $items;
+}
+
+/*
+function motores_calculadora_init() {
+    drupal_add_js(drupal_get_path('module', 'motores_custom').'/taxonomy_engine.js', $type = 'module', 'header', FALSE, FALSE);
+}
+*/
+
+function motores_calculadora_block($op = 'list', $delta = 0, $edit = array()) {
+	
+	switch($op){
+		case 'list':
+	      $blocks[0]['info'] = t('Calculadora financiera');
+	      return $blocks;
+	      break;
+	    case 'view':
+	      switch ( $delta )
+	      {
+			case 0:
+	          drupal_add_js(drupal_get_path('module', 'motores_calculadora').'/calculadora_engine.js', $type = 'module', 'header', FALSE, FALSE);		 
+	          $blocks['title'] = t('Calculadora financiera');
+	          $blocks['content'] = motores_calculadora_forma();
+	          break;
+	      }
+	      return $blocks;
+	      break;
+	}
+}
+
+function motores_calculadora_forma(){
+	
+	$output = '
+	<div id="calculadora-financiera">
+	  <form id="calc-fin">
+	    <div class="calc-item">
+	      <label>Marca:</label>
+	      <select name="marca" id="marca">
+	        <option value="Acura">Acura</option>
+	        <option value="Alfa romeo">Alfa romeo</option>
+	      </select>
+	    </div>
+	    <div class="calc-item">
+	      <label>Año:</label>
+	      <select name="anio" id="anio">
+	        <option value="Acura">Acura</option>
+	        <option value="Alfa romeo">Alfa romeo</option>
+	      </select>
+	    </div>
+	    <div class="calc-item">
+	      <label>Línea - Versión - Descripción:</label>
+	      <select name="version" id="version">
+	        <option value="Acura">Acura</option>
+	        <option value="Alfa romeo">Alfa romeo</option>
+	      </select>
+	    </div>
+	    <div class="calc-item azul">
+	      <label>Datos del Crédito:</label>
+	    </div>
+	    <div class="calc-item">
+	      <label>Precio de venta al contado:</label>
+	      <input type="text" size="20" name="precio" id="precio" />
+	    </div>
+	    <div class="calc-item red">
+	      <label>Enganche:</label>
+	      <input type="text" size="20" name="enganche" id="enganche" />
+	    </div>
+	    <div class="calc-item">
+	      <label>Aforo:</label>
+	      <span id="aforo">$ -</span>
+	    </div>
+	    
+	    <div class="calc-item red">
+	      <label>Monto de seguro de daño anual:</label>
+	      <span id="valor-seguro-dano"></div>
+	    </div>
+	   	<div class="calc-item red">
+	      <label>Monto de seguro de vida anual:</label>
+	      <span id="valor-vida"></div>
+	    </div>
+	    <div class="calc-item red">
+	      <label>Total de seguros:</label>
+	      <span id="seguro-total"></div>
+	    </div>
+	    <div class="calc-item">
+	      <label>Aforo más seguros:</label>
+	      <span id="aforo-seguro"></div>
+	    </div>
+	
+	     <div class="calc-item">
+	      <label>Garantia exendida:</label>
+	      <span id="valor-garantia"></div>
+	    </div>
+	
+	    <div class="calc-item">
+	      <label>Importe a financiar:</label>
+	      <span id="valor-importe"></div>
+	    </div>
+	
+	
+	    <div class="calc-item red" id="maximo">
+	      <label>Monto máximo a financiar:</label>
+	      <span id="valor-maximo"></div>
+	    </div>
+	
+	    <div class="calc-item red" id="maximo">
+	      <input type="submit" class="form-submit" value="Calcular" id="calc-calcular" name="calc-calcular">
+	    </div>
+	
+	    <table id="tala-calculos">
+	    <tr>
+	     <td></td>
+	     <td>12 meses</td>
+	     <td>18 meses</td>
+	     <td>24 meses</td>
+	     <td>36 meses</td>
+	    </tr>
+	    <tr>
+	     <td>Tasa de interés fija anual:</td>
+	     <td id="int-12"></td>
+	     <td id="int-18"></td>
+	     <td id="int-24"></td>
+	     <td id="int-36"></td>
+	    </tr>
+	    <tr>
+	     <td>Comisión por Apertura:</td>
+	     <td id="com-12"></td>
+	     <td id="com-18"></td>
+	     <td id="com-24"></td>
+	     <td id="com-36"></td>
+	    </tr>
+	    <tr>
+	     <td>Comisión por Apertura (incluye IVA):</td>
+	     <td id="comiva-12"></td>
+	     <td id="comiva-18"></td>
+	     <td id="comiva-24"></td>
+	     <td id="comiva-36"></td>
+	    </tr>
+	    <tr>
+	      <td>Pago fijo mensual:</td>
+	     <td id="fijo-12"></td>
+	     <td id="fijo-18"></td>
+	     <td id="fijo-24"></td>
+	     <td id="fijo-36"></td>
+	    </tr>
+	    </table>
+	
+	
+	  </form>
+	</div>
+	';
+	
+	return $output;
+	
+}
+
+function calcular_seguros(){
+	$aforo=$_GET['aforo'];
+	$seguro=0; //Monto del seguro de daños anual
+	$vida=0;
+	if($seguro!=0){
+		$vida=300;
+	}
+	$total=$seguro+$vida;
+	$json['seguro']=$seguro;
+	$json['vida']=$vida;
+	$json['total']=$total;
+	
+	print json_encode($json);
+	
+}
+
+
+
+function motores_calculadora_calcular(){
+	$marcas = array('ACURA',
+	'ALFA ROMEO',
+	'AUDI',
+	'BMW',
+	'CADILLAC',
+	'CHEVROLET',
+	'CHRYSLER',
+	'DODGE',
+	'FERRARI',
+	'FIAT',
+	'FORD',
+	'GMC',
+	'HONDA',
+	'HUMMER',
+	'INFINITI',
+	'JAGUAR',
+	'JEEP',
+	'LAND ROVER',
+	'LINCOLN',
+	'LOTUS',
+	'MASERATI',
+	'MAZDA',
+	'MERCEDES',
+	'MERCURY',
+	'MG',
+	'MINI',
+	'MITSUBISHI',
+	'NISSAN',
+	'PEUGEOT',
+	'PONTIAC',
+	'PORSCHE',
+	'RENAULT',
+	'ROVER',
+	'SAAB',
+	'SEAT',
+	'SMART',
+	'SSANGYONG',
+	'SUBARU',
+	'SUZUKI',
+	'TOYOTA',
+	'VOLKSWAGEN',
+	'VOLVO');
+}
