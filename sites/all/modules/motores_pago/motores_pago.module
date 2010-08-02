@@ -1,5 +1,15 @@
 <?php
 
+function motores_pago_menu()
+{
+  $items['anuncio/procesar'] = array(
+    'title' => t('Proceso de anuncio'),
+    'page callback' => 'motores_pago_enable_anuncio',
+    'access arguments' => array('access content')
+  );
+  return $items; 
+}
+
 function motores_pago_payment_method()
 {
   $methods[] = array(
@@ -51,5 +61,31 @@ function motores_pago_form_alter( &$form, &$form_state, $form_id )
       
     break;
   }
+}
+
+function motores_pago_enable_anuncio( $nid )
+{
+  if (!isset($nid)) $nid = arg(2);
+  
+  $cart = uc_cart_get_contents();
+  $anuncio = $cart[0];
+  
+  $node = node_load($nid);
+  
+  // relaciona el nuevo anuncio con su respectivo producto para ubercart
+  $node->field_tipo_anunio[0]['nid'] = $anuncio->nid;
+  
+  // publica el anuncio now
+  switch ($anuncio->model)
+  {
+    case 1: // gratuito
+      uc_cart_empty($anuncio->cart_id);
+      $node->status = 1;
+    break;
+  }
+  
+  // el anuncio esta listo
+  node_save($node);
+  drupal_goto('listo');
 }
 

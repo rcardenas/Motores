@@ -49,6 +49,10 @@ function motores_multistep_markup()
   {
     $active = 6;
   }
+  if ( arg(1) == '62' )
+  {
+    $active = 7;
+  }
   
   $r = 
   '<div class="multistep-tabs">

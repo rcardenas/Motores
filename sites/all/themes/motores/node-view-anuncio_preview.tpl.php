@@ -7,7 +7,7 @@
     <div class="nn"><p>Datos generales del veh&iacute;culo</p></div>
     <div class="preview-block fl">
       <?=$field_anio_rendered?>
-      <?=$field_marca_rendered?>
+      <?=$nombre_sin_anio?>
     </div>
     <div class="change">
       <?=t('Si buscas cambiar algo, puedes hacerlo ').
@@ -85,6 +85,6 @@
     </div>
   </fieldset>
   
-  <?=l( 'Continuar', '', array('attributes'=>array('class'=>'form-submit')) )?>
+  <?=l( 'Continuar', $next, array('attributes'=>array('class'=>'form-submit')) )?>
 
 </div></div> <!-- /node-inner, /node -->

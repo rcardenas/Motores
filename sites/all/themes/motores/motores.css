@@ -965,8 +965,96 @@
 	border: 2px solid #CBCBCB;
 	border-bottom: none;
 }
+
+/* @group My Account */
+
+.block-motores_custom
+{
+	font-size: 13px;
+}
+#block-motores_custom-1
+{
+	width: 300px;
+	margin-right: 20px;
+	float: left;
+}
+#block-motores_custom-2
+{
+	float: left;
+	width: 640px;
+}
+#block-motores_custom-2 a
+{
+	float: left;
+	display: block;
+	width: 119px;
+	height: 22px;
+	padding-top: 90px;
+	text-align: center;
+	text-transform: capitalize;
+	font-weight: bold;
+	margin-right: 3px;
+}
+#block-motores_custom-2 .camionetas a
+{
+	background: url(img/micuenta/camionetas.gif) no-repeat;
+}
+#block-motores_custom-2 .carro a
+{
+	background: url(img/micuenta/carro.gif) no-repeat;
+}
+#block-motores_custom-2 .moto a
+{
+	background: url(img/micuenta/moto.gif) no-repeat;
+}
+#block-motores_custom-2 .otro-tipo a
+{
+	background: url(img/micuenta/otro.gif) no-repeat;
+}
+#block-motores_custom-2 .accesorios a
+{
+	background: url(img/micuenta/accesorios.gif) no-repeat;
+}
+#block-motores_custom-2 .camionetas.active a
+{
+	background: url(img/micuenta/ov_camionetas.gif) no-repeat;
+}
+#block-motores_custom-2 .carro.active a
+{
+	background: url(img/micuenta/ov_carro.gif) no-repeat;
+}
+#block-motores_custom-2 .moto.active a
+{
+	background: url(img/micuenta/ov_moto.gif) no-repeat;
+}
+#block-motores_custom-2 .otro-tipo.active a
+{
+	background: url(img/micuenta/ov_otro.gif) no-repeat;
+}
+#block-motores_custom-2 .accesorios.active a
+{
+	background: url(img/micuenta/ov_accesorios.gif) no-repeat;
+}
+.block-motores_custom .item-mis-mensajes
+{
+	margin-bottom: 20px;
+}
+.block-motores_custom .item-centro-seguridad a
+{
+	color: #FF4C00;
+}
+
+.section-micuenta #block-block-2 h1
+{
+	color: #999;
+}
+.section-micuenta #block-block-2 h1 span
+{
+	color: #000;
+}
+
 #sidebar-right .block .content,
-.section-micuenta #content-inner .block .content
+.section-micuenta #content-inner .block-motores_custom .content
 {
 	border: 2px solid #CBCBCB;
 	border-top: none;
@@ -981,6 +1069,64 @@
 	border-top-left-radius: 0px;
 	border-top-right-radius: 0px;
 }
+.view-micuenta .views-field .green
+{
+	font-size: 16px;
+	color: #009900;
+}
+
+.view-micuenta
+{
+	clear: both;
+}
+.view-micuenta .views-table tbody tr
+{
+	background-color: #FFFFFF;
+	border: none;
+	font-size: 12px;
+	color: #757979;
+}
+.view-micuenta .views-field img
+{
+	display: block;
+}
+.view-micuenta .views-field
+{
+	border: 2px solid #CBCBCB;
+	border-top: none;
+	border-left: none;
+	padding: 6px;
+}
+.view-micuenta .views-field-nothing-2
+{
+	border-right: none;
+}
+.view-micuenta .views-table
+{
+	width: 100%;
+	margin-top: 0;
+	margin-bottom: 6px;
+	text-align: center;
+}
+.view-micuenta .views-table th
+{
+	text-align: center;
+}
+.view-micuenta .view-content
+{
+	background-color: #E8E8E8;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	border: 2px solid #CDCFCF;
+}
+.view-micuenta thead
+{
+	height: 48px;
+	color: #0093FF;
+}
+
+/* @end */
 #sidebar-right .form-item
 {
 	margin-top: 0;
@@ -1646,107 +1792,47 @@
 	padding-left: 12px;
 }
 
-.view-micuenta
+/* @group Anuncio listo */
+
+.section-listo .box
 {
-	clear: both;
+	width: 600px;
+	margin: 0 auto;
+	margin-top: 30px;
 }
-.view-micuenta .views-table tbody tr
+.section-listo h1.title
 {
-	background-color: #FFFFFF;
-	border: none;
-	font-size: 12px;
-	color: #757979;
+	display: none;
 }
-.view-micuenta .views-field img
+.section-listo .bordes
 {
+	border: 2px solid #CFCFCF;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	padding: 0 15px 15px 15px;
+}
+.section-listo .bordes p
+{
+	color: #000000;
+}
+.section-listo .bordes a
+{
+	font-weight: bold;
+	text-align: center;
 	display: block;
+	float: left;
+	width: 50%;
+	height: 20px;
+	padding-top: 95px;
+	background: url(img/anuncios/papel.jpg) no-repeat center top;
 }
-.view-micuenta .views-field
+.section-listo .bordes .llanta
 {
-	border: 2px solid #CBCBCB;
-	border-top: none;
-	border-left: none;
-	padding: 6px;
-}
-.view-micuenta .views-field-nothing-2
-{
-	border-right: none;
-}
-.view-micuenta .views-table
-{
-	width: 100%;
-	margin-top: 0;
-	margin-bottom: 6px;
-}
-.view-micuenta .view-content
-{
-	background-color: #E8E8E8;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
-	border-radius: 8px;
-	border: 2px solid #CDCFCF;
-}
-.view-micuenta thead
-{
-	height: 48px;
-	color: #0093FF;
+	background: url(img/anuncios/llanta.jpg) no-repeat center top;
 }
 
-.block-motores_custom
-{
-	font-size: 13px;
-}
-#block-motores_custom-1
-{
-	width: 300px;
-	margin-right: 20px;
-	float: left;
-}
-#block-motores_custom-2
-{
-	float: left;
-	width: 640px;
-}
-#block-motores_custom-2 a
-{
-	float: left;
-	display: block;
-	width: 119px;
-	height: 22px;
-	padding-top: 90px;
-	text-align: center;
-	text-transform: capitalize;
-	font-weight: bold;
-	margin-right: 3px;
-}
-#block-motores_custom-2 .camionetas a
-{
-	background: url(img/camionetas.gif) no-repeat;
-}
-#block-motores_custom-2 .carro a
-{
-	background: url(img/carro.gif) no-repeat;
-}
-#block-motores_custom-2 .moto a
-{
-	background: url(img/moto.gif) no-repeat;
-}
-#block-motores_custom-2 .otro-tipo a
-{
-	background: url(img/otro.gif) no-repeat;
-}
-#block-motores_custom-2 .accesorios a
-{
-	background: url(img/accesorios.gif) no-repeat;
-}
-.block-motores_custom .item-mis-mensajes
-{
-	margin-bottom: 20px;
-}
-.block-motores_custom .item-centro-seguridad a
-{
-	color: #FF4C00;
-}
+/* @end */
 
 /* @group Checkout */
 

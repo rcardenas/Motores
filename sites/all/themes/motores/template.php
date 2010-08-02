@@ -184,27 +184,30 @@ function motores_uc_cart_checkout_review( $panes, &$form )
  *   The name of the template being rendered ("node" in this case.)
  */
 
-function motores_preprocess_node(&$vars, $hook) {
-  //print_r($vars['field_imagenes']);
+function motores_preprocess_node(&$vars, $hook) 
+{
+  
   switch ( $vars['node']->type )
   {
     case 'page':
-      break;
     case 'productos':
     case 'talleres':
     case 'tarifa':
+    case 'product':
       break;
     default:
     
       // nombre del vehiculo
       $vars['nombre'] = $vars['field_anio'][0]['value'];
+      $vars['nombre_sin_anio'] = '';
       $carro = taxonomy_get_parents_all( $vars['field_marca'][0]['value'] );
       $carro = array_reverse($carro);
       foreach ( $carro as $c )
       {
         $vars['nombre'] .= ' '.$c->name;
+        $vars['nombre_sin_anio'] .= $c->name.' ';
       }
-      
+
       if ( $vars['page'] )
       {
         // este es un anuncio
@@ -221,6 +224,28 @@ function motores_preprocess_node(&$vars, $hook) {
         drupal_add_js( path_to_theme(). '/js/anuncio_engine.js', 'theme' );  
       }
       
+      // if this node is being previewed
+      if ( $vars['view']->name == 'anuncio_preview' )
+      {
+        // las fotos
+        foreach ( $vars['field_imagenes'] as $img )
+        {
+          $vars['imagenes'] .= theme('imagecache', 'preview_thumb', $img['filepath'] );
+        }
+        
+        // link a donde vas despues
+        $cart = uc_cart_get_contents();
+        // si el anuncio no es gratis, a pagar se ha dicho.
+        if ( $cart[0]->model != 1 )
+        {
+          $vars['next'] = 'cart/checkout';
+        }
+        else
+        {
+          $vars['next'] = 'anuncio/procesar/'.$vars['node']->nid;
+        }
+      }
+      
       break;
   }
   
@@ -230,15 +255,6 @@ function motores_preprocess_node(&$vars, $hook) {
     $vars['search_image'] = l(theme('imagecache', 'search_result', $vars['field_imagenes'][0]['filepath'] ),
                               'node/'.$vars['nid'],
                               array('html'=>true));
-  }
-  
-  // if this node is being previewed
-  if ( $vars['view']->name == 'anuncio_preview' )
-  {
-    foreach ( $vars['field_imagenes'] as $img )
-    {
-      $vars['imagenes'] .= theme('imagecache', 'preview_thumb', $img['filepath'] );
-    }
   }
 }
 // */
