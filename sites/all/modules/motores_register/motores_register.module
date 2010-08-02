@@ -28,7 +28,7 @@ function motores_register_markup()
   if ( $user->uid )
   {
     $dude = user_load($user->uid);
-    $r = 'Hola <strong>'.$dude->profile_nombre.'</strong> | '.l( t('Cerrar sesi&oacute;n'), 'logout', array('html'=>true) );
+    $r = 'Hola <strong>'.$dude->profile_nombre.'</strong> | '.l(t('Mi cuenta'), 'micuenta' ).' | '.l( t('Cerrar sesi&oacute;n'), 'logout', array('html'=>true) );
   }
   else
   {
