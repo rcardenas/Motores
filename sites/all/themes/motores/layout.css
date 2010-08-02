@@ -280,7 +280,7 @@
 
   #navbar
   {
-    overflow: hidden; /* May need to be removed if using a dynamic drop-down menu */
+    /* May need to be removed if using a dynamic drop-down menu */
   }
 
   /* If a div.clear-block doesn't have any content after it and its bottom edge

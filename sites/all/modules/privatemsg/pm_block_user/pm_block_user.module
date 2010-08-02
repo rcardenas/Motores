@@ -1,5 +1,5 @@
 <?php
-// $Id: pm_block_user.module,v 1.1.2.14 2009/11/23 19:52:40 berdir Exp $
+// $Id: pm_block_user.module,v 1.1.2.15 2010/02/18 18:15:33 berdir Exp $
 
 /**
  * @file
@@ -508,17 +508,18 @@ function pm_block_user_privatemsg_block_message($author, $recipients) {
   // author from sending them private messages. Use a reference, so when
   // user_load() is needed here the array is updated, negating the need for
   // further calls to user_load() later in the code.
-  foreach ($recipients as $uid => &$recipient) {
+  foreach (array_keys($recipients) as $uid) {
+
     // Ensure we have a recipient user object which includes roles.
-    if (!isset($recipient->roles)) {
-      $recipient = user_load($uid);
+    if (!isset($recipients[$uid]->roles)) {
+      $recipients[$uid] = user_load($uid);
     }
     // Note: this is checks whether the author may send the message (see third
     // parameter). Further below is a check whether the recipient may block it.
-    if (_pm_block_user_rule_exists($author, $recipient, PM_BLOCK_USER_DISALLOW_SENDING)) {
+    if (_pm_block_user_rule_exists($author, $recipients[$uid], PM_BLOCK_USER_DISALLOW_SENDING)) {
       $blocked[] = array(
-        'uid' => $recipient->uid,
-        'message' => t('Sorry, private messaging rules forbid sending messages to !name.', array('!name' => $recipient->name)),
+        'uid' => $uid,
+        'message' => t('Sorry, private messaging rules forbid sending messages to !name.', array('!name' => $recipients[$uid]->name)),
       );
     }
   }

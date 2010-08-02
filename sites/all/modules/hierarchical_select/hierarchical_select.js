@@ -1,4 +1,4 @@
-// $Id: hierarchical_select.js,v 1.100 2009/10/31 00:56:06 wimleers Exp $
+// $Id: hierarchical_select.js,v 1.101 2010/03/01 00:39:07 wimleers Exp $
 
 (function($) {
 
@@ -518,7 +518,8 @@ Drupal.HierarchicalSelect.update = function(hsid, updateType, settings) {
   // forgotten.
   var url = Drupal.settings.HierarchicalSelect.basePath + Drupal.settings.HierarchicalSelect.settings[hsid]['path'];
   if (Drupal.settings.HierarchicalSelect.getArguments.length > 0) {
-    url += '?' + Drupal.settings.HierarchicalSelect.getArguments;
+    url += (url.indexOf('?') == -1) ? '?' : '&';
+    url += Drupal.settings.HierarchicalSelect.getArguments;
   }
 
   // Construct the object that contains the options for a callback to the

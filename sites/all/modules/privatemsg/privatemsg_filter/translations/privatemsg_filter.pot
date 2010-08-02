@@ -1,17 +1,17 @@
-# $Id: privatemsg_filter.pot,v 1.1.2.2 2009/11/23 19:52:40 berdir Exp $
+# $Id: privatemsg_filter.pot,v 1.1.2.3 2010/04/12 12:10:41 berdir Exp $
 #
 # LANGUAGE translation of Privatemsg (privatemsg_filter)
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 # Generated from files:
 #  privatemsg_filter.admin.inc,v 1.1.2.2 2009/11/06 13:06:26 berdir
-#  privatemsg_filter.module,v 1.1.2.29 2009/11/19 20:32:43 berdir
+#  privatemsg_filter.module,v 1.1.2.30 2009/11/23 19:54:49 berdir
 #  privatemsg_filter.info,v 1.1.2.1 2009/01/25 23:25:18 litwol
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2009-11-23 16:31+0100\n"
+"POT-Creation-Date: 2010-04-12 13:53+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: privatemsg_filter/privatemsg_filter.admin.inc:13 privatemsg_filter/privatemsg_filter.module:157;344;547;684;33
+#: privatemsg_filter/privatemsg_filter.admin.inc:13 privatemsg_filter/privatemsg_filter.module:157;344;550;687;33
 msgid "Tags"
 msgstr ""
 
@@ -165,38 +165,38 @@ msgid "Apply tag..."
 msgstr ""
 
 #: privatemsg_filter/privatemsg_filter.module:519
-msgid "Apply tag"
+msgid "Apply Tag"
 msgstr ""
 
 #: privatemsg_filter/privatemsg_filter.module:523
-msgid "Remove tag..."
+msgid "Remove Tag..."
 msgstr ""
 
 #: privatemsg_filter/privatemsg_filter.module:533
-msgid "Remove tag"
+msgid "Remove Tag"
 msgstr ""
 
-#: privatemsg_filter/privatemsg_filter.module:587
+#: privatemsg_filter/privatemsg_filter.module:590
 msgid "The selected conversations have been tagged."
 msgstr ""
 
-#: privatemsg_filter/privatemsg_filter.module:601
+#: privatemsg_filter/privatemsg_filter.module:604
 msgid "The tag has been removed from the selected conversations."
 msgstr ""
 
-#: privatemsg_filter/privatemsg_filter.module:700
+#: privatemsg_filter/privatemsg_filter.module:703
 msgid "Tags for this conversation"
 msgstr ""
 
-#: privatemsg_filter/privatemsg_filter.module:701
+#: privatemsg_filter/privatemsg_filter.module:704
 msgid "Separate multiple tags with commas."
 msgstr ""
 
-#: privatemsg_filter/privatemsg_filter.module:709
+#: privatemsg_filter/privatemsg_filter.module:712
 msgid "Tag this conversation"
 msgstr ""
 
-#: privatemsg_filter/privatemsg_filter.module:730
+#: privatemsg_filter/privatemsg_filter.module:733
 msgid "Tagging information has been saved."
 msgstr ""
 

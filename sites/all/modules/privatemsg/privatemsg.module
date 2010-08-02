@@ -1,5 +1,5 @@
 <?php
-// $Id: privatemsg.module,v 1.70.2.30.2.91.2.105 2009/12/07 16:27:29 berdir Exp $
+// $Id: privatemsg.module,v 1.70.2.30.2.91.2.110 2010/04/12 13:13:16 berdir Exp $
 
 /**
  * @file
@@ -309,8 +309,11 @@ function privatemsg_thread_load($thread_id, $account = NULL, $start = NULL) {
         if (isset($_GET['start']) && $_GET['start'] < $thread['message_count']) {
           $start = $_GET['start'];
         }
+        elseif (!variable_get('privatemsg_view_use_max_as_default', FALSE) && $max_amount == PRIVATEMSG_UNLIMITED) {
+          $start = PRIVATEMSG_UNLIMITED;
+        }
         else {
-          $start = $thread['message_count'] - (variable_get('privatemsg_view_use_max_as_default', FALSE) ? variable_get('privatemsg_view_default_amount', 10) : variable_get('privatemsg_view_max_amount', 20));
+          $start = $thread['message_count'] - (variable_get('privatemsg_view_use_max_as_default', FALSE) ? variable_get('privatemsg_view_default_amount', 10) : $max_amount);
         }
       }
 
@@ -1222,6 +1225,7 @@ function privatemsg_sql_load(&$fragments, $pmids, $account = NULL) {
     $fragments['query_args']['where'][]  = $account->uid;
   }
   $fragments['order_by'][] = 'pm.timestamp ASC';
+  $fragments['order_by'][] = 'pm.mid ASC';
 }
 
 /**
@@ -1254,11 +1258,13 @@ function privatemsg_sql_messages(&$fragments, $threads, $account = NULL, $load_a
   }
   // Only load each mid once.
   $fragments['group_by'][]    = 'pmi.mid';
+  $fragments['group_by'][]    = 'pm.timestamp';
+
   // Order by timestamp first.
   $fragments['order_by'][]    = 'pm.timestamp ASC';
   // If there are multiple inserts during the same second (tests, for example)
   // sort by mid second to have them in the same order as they were saved.
-  $fragments['order_by'][]    = 'pm.mid ASC';
+  $fragments['order_by'][]    = 'pmi.mid ASC';
 
 }
 
@@ -1410,7 +1416,7 @@ function privatemsg_user($op, &$edit, &$account, $category = NULL) {
       if (variable_get('privatemsg_display_loginmessage', TRUE) && privatemsg_user_access()) {
         $count = privatemsg_unread_count();
         if ($count) {
-          drupal_set_message(t('You have <a href="@messages">%unread</a>.', array('@messages' => url('messages'), '%unread' => format_plural($count, '1 unread message', '@count unread messages'))));
+          drupal_set_message(format_plural($count, 'You have <a href="@messages">1 unread message</a>.', 'You have <a href="@messages">@count unread messages</a>', array('@messages' => url('messages'))));
         }
       }
       break;
@@ -1788,10 +1794,10 @@ function _privatemsg_validate_message(&$message, $form = FALSE) {
 
   if (empty($message['recipients']) || !is_array($message['recipients'])) {
     if ($form) {
-      form_set_error('to', t('Disallowed to send a message without atleast one valid recipient'));
+      form_set_error('to', t('Disallowed to send a message without at least one valid recipient'));
     }
     else {
-      $messages['error'][] = t('Disallowed to send a message without atleast one valid recipient');
+      $messages['error'][] = t('Disallowed to send a message without at least one valid recipient');
     }
   }
 

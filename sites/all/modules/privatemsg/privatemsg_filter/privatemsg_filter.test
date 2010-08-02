@@ -1,5 +1,5 @@
 <?php
-// $Id: privatemsg_filter.test,v 1.1.2.5 2009/11/06 13:06:26 berdir Exp $
+// $Id: privatemsg_filter.test,v 1.1.2.6 2010/01/31 20:12:46 berdir Exp $
 
 /*
  * @file
@@ -212,13 +212,12 @@ class PrivatemsgTagsTestCase extends DrupalWebTestCase {
       else {
         $this->assertEqual((string)$row->td[2], t('Yes'), t('Public tag does have public flag.'));
       }
-      // Extract edit url.
+      // Extract edit/delete url. Only the part starting with admin/ is needed.
       if ((string)$row->td[0] == $to_edit['tag']) {
-        $edit_url = drupal_substr($row->td[3]->a[0]['href'], 1);
+        $edit_url = drupal_substr($row->td[3]->a[0]['href'], strpos($row->td[3]->a[0]['href'], 'admin/'));
       }
-      // Extract edit url.
       if ((string)$row->td[0] == $public['tag']) {
-        $delete_url = drupal_substr($row->td[3]->a[1]['href'], 1);
+        $delete_url = drupal_substr($row->td[3]->a[1]['href'], strpos($row->td[3]->a[1]['href'], 'admin/'));
       }
     }
 

@@ -117,6 +117,7 @@ function motores_preprocess(&$vars, $hook) {
  */
 function motores_preprocess_page(&$vars, $hook) {
 	global $user;
+	
   switch ( $vars['node']->type )
   {
     case 'vehiculo':
@@ -134,18 +135,45 @@ function motores_preprocess_page(&$vars, $hook) {
     
     break;
   }
-
-  if(arg(1)=='register' && $user->uid==0){
-    $vars['content'] .=drupal_get_form('user_login');	
-  }
   
-  // Agregar body class para multistep en node creation
-  if ( $_GET['q'] == 'node/add/vehiculo' )
+  // Agregar body class para multistep en node creation y otras ondas
+  if ( $_GET['q'] == 'node/add/carro' )
   {
-    $vars['body_classes'] .= ' multistep-1';
+    $vars['body_classes'] .= ' multistep multistep-1';
+    unset($vars['title']);
+  }
+  // if this node is being previewed
+  if ( arg(0) == 'anuncio_preview' )
+  {
+    $vars['body_classes'] .= ' multistep multistep-5';
+    unset($vars['breadcrumb']);
+  }
+  // if we're at the cart
+  if ( arg(0) == 'cart' )
+  {
+    unset($vars['title']);
+    $vars['body_classes'] .= ' multistep multistep-7';
+    unset($vars['breadcrumb']);
   }
 }
 // */
+
+function motores_uc_cart_checkout_review( $panes, &$form )
+{
+  global $user;
+  
+  $normal = theme_uc_cart_checkout_review( $panes, &$form );
+  
+  $normal = $user->mail;
+  
+  $r = '<div class="anuncio600">
+    <h2>'.t('Paso 7: Pago: Revisi&oacute;n de datos').'</h2>
+    <p>'.t('Su pedido est&aacute; casi completo. Por favor revise los datos abajo y pulse "Pagar" si toda la informaci&oacute;n es correcta.
+    ').'</p>
+    <fieldset>'.$normal.'</fieldset>'.$form.'</div>';
+  
+  return $r;
+}
 
 /**
  * Override or insert variables into the node templates.
@@ -156,26 +184,30 @@ function motores_preprocess_page(&$vars, $hook) {
  *   The name of the template being rendered ("node" in this case.)
  */
 
-function motores_preprocess_node(&$vars, $hook) {
-  //print_r($vars['field_imagenes']);
+function motores_preprocess_node(&$vars, $hook) 
+{
+  
   switch ( $vars['node']->type )
   {
     case 'page':
-      break;
     case 'productos':
     case 'talleres':
+    case 'tarifa':
+    case 'product':
       break;
     default:
     
       // nombre del vehiculo
       $vars['nombre'] = $vars['field_anio'][0]['value'];
+      $vars['nombre_sin_anio'] = '';
       $carro = taxonomy_get_parents_all( $vars['field_marca'][0]['value'] );
       $carro = array_reverse($carro);
       foreach ( $carro as $c )
       {
         $vars['nombre'] .= ' '.$c->name;
+        $vars['nombre_sin_anio'] .= $c->name.' ';
       }
-      
+
       if ( $vars['page'] )
       {
         // este es un anuncio
@@ -190,6 +222,28 @@ function motores_preprocess_node(&$vars, $hook) {
         drupal_add_js( path_to_theme(). '/js/scrollable.min.js', 'theme' );
         // JS engine
         drupal_add_js( path_to_theme(). '/js/anuncio_engine.js', 'theme' );  
+      }
+      
+      // if this node is being previewed
+      if ( $vars['view']->name == 'anuncio_preview' )
+      {
+        // las fotos
+        foreach ( $vars['field_imagenes'] as $img )
+        {
+          $vars['imagenes'] .= theme('imagecache', 'preview_thumb', $img['filepath'] );
+        }
+        
+        // link a donde vas despues
+        $cart = uc_cart_get_contents();
+        // si el anuncio no es gratis, a pagar se ha dicho.
+        if ( $cart[0]->model != 1 )
+        {
+          $vars['next'] = 'cart/checkout';
+        }
+        else
+        {
+          $vars['next'] = 'anuncio/procesar/'.$vars['node']->nid;
+        }
       }
       
       break;

@@ -1,5 +1,5 @@
 <?php
-// $Id: hierarchical_select.module,v 1.181 2009/10/31 01:33:22 wimleers Exp $
+// $Id: hierarchical_select.module,v 1.185 2010/04/06 17:49:43 wimleers Exp $
 
 /**
  * @file
@@ -691,6 +691,11 @@ function hierarchical_select_process($element, $edit, &$form_state, $form) {
     _hierarchical_select_mark_as_disabled($element);
   }
 
+  // Remove #options in case it's been added.
+  if (isset($element['#options'])) {
+    unset($element['#options']);
+  }
+
   return $element;
 }
 
@@ -962,7 +967,7 @@ function _hierarchical_select_process_calculate_selections(&$element) {
   // - or #value is set directly and not by a Hierarchical Select POST (and
   //   therefor set either manually or by another module),
   // then use the value of #default_value, or when available, of #value.
-  if (!isset($element['#post']) || !isset($element['#value']['hierarchical_select'])) {
+  if (!isset($element['#post']) || (!isset($element['#value']['hierarchical_select']) && !isset($element['#value']['dropbox']))) {
     $value = (isset($element['#value'])) ? $element['#value'] : $element['#default_value'];
     $value = (is_array($value)) ? $value : array($value);
     if ($dropbox) {
@@ -1327,7 +1332,8 @@ function _hierarchical_select_setup_js(&$form_state = NULL) {
     $url .= variable_get('clean_url', 0) ? '' : 'index.php?q=';
     // Prefix URL with language path when i18n is enabled and when path-based
     // negotiation is being used.
-    if (module_exists('i18n') && ($language->prefix != '') && variable_get('language_negotiation', LANGUAGE_NEGOTIATION_NONE) != "3") {
+    $negotiation = variable_get('language_negotiation', LANGUAGE_NEGOTIATION_NONE);
+    if (module_exists('i18n') && ($language->prefix != '') && ($negotiation == LANGUAGE_NEGOTIATION_PATH_DEFAULT || $negotiation == LANGUAGE_NEGOTIATION_PATH)) {
        $url .= $language->prefix . '/';
     }
 
@@ -2257,18 +2263,20 @@ function _hierarchical_select_dropbox_lineage_item_get_value($item) {
  *
  * From: http://www.php.net/manual/en/function.array-merge-recursive.php#82976.
  */
-function array_smart_merge($array, $override) {
-  if (is_array($array) && is_array($override)) {
-    foreach ($override as $k => $v) {
-      if (isset($array[$k]) && is_array($v) && is_array($array[$k])) {
-        $array[$k] = array_smart_merge($array[$k], $v);
-      }
-      else {
-        $array[$k] = $v;
+if (!function_exists('array_smart_merge')) {
+  function array_smart_merge($array, $override) {
+    if (is_array($array) && is_array($override)) {
+      foreach ($override as $k => $v) {
+        if (isset($array[$k]) && is_array($v) && is_array($array[$k])) {
+          $array[$k] = array_smart_merge($array[$k], $v);
+        }
+        else {
+          $array[$k] = $v;
+        }
       }
     }
+    return $array;
   }
-  return $array;
 }
 
 /**

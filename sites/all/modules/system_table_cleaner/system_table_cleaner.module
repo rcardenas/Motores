@@ -1,0 +1,209 @@
+<?php
+// $Id: system_table_cleaner.module,v 1.1 2009/05/22 21:58:13 mikeyp Exp $
+
+/**
+ * @file
+ * System table cleaner module, a tool to remove old items from system table.
+ */
+
+/**
+ * Implementation of hook_theme().
+ */
+function system_table_cleaner_theme($existing, $type, $theme, $path) {
+  return array(
+    'system_table_cleaner_list_form' => array(
+      'arguments' => array('form' => NULL),
+    ),
+  );
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+function system_table_cleaner_menu() {
+  $items['admin/settings/systems-table-cleaner'] = array(
+    'title' => 'System Table Cleaner',
+    'description' => 'Remove old items from your system table.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('system_table_cleaner'),
+    'access arguments' => array('administer site configuraiton'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+
+
+/**
+ * Menu callback for the admin page.
+ *
+ * This module uses a technique similar to what the node module uses
+ * on the administer nodes page at admin/content/node. For more information 
+ * please see the node (or user) module for a more detailed explanation. 
+ */
+function system_table_cleaner(&$form_state) {
+  if ($form_state['values']['op'] == t('Remove items') && $form_state['storage']['validate'] != FALSE) {
+    return system_table_cleaner_delete_confirm($form_state);
+  }
+  return system_table_cleaner_list_form();
+}
+
+/**
+ * Helper function to return a list of all items from system table missing files.
+ */
+function system_table_cleaner_find_missing() {
+  $result = db_query("SELECT * from {system}");
+
+  $items = array();
+  while ($record = db_fetch_object($result)) {
+    $record->info = unserialize($record->info);
+    $items[$record->name] = $record;
+  }
+
+  foreach ($items as $item) {
+    if (file_exists($item->filename)) {
+      unset($items[$item->name]);
+    }
+  }
+
+  return $items;
+}
+
+/**
+ * Theme function for overview page.
+ */
+function theme_system_table_cleaner_list_form($form) {
+  $output .= drupal_render($form['instructions']);
+
+  if (isset($form['no_items'])) {
+    $output .= '<p>'. drupal_render($form['no_items']) .'</p>';
+  }
+  else {
+    $header = array('', t('Name'), t('Type'), t('Status'));
+    $rows = array();
+    
+    foreach (element_children($form['title']) as $key) {
+      $row = array();
+      $row[] = drupal_render($form['items'][$key]);
+      $row[] = '<strong>'. drupal_render($form['title'][$key]) .'</strong><div class="description">'. drupal_render($form['description'][$key]) .'</div>';
+      $row[] = drupal_render($form['type'][$key]);
+      $row[] = drupal_render($form['status'][$key]);
+      $rows[] = $row;
+    }
+    $output .= theme('table', $header, $rows);
+  }
+  $output .= drupal_render($form);
+  return $output;
+}
+
+/**
+ * Generate the form for the list of all unused items.
+ */
+function system_table_cleaner_list_form() {
+  $form = array();
+
+  $form['instructions'] = array(
+    '#value' => t('System Table Cleaner searches the system table for unused items. For an item to be unused its corresponding module or theme files must be missing from the filesystem.'),
+  );
+
+  $missing_items = system_table_cleaner_find_missing();
+
+  if (empty($missing_items)) {
+    $form['no_items'] = array(
+      '#value' => t('No unused items were found.'),
+    );
+  }
+  else {
+    $form['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Remove items'),
+      '#submit' => array('system_table_cleaner_list_submit'),
+      '#validate' => array('system_table_cleaner_list_validate'),
+    );
+  }
+
+  $items = array();
+  foreach ($missing_items as $item) {
+    $items[$item->filename] = '';
+    $form['title'][$item->filename] = array('#value' => $item->info['name']);
+    $form['description'][$item->filename] = array('#value' => $item->info['description']);
+    $form['type'][$item->filename] = array('#value' => $item->type);
+    if ($item->schema_version != '-1') {
+      $form['status'][$item->filename] = array(
+        '#value' => theme('image', 'misc/watchdog-warning.png') .' '. t('Previously installed'),
+      );
+    }
+    else {
+      $form['status'][$item->filename] = array(
+        '#value' => t('Never installed'),
+      );
+    }
+  }
+  $form['items'] = array('#type' => 'checkboxes', '#options' => $items);
+  $form['#theme'] = 'system_table_cleaner_list_form';
+  
+  return $form;
+}
+
+/**
+ * Validation handler for overview page.
+ */
+function system_table_cleaner_list_validate($form, &$form_state) {
+  $items = array_filter($form_state['values']['items']);
+  if (empty($items)) {
+    drupal_set_message(t('You must specify at least one item to remove.'));
+    $form_state['storage']['validate'] = FALSE;
+    return;
+  }
+  $form_state['storage']['validate'] = TRUE;
+}
+
+/**
+ * Submit handler for overview page.
+ */
+function system_table_cleaner_list_submit($form, &$form_state) {
+  // Set rebuild so that we refresh the form.
+  // Don't need to set other values here as a switch was set in system_table_cleaner().
+  $form_state['rebuild'] = TRUE;
+}
+
+/**
+ * Delete confirmation form.
+ */
+function system_table_cleaner_delete_confirm(&$form_state) {
+  drupal_set_title(t('Are you sure?'));
+  $form['instructions'] = array('#value' => 'Are you sure you want to remove the following items from your system table?');
+
+  // Copy the submitted items out of values, because they won't be the values of *this* form
+  // when it is submitted.
+  $form_state['storage']['items'] = $form_state['values']['items'];
+
+  $items = array();
+  foreach ($form_state['values']['items'] as $filename) {
+    $result = db_query("SELECT * FROM {system} where filename = '%s'", $filename);
+    $item = db_fetch_object($result);
+    $item->info = unserialize($item->info);
+    $items[] = $item->info['name'];
+  }
+  $form['items'] = array('#value' => theme('item_list', $items));
+  $form['submit'] = array('#type' => 'submit', '#value' => 'Remove items');
+  $form['#submit'] = array('system_table_cleaner_delete_confirm_submit');
+
+  return $form;
+}
+
+/**
+ * Submit handler for delete form.
+ */
+function system_table_cleaner_delete_confirm_submit($form, &$form_state) {
+  system_table_cleaner_delete($form_state['storage']['items']);
+  $form_state['storage']['validate'] = FALSE;
+}
+
+/**
+ * Helper function to delete items from system table.
+ */
+function system_table_cleaner_delete($filenames = array()) {
+  foreach ($filenames as $item) {
+    db_query("DELETE FROM {system} WHERE filename = '%s'", $item);
+  }
+}

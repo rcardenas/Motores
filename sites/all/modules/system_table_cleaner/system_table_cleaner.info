@@ -1,0 +1,10 @@
+; $Id: system_table_cleaner.info,v 1.1 2009/05/22 21:58:13 mikeyp Exp $ 
+name = System Table Cleaner
+description = It's like spring cleaning, only for your system table.
+core = 6.x
+; Information added by drupal.org packaging script on 2010-07-11
+version = "6.x-1.x-dev"
+core = "6.x"
+project = "system_table_cleaner"
+datestamp = "1278835863"
+

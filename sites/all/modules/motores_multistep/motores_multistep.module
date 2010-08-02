@@ -21,15 +21,6 @@ function motores_multistep_block($op = 'list', $delta = 0, $edit = array())
 	}
 }
 
-function motores_multistep_form_alter(&$form, &$form_state, $form_id)
-{
-  if ($form_id == 'carro_node_form')
-  {
-    $form['field_marca']['#prefix'] = '<div class="num">1</div>';
-    $form['field_version']['#prefix'] = '<div class="num">1</div>';
-  }
-}
-
 function motores_multistep_markup()
 {
   $t[] = t('Marca y modelo');
@@ -49,6 +40,18 @@ function motores_multistep_markup()
   if ( arg(2) == 'edit' )
   {
     $active = arg(3) - 1;
+  }
+  if ( arg(0) == 'anuncio_preview' )
+  {
+    $active = 4;
+  }
+  if ( arg(0) == 'cart' )
+  {
+    $active = 6;
+  }
+  if ( arg(1) == '62' )
+  {
+    $active = 7;
   }
   
   $r = 

@@ -1,5 +1,5 @@
 <?php
-// $Id: views_handler_field_privatemsg_link.inc,v 1.1.2.1 2009/11/09 16:44:09 berdir Exp $
+// $Id: views_handler_field_privatemsg_link.inc,v 1.1.2.2 2010/01/20 15:54:42 berdir Exp $
 
 /**
  * @file
@@ -34,15 +34,18 @@ class views_handler_field_privatemsg_link extends views_handler_field {
    * Define the configuration form for our textfield.
    */
   function options_form(&$form, &$form_state) {
+     $form['label'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Label'),
+      '#default_value' => isset($this->options['label']) ? $this->options['label'] : '',
+      '#description' => t('The label for this field that will be displayed to end users if the style requires it.'),
+    );
+
     $form['text'] = array(
       '#type' => 'textfield',
       '#title' => t('Text to display'),
       '#default_value' => $this->options['text'],
       '#description' => t('Define the text to use for the link title. You can use replacement tokens to insert any existing field output.'),
-      '#process' => array('views_process_dependency'),
-      '#dependency' => array(
-        'edit-options-alter-alter-text' => array(1)
-      )
     );
 
     $form['subject'] = array(
@@ -50,10 +53,6 @@ class views_handler_field_privatemsg_link extends views_handler_field {
       '#title' => t('Pre-filled subject'),
       '#default_value' => $this->options['subject'],
       '#description' => t('Define the subject that will be pre-filled in the send message form. You can use replacement tokens to insert any existing field output.'),
-      '#process' => array('views_process_dependency'),
-      '#dependency' => array(
-        'edit-options-alter-alter-text' => array(1)
-      )
     );
 
     // Get a list of the available fields and arguments for token replacement.
@@ -88,15 +87,10 @@ class views_handler_field_privatemsg_link extends views_handler_field {
       }
     }
 
-    $form['alter']['help'] = array(
-      '#type' => 'hidden',
+    $form['help'] = array(
+      '#type' => 'markup',
       '#id' => 'views-tokens-help',
-      '#prefix' => '<div><fieldset id="views-tokens-help"><legend>' . t('Replacement patterns') . '</legend>' . $output . '</fieldset></div>',
-      '#process' => array('views_process_dependency'),
-      '#dependency' => array(
-        'edit-options-alter-make-link' => array(1),
-        'edit-options-alter-alter-text' => array(1),
-      ),
+      '#value' => '<div><fieldset id="views-tokens-help"><legend>' . t('Replacement patterns') . '</legend>' . $output . '</fieldset></div>',
     );
 
     $form['return'] = array(

@@ -1,0 +1,150 @@
+<?php
+
+function motores_anuncio_menu()
+{
+  $items['admin/settings/motores_anuncio'] = array(
+    'title' => t('Proceso de anuncio'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('motores_anuncio_settings'),
+    'access arguments' => array('administer anuncio process')
+  );
+  
+  $items['anuncio/crear'] = array(
+    'title' => t('Proceso de anuncio'),
+    'page callback' => 'motores_anuncio_configure_cart',
+    'access arguments' => array('access content')
+  );
+  
+  return $items;
+}
+
+function motores_anuncio_perm()
+{
+  return array('administer anuncio process');
+}
+
+function motores_anuncio_settings()
+{
+  $form = array();
+  $form['motores_anuncio_eula'] = array(
+    '#type' => 'textarea',
+    '#default_value' => variable_get( 'motores_anuncio_eula', '' ),
+    '#title' => t('End User License Agreement')
+  );
+  
+  return system_settings_form( $form );
+}
+
+function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
+{
+  global $user;
+  if ( $user->uid != 1 && !in_array('editor', $user->roles) )
+  {
+    switch ($form_id)
+    {
+      case 'carro_node_form':
+        
+        drupal_add_js(drupal_get_path('module', 'motores_anuncio').'/anuncio_engine.js', $type = 'module', 'header', FALSE, FALSE);
+        
+        //print_r($form);exit;
+        
+        // container div
+        $form['#prefix'] = '<div class="anuncio600">';
+        $form['#suffix'] = '</div>';
+        
+        // botones
+        unset($form['buttons']['save']);
+        unset($form['buttons']['previous']);
+        if (isset($form['buttons']['next']))
+        { 
+          $form['buttons']['next']['#value'] = t('Continuar');
+        }
+        else
+        {
+          $form['buttons']['done']['#value'] = t('Continuar');
+          $form['#redirect'] = 'anuncio_preview/'.$form['#node']->nid;
+        }
+        
+        
+        /**********
+        PASO 1
+        **********/
+        unset($form['field_tipo_anunio']);
+        $form['group_marca_modelo']['#prefix'] = '<h2>'.t('Paso 1: Marca y Modelo').'</h2>';
+        $form['group_marca_modelo']['field_marca']['#prefix'] = 
+          '<div class="nn clear-block"><div class="num">1</div><p>'.t('Seleccione la marca y modelo del vehículo que desea vender.').'</p></div>';
+        $form['group_marca_modelo']['#suffix'] =
+          '<fieldset>
+            <div class="nn clear-block"><div class="num">2</div><p>'.t('Aceptar el reglamento de publicación de anuncios en Mercado Absoluto Vehículos.').'</p></div>
+          
+            <div class="form-item">
+              <textarea id="eula" readonly="readonly">'.variable_get( 'motores_anuncio_eula', '' ).'</textarea>
+              <input type="checkbox"/> '.t('He leído y acepto las condiciones del reglamento.').'
+            </div>
+          </fieldset>';
+        
+        
+        /**********
+        PASO 2
+        **********/
+        $form['group_anio_submodelo']['#prefix'] = '<h2>'.t('Paso 2: Año y Submodelo').'</h2>';
+        $form['group_anio_submodelo']['field_anio']['#prefix'] = 
+          '<div class="nn clear-block"><div class="num">1</div><p>'.t('Seleccione la marca y sub-modelo del vehículo que desea:').'</p></div>';
+        
+        
+        /**********
+        PASO 3
+        **********/
+        $form['group_detalles']['#prefix'] = 
+        '<h2>'.t('Paso 3: Detalles').'</h2><p>'.t('Llena los siguientes datos describiendo las características del vehículo que deseas vender.
+        Los campos obligatorios se indican con').' (<span class="form-required">*</span>).</p>';
+        $form['group_detalles']['field_ciudad']['#prefix'] = 
+          '<div class="nn clear-block"><div class="num">1</div><p>'.t('Datos del vehículo').'</p></div>';
+         /* <div class="nn form-item clear-block">
+          <div class="preview-field">Marca: </div>
+          <div class="preview-field">Submodelo: <span>'.$form['#node']->field_version[0]['value'].'</span></div>
+          <div class="preview-field">Modelo: </div>
+          <div class="preview-field">Año: <span>'.$form['#node']->field_anio[0]['value'].'</span></div>
+          </div>
+          ';*/
+        $form['body_field']['#prefix'] = '<fieldset><div class="nn clear-block"><div class="num">4</div><p>'.t('Describe tu auto').'</p></div>';
+        $form['body_field']['#suffix'] = '</fieldset>';
+        unset($form['body_field']['format']);
+        
+        $form['group_equipo']['field_cristales']['#prefix'] = 
+          '<div class="nn clear-block"><div class="num">2</div><p>'.t('Equipo').'</p></div>';
+        $form['group_describe']['field_especiales']['#prefix'] = 
+         '<div class="nn clear-block"><div class="num">3</div><p>'.t('Opciones especiales de venta').'</p></div>';
+        
+        
+        /**********
+        PASO 4
+        **********/
+        //$form[]
+        
+        break;
+    }
+  }
+}
+
+function motores_anuncio_configure_cart()
+{
+  $cid = uc_cart_get_id();
+  uc_cart_empty($cid);
+  
+  switch( $_GET['p'] )
+  {
+    case 'gratuito':
+      uc_cart_add_item('63');
+    break;
+    case 'basico':
+      uc_cart_add_item('53');
+    break;
+    case 'premium':
+      uc_cart_add_item('64');
+    break;
+  }
+  
+  // start creating the ad
+  drupal_goto('node/add/'.$_GET['t']);
+}

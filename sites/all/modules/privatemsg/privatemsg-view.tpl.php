@@ -1,11 +1,11 @@
 <?php
-// $Id: privatemsg-view.tpl.php,v 1.1.2.7 2009/11/19 15:59:55 berdir Exp $
+// $Id: privatemsg-view.tpl.php,v 1.1.2.8 2010/03/10 12:35:34 berdir Exp $
 // Each file loads it's own styles because we cant predict which file will be
 // loaded.
 drupal_add_css(drupal_get_path('module', 'privatemsg') . '/styles/privatemsg-view.css');
 ?>
 <?php print $anchors; ?>
-<div class="privatemsg-box-fb" id="privatemsg-mid-<?php print $mid; ?>">
+<div class="privatemsg-box-fb <?php print $zebra; ?>" id="privatemsg-mid-<?php print $mid; ?>">
   <div class="left-column">
     <div class="avatar-fb">
       <?php print $author_picture; ?>

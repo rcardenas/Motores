@@ -1,0 +1,91 @@
+<?php
+
+function motores_pago_menu()
+{
+  $items['anuncio/procesar'] = array(
+    'title' => t('Proceso de anuncio'),
+    'page callback' => 'motores_pago_enable_anuncio',
+    'access arguments' => array('access content')
+  );
+  return $items; 
+}
+
+function motores_pago_payment_method()
+{
+  $methods[] = array(
+      'id' => 'deposito',
+      'name' => t('Depósito'),
+      'title' => t('Depósito bancario'),
+      'desc' => t('Pagar en Santander'),
+      'callback' => 'uc_payment_method_deposito',
+      'weight' => 1,
+      'checkout' => TRUE,
+    );
+  
+  return $methods;
+}
+
+function uc_payment_method_deposito( $op, &$order )
+{
+  switch ($op)
+  {
+    case 'cart-review': 
+      //print_r($order);exit;
+      $review[] = array(
+        'title' => t('Account details'), 
+        'data' => 'chido men'
+      );
+      return $review;
+  }
+}
+
+function motores_pago_form_alter( &$form, &$form_state, $form_id )
+{
+  switch ($form_id)
+  {
+    case 'uc_cart_checkout_form':
+    
+      //print_r($form);exit;
+      $form['#prefix'] = '<div class="anuncio600"><h2>'.t('Paso 7: Pago').'</h2><p>'.t('Escoge el método de pago de tu preferencia.').'</p>';
+      $form['#suffix'] = '</div>';
+      unset($form['panes']['payment']['details']);
+      unset($form['panes']['payment']['#description']);
+      
+      $form['continue']['#value'] = t('Continuar');
+      
+      // leyenda
+      $form['panes']['payment']['realizado'] = array(
+        '#value' => '<div class="form-item realizado">'.
+          t('Una vez realizado el pago, su anuncio será publicado el día hábil siguiente.').'</div>'
+      );
+      
+    break;
+  }
+}
+
+function motores_pago_enable_anuncio( $nid )
+{
+  if (!isset($nid)) $nid = arg(2);
+  
+  $cart = uc_cart_get_contents();
+  $anuncio = $cart[0];
+  
+  $node = node_load($nid);
+  
+  // relaciona el nuevo anuncio con su respectivo producto para ubercart
+  $node->field_tipo_anunio[0]['nid'] = $anuncio->nid;
+  
+  // publica el anuncio now
+  switch ($anuncio->model)
+  {
+    case 1: // gratuito
+      uc_cart_empty($anuncio->cart_id);
+      $node->status = 1;
+    break;
+  }
+  
+  // el anuncio esta listo
+  node_save($node);
+  drupal_goto('listo');
+}
+

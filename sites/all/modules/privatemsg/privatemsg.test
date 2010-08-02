@@ -1,5 +1,5 @@
 <?php
-// $Id: privatemsg.test,v 1.2.2.13 2009/12/07 16:27:29 berdir Exp $
+// $Id: privatemsg.test,v 1.2.2.16 2010/04/12 13:13:16 berdir Exp $
 /**
  * @file
  * Test file for privatemsg.module
@@ -162,6 +162,17 @@ class PrivatemsgTestCase extends DrupalWebTestCase {
     $this->assertText($bodies[22], t('Message is displayed.'));
     $this->assertNoText(t('&gt;&gt;'), t('Newer messages link not displayed.'));
     $this->assertNoText(t('&lt;&lt;'), t('Older messages link not displayed.'));
+
+    // Check with max_amount = UNLIMITED and different default amount disabled.
+    variable_set('privatemsg_view_use_max_as_default', FALSE);
+
+    $this->drupalGet('messages');
+    $this->clickLink($subject);
+    $this->assertText(t('Displaying messages 1 - 23 of 23'), t('Pager is displayed'));
+    $this->assertText($bodies[0], t('Message is displayed.'));
+    $this->assertText($bodies[22], t('Message is displayed.'));
+    $this->assertNoText(t('&gt;&gt;'), t('Newer messages link not displayed.'));
+    $this->assertNoText(t('&lt;&lt;'), t('Older messages link not displayed.'));
   }
 
   /**
@@ -242,10 +253,10 @@ class PrivatemsgTestCase extends DrupalWebTestCase {
     $this->assertText(t('A message has been sent to @recipients.', array('@recipients' => implode(', ', array($recipient->name, $recipient2->name)))), 'Message sent confirmation displayed.');
 
     $this->drupalPost('messages/new', $editnone, t('Send message'));
-    $this->assertText(t('Disallowed to send a message without atleast one valid recipient'), 'Message was not sent.');
+    $this->assertText(t('Disallowed to send a message without at least one valid recipient'), 'Message was not sent.');
 
     $this->drupalPost('messages/new', $editinvalid, t('Send message'));
-    $this->assertText(t('Disallowed to send a message without atleast one valid recipient'), 'Message was not sent.');
+    $this->assertText(t('Disallowed to send a message without at least one valid recipient'), 'Message was not sent.');
     $this->assertText(t('The following users will not receive this private message: @recipients', array('@recipients' => $editinvalid['recipient'])), 'Message about non-existing user displayed.');
 
     $this->drupalPost('messages/new', $editnobody, t('Send message'));
@@ -284,7 +295,6 @@ class PrivatemsgTestCase extends DrupalWebTestCase {
     );
 
     $this->drupalPost(NULL, $reply, t('Send message'));
-    $this->assertText(t('A message has been sent to @recipient, @author.', array('@recipient' => $recipient->name, '@author' => $author->name)), 'Reply has been sent.');
     $this->assertText($reply['body'], 'New message body displayed.');
 
     $this->drupalPost(NULL, $replyempty, t('Send message'));
@@ -485,7 +495,7 @@ class PrivatemsgTestCase extends DrupalWebTestCase {
     $this->clickLink(t('Delete message'), 1);
     $this->assertText(t('Are you sure you want to delete this message?'), 'Confirmation message displayed');
     $this->drupalPost(NULL, array(), t('Delete'));
-    $this->assertText(t('Message has been deleted.'), 'Message deleted has been deleted');
+    $this->assertText(t('Message has been deleted.'), 'Message has been deleted');
     $this->assertText($body1, 'First message is still displayed');
     $this->assertNoText($body2, 'Second message was deleted');
     
@@ -493,7 +503,7 @@ class PrivatemsgTestCase extends DrupalWebTestCase {
     $this->clickLink(t('Delete message'));
     $this->assertText(t('Are you sure you want to delete this message?'), 'Confirmation message displayed');
     $this->clickLink(t('Cancel'));
-    $this->assertText($body1, 'Second message is still displayed');
+    $this->assertText($body1, 'First message is still displayed');
 
     // Confirm message deletion.
     $this->clickLink(t('Delete message'));

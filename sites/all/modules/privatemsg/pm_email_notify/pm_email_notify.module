@@ -1,5 +1,5 @@
 <?php
-// $Id: pm_email_notify.module,v 1.1.2.11 2009/11/19 21:35:24 berdir Exp $
+// $Id: pm_email_notify.module,v 1.1.2.15 2010/04/28 20:19:52 berdir Exp $
 
 /**
  * @file
@@ -15,7 +15,7 @@ function pm_email_notify_menu() {
     'description'      => 'E-mail notification settings',
     'page callback'    => 'drupal_get_form',
     'page arguments'   => array('pm_email_notify_admin_settings_form'),
-    'access arguments' => array('read privatemsg'),
+    'access arguments' => array('administer privatemsg settings'),
     'type'             => MENU_LOCAL_TASK,
     'weight'           => 10,
   );
@@ -126,8 +126,8 @@ function pm_email_notify_mail($key, &$message, $params) {
 function _pm_email_notify_token($recipient, $message) {
   $tokens = array(
     '!author' => $message['author']->name,
-    '!pm_subject' => drupal_html_to_text(check_plain($message['subject'])),
-    '!pm_body' => drupal_html_to_text(check_markup($message['body'], $message['format'], FALSE)),
+    '!pm_subject' => trim(drupal_html_to_text(check_plain($message['subject']))),
+    '!pm_body' => trim(drupal_html_to_text(check_markup($message['body'], $message['format'], FALSE))),
     '!thread' => $message['thread_id'],
     '!user_uid' => $recipient->uid,
     '!message' => url('messages/view/' . $message['thread_id'], array('absolute' => TRUE)),
@@ -152,7 +152,7 @@ function _pm_email_notify_default_body() {
 function pm_email_notify_user($op, &$edit, &$account, $category = NULL) {
   switch ($op) {
     case 'form':
-      if ($category == 'account') {
+      if ($category == 'account' && privatemsg_user_access('read privatemsg')) {
         $form['enable_pm_mail'] = array(
           '#type' => 'fieldset',
           '#title' => t('Privatemsg e-mail notification'),
@@ -169,14 +169,17 @@ function pm_email_notify_user($op, &$edit, &$account, $category = NULL) {
       return $form;
 
      case 'submit':
-      if ($category == 'account') {
+      if ($category == 'account' && privatemsg_user_access('read privatemsg')) {
         $pm_email_enabled = $edit['pm_send_notifications'];
         unset($edit['pm_send_notifications']);
         // Update database entry with user preference.
-        db_query("UPDATE {pm_email_notify} SET email_notify_is_enabled = %d WHERE user_id = %d", $pm_email_enabled, $account->uid);
-        if (!db_affected_rows()) {
-          // Update will fail if record didnt exist, create a new entry with
-          // user preference in the database.
+        $exists = db_result(db_query("SELECT 1 FROM {pm_email_notify} WHERE user_id = %d", $account->uid));
+        if ($exists) {
+          // If there is an existing entry, update.
+          db_query("UPDATE {pm_email_notify} SET email_notify_is_enabled = %d WHERE user_id = %d", $pm_email_enabled, $account->uid);
+        }
+        else {
+          // If not, create a new one.
           db_query("INSERT INTO {pm_email_notify} (email_notify_is_enabled, user_id) VALUES (%d, %d)", $pm_email_enabled, $account->uid);
         }
       }
