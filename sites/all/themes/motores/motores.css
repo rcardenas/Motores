@@ -2186,6 +2186,7 @@
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
 	border-radius: 8px;
+	background: #0093FF url(img/bluetop.png) repeat-x;
 }
 #content #block-motores_search-1 .title
 {
