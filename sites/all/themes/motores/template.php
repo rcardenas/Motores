@@ -170,7 +170,53 @@ function motores_uc_cart_checkout_review( $panes, &$form )
     <h2>'.t('Paso 7: Pago: Revisi&oacute;n de datos').'</h2>
     <p>'.t('Su pedido est&aacute; casi completo. Por favor revise los datos abajo y pulse "Pagar" si toda la informaci&oacute;n es correcta.
     ').'</p>
-    <fieldset>'.$normal.'</fieldset>'.$form.'</div>';
+    <fieldset>'.$normal.'</fieldset>';
+  
+  // si estamos pagando con deposito bancario
+  if ( $panes['Forma de pago'][3]['data'] == 'Santander' )
+  {
+    $r .= 
+    '<fieldset>
+    <h3>Datos del dep&oacute;sito bancario</h3>
+    
+    <table>
+    <thead>
+      <th colspan="2">Santander</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="strong">Banco</td>
+        <td>BBVA Bancomer</td>
+      </tr>
+      <tr>
+        <td class="strong">Nombre del servicio</td>
+        <td>AUTOMATIVE INTERNET SERVICES S.A. DE C.V.</td>
+      </tr>
+      <tr>
+        <td class="strong">Convenio</td>
+        <td>83 38 35</td>
+      </tr>
+      <tr>
+        <td class="strong">Referencia</td>
+        <td>712183573</td>
+      </tr>
+      <tr>
+        <td class="strong">Total a pagar</td>
+        <td>'.$panes['Forma de pago'][4]['data'].'</td>
+      </tr>
+      <tr>
+        <td class="strong">CLABE</td>
+        <td>012180001625361293 (Transferencias interbancarias)</td>
+      </tr>
+    </tbody>
+    </table>
+    
+    <p class="description">Una vez realizado el pago, su anuncio ser&aacute; publicado al d&iacute;a h&aacute;bil siguiente.<br/>Te recomendamos conservar unos d&iacute;as su comprobante de pago, e imprimir esta hoja para cualquier duda o aclaraci&oacute;n.</p>
+    
+    </fieldset>';
+  }
+  
+  $r .= $form.'</div>';
   
   return $r;
 }
@@ -190,7 +236,7 @@ function motores_preprocess_node(&$vars, $hook)
   switch ( $vars['node']->type )
   {
     case 'page':
-    case 'productos':
+    case 'accesorio':
     case 'talleres':
     case 'tarifa':
     case 'product':

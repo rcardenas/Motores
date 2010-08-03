@@ -1857,6 +1857,16 @@
 	padding-left: 30px;
 	padding-bottom: 20px;
 }
+#uc-cart-checkout-form .form-radios div.santander
+{
+	height: 40px;
+	margin-left: 25px;
+	margin-top: 5px;
+	padding: 0;
+	text-indent: -99em;
+	overflow: hidden;
+	background: url(img/santander.gif) no-repeat;
+}
 #uc-cart-checkout-form .realizado
 {
 	color: #09f;

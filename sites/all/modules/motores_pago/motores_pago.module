@@ -15,7 +15,7 @@ function motores_pago_payment_method()
   $methods[] = array(
       'id' => 'deposito',
       'name' => t('Depósito'),
-      'title' => t('Depósito bancario'),
+      'title' => t('Depósito bancario').'<div class="santander">Santander</div>',
       'desc' => t('Pagar en Santander'),
       'callback' => 'uc_payment_method_deposito',
       'weight' => 1,
@@ -32,8 +32,12 @@ function uc_payment_method_deposito( $op, &$order )
     case 'cart-review': 
       //print_r($order);exit;
       $review[] = array(
-        'title' => t('Account details'), 
-        'data' => 'chido men'
+        'title' => t('Cuenta'), 
+        'data' => 'Santander'
+      );
+      $review[] = array(
+        'title' => t('Total'), 
+        'data' => '$'.$order->order_total.' MXN'
       );
       return $review;
   }
