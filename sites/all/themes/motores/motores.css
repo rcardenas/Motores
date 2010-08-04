@@ -1538,6 +1538,33 @@
 	font-weight: bold;
 	margin-bottom: 5px;
 }
+
+/* @group Finanzas */
+
+.section-finanzas h1.title
+{
+	display: none;
+}
+.section-finanzas .bordes
+{
+	border: 2px solid #CFCFCF;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	background:url("img/calc.jpg") no-repeat scroll 541px 20px transparent;
+	padding:15px 110px 15px 15px;
+	width:530px;
+}
+.section-finanzas p
+{
+	color: #000000;
+}
+.section-finanzas h1
+{
+	color: #fd3500;
+}
+
+/* @end */
 .view-home .views-field-created
 {
 	clear: both;
