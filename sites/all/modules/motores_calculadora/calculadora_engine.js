@@ -1,7 +1,7 @@
 Drupal.behaviors.mensajes = function()
 {
 	$('#submit-calc').click(function(){
-		$('#calcu-form').addClass('loading-calc');
+		$('#result').addClass('loading-calc');
 		var anio = $('#anio').val();
 		var linea = $('#version').val();
 		var marca = $('#marca').val();
@@ -13,7 +13,7 @@ Drupal.behaviors.mensajes = function()
 		   url: Drupal.settings.basePath+"sites/all/modules/motores_calculadora/google/demos/Zend/Gdata/Docs.php",  
 		   data: dataString,  
 		   success: function(dat) {
-			$('#calcu-form').removeClass('loading-calc'); 
+			$('#result').removeClass('loading-calc'); 
 			$('#result').html(dat);
 		     //display message back to user here  
 		   }  

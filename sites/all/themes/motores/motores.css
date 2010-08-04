@@ -1826,10 +1826,14 @@
 	width: 660px;
 	margin-top: 20px;
 }
-#block-motores_calculadora-0 h2
+#block-motores_calculadora-0 h2.title
 {
 	color: #ffffff;
 	margin-bottom: 10px;
+}
+#block-motores_calculadora-0 .content h2
+{
+	color: #09f;
 }
 #block-motores_calculadora-0 .block-inner
 {
@@ -1843,7 +1847,6 @@
 {
 	background-color: #FFFFFF;
 	-moz-border-radius: 8px;
-	height: 300px;
 	-webkit-border-radius: 8px;
 	border-radius: 8px;
 	padding: 10px;
