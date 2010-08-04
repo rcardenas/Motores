@@ -1819,6 +1819,20 @@
 	padding-left: 12px;
 }
 
+/* @group Calculadora */
+
+#block-motores_calculadora-0
+{
+	width: 660px;
+	padding: 12px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	background: #0093FF url(img/bluetop.png) repeat-x;
+}
+
+/* @end */
+
 /* @group Anuncio listo */
 
 .section-listo .box
