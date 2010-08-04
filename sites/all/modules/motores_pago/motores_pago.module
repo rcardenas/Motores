@@ -50,6 +50,10 @@ function motores_pago_form_alter( &$form, &$form_state, $form_id )
     case 'uc_cart_checkout_form':
     
       //print_r($form);exit;
+      
+      // llevarte datos de que anuncio estas comprando
+      if (isset($_GET['anuncio'])) $_SESSION['anuncio'] = $_GET['anuncio'];
+      
       $form['#prefix'] = '<div class="anuncio600"><h2>'.t('Paso 7: Pago').'</h2><p>'.t('Escoge el método de pago de tu preferencia.').'</p>';
       $form['#suffix'] = '</div>';
       unset($form['panes']['payment']['details']);

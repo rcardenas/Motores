@@ -127,24 +127,61 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
   }
 }
 
+/*
+  Revisa si el usuario ya tiene cuenta como para comenzar
+  el proceso de anuncio
+*/
 function motores_anuncio_configure_cart()
-{
-  $cid = uc_cart_get_id();
-  uc_cart_empty($cid);
-  
+{ 
   switch( $_GET['p'] )
   {
     case 'gratuito':
-      uc_cart_add_item('63');
+      $anuncio = '63';
     break;
     case 'basico':
-      uc_cart_add_item('53');
+      $anuncio = '53';
     break;
     case 'premium':
-      uc_cart_add_item('64');
+      $anuncio = '64';
     break;
   }
   
-  // start creating the ad
-  drupal_goto('node/add/'.$_GET['t']);
+  global $user;
+  
+  if ( $user->uid )
+  {
+    // start creating the ad
+    $cid = uc_cart_get_id();
+    uc_cart_empty($cid);
+    uc_cart_add_item($anuncio);
+    
+    drupal_goto('node/add/'.$_GET['t']);
+  }
+  else
+  {
+    // nel, registrate primero
+    drupal_goto('user/register','p='.$anuncio.'&t='.$_GET['t']);
+  }
+}
+
+/*
+  Despues de crear una cuenta, ahoooora si hazte el anuncio
+*/
+function motores_anuncio_user( $op, &$edit, &$account )
+{
+  switch ($op)
+  {
+    case 'insert':
+      if ( isset($_GET['p']) && $prod = $_GET['p'] )
+      {
+        // agrega el anuncio al carrito
+        $cid = uc_cart_get_id();
+        uc_cart_empty($cid);
+        uc_cart_add_item($prod);
+        
+        // ahora si a darle al anuncio
+        drupal_goto('node/add/'.$_GET['t']);
+      }
+    break;
+  }
 }
