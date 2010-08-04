@@ -1,6 +1,6 @@
 <?php
 
-function motores_cron_con(){
+function motores_cron_cron(){
 	watchdog("MOTORES CRON", "Comienza el cron de motores");
 	$node_types = array(
 	  'carro' //update this string with the type of node you want to delete and add any more lines you might need
