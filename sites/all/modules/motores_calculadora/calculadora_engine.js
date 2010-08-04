@@ -10,7 +10,7 @@ Drupal.behaviors.mensajes = function()
 		dataString='anio='+anio+'&precio='+precio+'&enganche='+enganche+'&marca='+marca+'&linea='+linea;
 		$.ajax({  
 		   type: "GET",  
-		   url: Drupal.settings.basePath+"sites/all/modules/motores_calculadora/google/demos/zend/gdata/docs.php",  
+		   url: Drupal.settings.basePath+"sites/all/modules/motores_calculadora/google/demos/Zend/Gdata/Docs.php",  
 		   data: dataString,  
 		   success: function(dat) {
 			$('#calcu-form').removeClass('loading-calc'); 

@@ -1,5 +1,5 @@
 <?php
-ini_set('include_path',ini_get('include_path').':/Applications/MAMP/htdocs/motores/sites/all/modules/motores_calculadora/google/library:');
+ini_set('include_path',ini_get('include_path').':/var/www/motores/sites/all/modules/motores_calculadora/google/library:');
 /**
  * Zend Framework
  *
