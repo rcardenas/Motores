@@ -85,6 +85,6 @@
     </div>
   </fieldset>
   
-  <?=l( 'Continuar', $next, array('attributes'=>array('class'=>'form-submit')) )?>
+  <?=l( 'Continuar', $next, array('query'=>$query,'attributes'=>array('class'=>'form-submit')) )?>
 
 </div></div> <!-- /node-inner, /node -->

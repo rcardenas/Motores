@@ -161,16 +161,62 @@ function motores_preprocess_page(&$vars, $hook) {
 function motores_uc_cart_checkout_review( $panes, &$form )
 {
   global $user;
-  
-  $normal = theme_uc_cart_checkout_review( $panes, &$form );
-  
-  $normal = $user->mail;
+  $anuncio = node_load( $_SESSION['anuncio'] );
+  $cart = uc_cart_get_contents();
+  //print_r($cart);
+  //$normal = theme_uc_cart_checkout_review( $panes, &$form );
   
   $r = '<div class="anuncio600">
     <h2>'.t('Paso 7: Pago: Revisi&oacute;n de datos').'</h2>
     <p>'.t('Su pedido est&aacute; casi completo. Por favor revise los datos abajo y pulse "Pagar" si toda la informaci&oacute;n es correcta.
     ').'</p>
-    <fieldset>'.$normal.'</fieldset>';
+    <fieldset>
+    <h3>Datos de pago</h3>
+    
+    <table>
+    <thead>
+      <tr>
+      <th colspan="2">Datos del Servicio</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="strong">Datos del anuncio</td>
+        <td>'.$anuncio->nombre.', A-'.$anuncio->nid.'</td>
+      </tr>
+      <tr>
+        <td class="strong">Servicio</td>
+        <td>'.$cart[0]->title.' $'.number_format($cart[0]->price,2).' MXN</td>
+      </tr>
+      <tr>
+        <td class="strong">Correo electr&oacute;nico</td>
+        <td>'.$user->mail.'</td>
+      </tr>
+    </tbody>
+    </table>
+    <table>
+    <thead>
+      <tr>
+      <th colspan="2">Datos de Pago</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="strong">Total a pagar</td>
+        <td>$'.number_format($cart[0]->price,2).' MXN</td>
+      </tr>
+      <tr>
+        <td class="strong">Inicio de vigencia</td>
+        <td>'.'0'.'</td>
+      </tr>
+      <tr>
+        <td class="strong">Pagando con</td>
+        <td>'.$panes['Forma de pago'][2]['data'].'</td>
+      </tr>
+    </tbody>
+    </table>
+    
+    </fieldset>';
   
   // si estamos pagando con deposito bancario
   if ( $panes['Forma de pago'][3]['data'] == 'Santander' )
@@ -181,7 +227,9 @@ function motores_uc_cart_checkout_review( $panes, &$form )
     
     <table>
     <thead>
+      <tr>
       <th colspan="2">Santander</th>
+      </tr>
     </thead>
     <tbody>
       <tr>
@@ -212,6 +260,7 @@ function motores_uc_cart_checkout_review( $panes, &$form )
     </table>
     
     <p class="description">Una vez realizado el pago, su anuncio ser&aacute; publicado al d&iacute;a h&aacute;bil siguiente.<br/>Te recomendamos conservar unos d&iacute;as su comprobante de pago, e imprimir esta hoja para cualquier duda o aclaraci&oacute;n.</p>
+    <p class="description2">Si tienes alguna duda o aclaraci&oacute;n, hazla saber '.l('aqu&iacute;','ayuda',array('html'=>true,'attributes'=>array('target'=>'_blank'))).'</p>
     
     </fieldset>';
   }
@@ -285,6 +334,7 @@ function motores_preprocess_node(&$vars, $hook)
         if ( $cart[0]->model != 1 )
         {
           $vars['next'] = 'cart/checkout';
+          $vars['query'] = 'anuncio='.$vars['node']->nid;
         }
         else
         {
