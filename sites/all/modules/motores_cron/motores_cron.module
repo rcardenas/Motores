@@ -3,16 +3,36 @@
 function motores_cron_cron(){
 	watchdog("MOTORES CRON", "Comienza el cron de motores");
 	$node_types = array(
-	  'carro' //update this string with the type of node you want to delete and add any more lines you might need
+	  'carro' //tipos de conenidos a chcar
 	);
+	
+	$comparar = '';
+	$free=strtotime("-30 days"); 
+	$basic=strtotime("-60 days"); 
     $count = 0;
 //    $starttime = mktime()-10*3600*24; 
-    $sql = 'SELECT nid FROM {node} WHERE type IN ('. implode(', ', array_fill(0, count($node_types), "'%s'")). ') ';//AND created < '.$starttime.' LIMIT 1500';
+    $sql = 'SELECT nid FROM {node} WHERE type IN ('. implode(', ', array_fill(0, count($node_types), "'%s'")). ') AND status=1';//AND created < '.$starttime.' LIMIT 1500';
 	    $result = db_query($sql, $node_types);
 	    while ($row = db_fetch_object($result)) {
 		
 		  $node =  node_load($row->nid);
-		  print_r($node);
+		  switch($node->field_tipo_anunio[0]['nid']){
+		    case 63: //gratuito, 30 dias
+		      if($node->created < $free){
+			    $node->status=0;
+			    node_save($node);
+		      }
+		    break;
+		    case 53: //basico, 60 dias
+		      if($node->created < $basic){
+			    $node->status=0;
+			    node_save($node);
+		      }
+		    break;
+		    default: // premium
+		
+		    break;	
+		  }
 			
 		 }
 	    
