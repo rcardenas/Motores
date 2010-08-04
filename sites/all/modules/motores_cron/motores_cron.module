@@ -14,6 +14,6 @@ function motores_cron_con(){
 		  $node =  node_load($row->nid);
 		  print_r($node);
 			
-		  }
-	    }
+		 }
+	    
 }
