@@ -76,7 +76,7 @@ function motores_calculadora_get_calculadora(){
 		
 	<input type="button" value="Calcular" id="submit-calc" />
 	</form>
-	<div id="result"></div></div>';
+	<div id="result">&nbsp;</div></div>';
 	
 	return $output;
 }

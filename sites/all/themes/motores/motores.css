@@ -1851,6 +1851,11 @@
 	border-radius: 8px;
 	padding: 10px;
 }
+#block-motores_calculadora-0 .loading-calc
+{
+	background: url(img/loadinfo.net.gif) no-repeat center center;
+	height: 100px;
+}
 
 /* @end */
 
