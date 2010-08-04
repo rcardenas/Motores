@@ -60,6 +60,8 @@ function motores_custom_block($op = 'list', $delta = 0, $edit = array()) {
 	}
 }
 
+
+
 function motores_custom_get_mensaje_form(){
 	global $user;
 	

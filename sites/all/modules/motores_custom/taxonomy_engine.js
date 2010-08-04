@@ -1,6 +1,7 @@
 Drupal.behaviors.motoresTaxo = function (context) {
 	var count=0;
 	var valores = [];
+	var alternativo = [];
 	var llave = '';
 	var html = '<select id="valores-primer" class="primer-nivel" name="primer">'
 
@@ -9,6 +10,10 @@ Drupal.behaviors.motoresTaxo = function (context) {
 		    llave=$(this).text();
 		    valores[llave]=[];
 		    html = html + '<option value="'+llave+'">'+llave+'</option>';
+		    var valor_al = new Array();
+			valor_al['text']=$(this).text();
+			valor_al['llave']=$(this).val();
+		    alternativo[llave]=valor_al;
 		    count++;
 	   }	
 	   if($(this).text().charAt(0)==' '){
@@ -26,9 +31,14 @@ Drupal.behaviors.motoresTaxo = function (context) {
     $('#valores-primer').change(function(i){
 	  $('#edit-field-marca-value').children().remove();
 	  var src = $("option:selected", this).val();
+	  var swit = 1;
 	  $.each(valores[src],function(index,value){
-	    $('#edit-field-marca-value').append('<option value="'+value['llave']+'">'+value['text']+'</option>');
+		swit=0;
+		$('#edit-field-marca-value').append('<option value="'+value['llave']+'">'+value['text']+'</option>');	
 	  });
+	  if(swit==1){
+	    $('#edit-field-marca-value').append('<option value="'+alternativo[src]['llave']+'">'+alternativo[src]['text']+'</option>');	
+	  }
 	  $('#edit-field-marca-value').show();
 	  
     });

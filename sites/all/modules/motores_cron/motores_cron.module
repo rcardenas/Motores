@@ -1,0 +1,19 @@
+<?php
+
+function motores_cron_con(){
+	watchdog("MOTORES CRON", "Comienza el cron de motores");
+	$node_types = array(
+	  'carro' //update this string with the type of node you want to delete and add any more lines you might need
+	);
+    $count = 0;
+//    $starttime = mktime()-10*3600*24; 
+    $sql = 'SELECT nid FROM {node} WHERE type IN ('. implode(', ', array_fill(0, count($node_types), "'%s'")). ') ';//AND created < '.$starttime.' LIMIT 1500';
+	    $result = db_query($sql, $node_types);
+	    while ($row = db_fetch_object($result)) {
+		
+		  $node =  node_load($row->nid);
+		  print_r($node);
+			
+		  }
+	    }
+}
