@@ -1889,6 +1889,21 @@
 	color: #787a79;
 	width: 100%;
 }
+#block-motores_calculadora-0 #submit-calc
+{
+	border:medium none;
+	color:#FFFFFF;
+	font-size: 12px;
+	font-weight:bold;
+	padding:4px 12px;
+	-moz-border-radius: 8px;
+	text-decoration: none;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	display: block;
+	margin-left: auto;
+	background: #FF4C00;
+}
 
 /* @end */
 
