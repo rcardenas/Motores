@@ -1869,12 +1869,15 @@
 #block-motores_calculadora-0 #result
 {
 	margin-top: 10px;
-	border-top: 1px solid #cccccc;
-	padding-top: 10px;
 }
 #block-motores_calculadora-0 #result label
 {
 	color: #fd8000;
+}
+#block-motores_calculadora-0 table td
+{
+	border: 2px solid #999999;
+	padding: 4px;
 }
 
 /* @end */

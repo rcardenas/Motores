@@ -254,7 +254,7 @@ $i = 0;
 $interes_fija='';
 foreach($feed->entries as $entry) {
     if ($entry instanceof Zend_Gdata_Spreadsheets_CellEntry) {
-        $interes_fija .= "<td>". $entry->content->text . "<td>";
+        $interes_fija .= "<td>". $entry->content->text . "</td>";
     }
     $i++;
 }
@@ -270,7 +270,7 @@ $i = 0;
 $comision='';
 foreach($feed->entries as $entry) {
     if ($entry instanceof Zend_Gdata_Spreadsheets_CellEntry) {
-        $comision .= "<td>". $entry->content->text . "<td>";
+        $comision .= "<td>". $entry->content->text . "</td>";
     }
     $i++;
 }
@@ -285,7 +285,7 @@ $i = 0;
 $comision_iva='';
 foreach($feed->entries as $entry) {
     if ($entry instanceof Zend_Gdata_Spreadsheets_CellEntry) {
-        $comision_iva .= "<td>". number_format  ($entry->content->text,2) . "<td>";
+        $comision_iva .= "<td>". number_format  ($entry->content->text,2) . "</td>";
     }
     $i++;
 }
@@ -301,7 +301,7 @@ $i = 0;
 $mensual='';
 foreach($feed->entries as $entry) {
     if ($entry instanceof Zend_Gdata_Spreadsheets_CellEntry) {
-        $mensual .= "<td>". number_format  ($entry->content->text,2) . "<td>";
+        $mensual .= "<td>". number_format  ($entry->content->text,2) . "</td>";
     }
     $i++;
 }
