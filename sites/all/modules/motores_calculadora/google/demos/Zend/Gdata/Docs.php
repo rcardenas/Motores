@@ -115,7 +115,7 @@ $entry = $gdClient->updateCell(16, 4, $_GET['precio'],
 $i = 0;
 foreach($feed->entries as $entry) {
     if ($entry instanceof Zend_Gdata_Spreadsheets_CellEntry) {
-        print "Monto del enganche: ". number_format  (  $entry->content->text,2 ) . "<br>";
+        print "<label>Monto del enganche:</label> ". number_format  (  $entry->content->text,2 ) . "<br>";
     }
     $i++;
 }

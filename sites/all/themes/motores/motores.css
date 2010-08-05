@@ -1856,6 +1856,16 @@
 	background: url(img/loadinfo.net.gif) no-repeat center center;
 	height: 100px;
 }
+#block-motores_calculadora-0 label
+{
+	float: left;
+	width: 200px;
+	font-weight: bold;
+}
+#block-motores_calculadora-0 .calc-item
+{
+	margin-bottom: 10px;
+}
 
 /* @end */
 
