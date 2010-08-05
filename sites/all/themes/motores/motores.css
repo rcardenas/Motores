@@ -1866,6 +1866,16 @@
 {
 	margin-bottom: 10px;
 }
+#block-motores_calculadora-0 #result
+{
+	margin-top: 10px;
+	border-top: 1px solid #cccccc;
+	padding-top: 10px;
+}
+#block-motores_calculadora-0 #result label
+{
+	color: #fd8000;
+}
 
 /* @end */
 
