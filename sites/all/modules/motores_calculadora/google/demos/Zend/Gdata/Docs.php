@@ -306,16 +306,18 @@ foreach($feed->entries as $entry) {
     $i++;
 }
 print "<table>
+        <thead>
         <tr>
-          <td></td>
-          <td>12 meses</td>
-          <td>18 meses</td>
-          <td>24 meses</td>
-          <td>36 meses</td>
-          <td>48 meses</td>
-          <td>60 meses</td>
+          <th></th>
+          <th>12 meses</th>
+          <th>18 meses</th>
+          <th>24 meses</th>
+          <th>36 meses</th>
+          <th>48 meses</th>
+          <th>60 meses</th>
         </tr>
-
+        </thead>
+        <tbody>
        	<tr>
           <td>Tasa de interes fija anual</td>
           ".$interes_fija."
@@ -335,6 +337,7 @@ print "<table>
           <td>Pago fijo Mensual</td>
           ".$mensual."
         </tr>
+        </tbody>
        </table>";
 exit;
 
