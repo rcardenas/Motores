@@ -1874,10 +1874,20 @@
 {
 	color: #fd8000;
 }
-#block-motores_calculadora-0 table td
+#block-motores_calculadora-0 table td,
+#block-motores_calculadora-0 table th
 {
 	border: 2px solid #CCCCCC;
 	padding: 4px;
+}
+#block-motores_calculadora-0 table th
+{
+	background-color: #aaaaaa;
+}
+#block-motores_calculadora-0 table
+{
+	color: #666666;
+	width: 100%;
 }
 
 /* @end */
