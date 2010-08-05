@@ -115,7 +115,7 @@ $entry = $gdClient->updateCell(16, 4, $_GET['precio'],
 $i = 0;
 foreach($feed->entries as $entry) {
     if ($entry instanceof Zend_Gdata_Spreadsheets_CellEntry) {
-        print "<label>Monto del enganche:</label> ". number_format  (  $entry->content->text,2 ) . "<br>";
+        print "<div class="calc-item"><label>Monto del enganche:</label> ". number_format  (  $entry->content->text,2 ) . "</div>";
     }
     $i++;
 }
@@ -130,7 +130,7 @@ $feed = $gdClient->getCellFeed($query);
 $i = 0;
 foreach($feed->entries as $entry) {
     if ($entry instanceof Zend_Gdata_Spreadsheets_CellEntry) {
-        print "% enganche: ". $entry->content->text . "<br>";
+        print "<div class="calc-item"><label>% enganche:</label>". $entry->content->text . "</div>";
     }
     $i++;
 }
@@ -145,7 +145,7 @@ $feed = $gdClient->getCellFeed($query);
 $i = 0;
 foreach($feed->entries as $entry) {
     if ($entry instanceof Zend_Gdata_Spreadsheets_CellEntry) {
-        print "Monto del seguro de daño anual: ". $entry->content->text . "<br>";
+        print "<div class="calc-item"><label>Monto del seguro de daño anual:</label>". $entry->content->text . "</div>";
     }
     $i++;
 }
@@ -160,7 +160,7 @@ $feed = $gdClient->getCellFeed($query);
 $i = 0;
 foreach($feed->entries as $entry) {
     if ($entry instanceof Zend_Gdata_Spreadsheets_CellEntry) {
-        print "Monto del seguro de vida anual: ". $entry->content->text . "<br>";
+        print "<div class="calc-item"><label>Monto del seguro de vida anual:</label>". $entry->content->text . "</div>";
     }
     $i++;
 }
@@ -175,7 +175,7 @@ $feed = $gdClient->getCellFeed($query);
 $i = 0;
 foreach($feed->entries as $entry) {
     if ($entry instanceof Zend_Gdata_Spreadsheets_CellEntry) {
-        print "TOTAL seguros: ". $entry->content->text . "<br>";
+        print "<div class="calc-item"><label>TOTAL seguros:</label>". $entry->content->text . "</div>";
     }
     $i++;
 }
@@ -191,7 +191,7 @@ $feed = $gdClient->getCellFeed($query);
 $i = 0;
 foreach($feed->entries as $entry) {
     if ($entry instanceof Zend_Gdata_Spreadsheets_CellEntry) {
-        print "Aforo mas seguros: ". number_format  ($entry->content->text,2) . "<br>";
+        print "<div class="calc-item"><label>Aforo mas seguros:</label>". number_format  ($entry->content->text,2) . "</div>";
     }
     $i++;
 }
@@ -206,7 +206,7 @@ $feed = $gdClient->getCellFeed($query);
 $i = 0;
 foreach($feed->entries as $entry) {
     if ($entry instanceof Zend_Gdata_Spreadsheets_CellEntry) {
-        print "Garantia extendida: ". number_format  ($entry->content->text,2) . "<br>";
+        print "<div class="calc-item"><label>Garantia extendida:</label>". number_format  ($entry->content->text,2) . "</div>";
     }
     $i++;
 }
@@ -222,7 +222,7 @@ $feed = $gdClient->getCellFeed($query);
 $i = 0;
 foreach($feed->entries as $entry) {
     if ($entry instanceof Zend_Gdata_Spreadsheets_CellEntry) {
-        print "Importe a financiar: ". number_format  ($entry->content->text,2) . "<br>";
+        print "<div class="calc-item"><label>Importe a financiar:</label>". number_format  ($entry->content->text,2) . "</div>";
     }
     $i++;
 }
@@ -238,7 +238,7 @@ $feed = $gdClient->getCellFeed($query);
 $i = 0;
 foreach($feed->entries as $entry) {
     if ($entry instanceof Zend_Gdata_Spreadsheets_CellEntry) {
-        print "Monto maximo a financiar: ". number_format  ($entry->content->text,2) . "\n";
+        print "<div class="calc-item"><label>Monto maximo a financiar:</label>". number_format  ($entry->content->text,2) . "</div>\n";
     }
     $i++;
 }
