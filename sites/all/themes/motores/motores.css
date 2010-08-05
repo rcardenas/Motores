@@ -1819,6 +1819,94 @@
 	padding-left: 12px;
 }
 
+/* @group Calculadora */
+
+#block-motores_calculadora-0
+{
+	width: 660px;
+	margin-top: 20px;
+}
+#block-motores_calculadora-0 h2.title
+{
+	color: #ffffff;
+	margin-bottom: 10px;
+}
+#block-motores_calculadora-0 .content h2
+{
+	color: #09f;
+}
+#block-motores_calculadora-0 .block-inner
+{
+	padding: 12px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	background: #0093FF url(img/bluetop.png) repeat-x;
+}
+#block-motores_calculadora-0 .content
+{
+	background-color: #FFFFFF;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	padding: 10px;
+}
+#block-motores_calculadora-0 .loading-calc
+{
+	background: url(img/loadinfo.net.gif) no-repeat center center;
+	height: 100px;
+}
+#block-motores_calculadora-0 label
+{
+	float: left;
+	width: 200px;
+	font-weight: bold;
+}
+#block-motores_calculadora-0 .calc-item
+{
+	margin-bottom: 10px;
+}
+#block-motores_calculadora-0 #result
+{
+	margin-top: 10px;
+}
+#block-motores_calculadora-0 #result label
+{
+	color: #fd8000;
+}
+#block-motores_calculadora-0 table td,
+#block-motores_calculadora-0 table th
+{
+	border: 2px solid #CCCCCC;
+	padding: 6px;
+}
+#block-motores_calculadora-0 table th
+{
+	background-color: #e8e8e8;
+}
+#block-motores_calculadora-0 table
+{
+	color: #787a79;
+	width: 100%;
+}
+#block-motores_calculadora-0 #submit-calc
+{
+	border:medium none;
+	color:#FFFFFF;
+	font-size: 12px;
+	font-weight:bold;
+	padding:4px 12px;
+	-moz-border-radius: 8px;
+	text-decoration: none;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	display: block;
+	margin-left: auto;
+	background: #FF4C00;
+}
+
+/* @end */
+
 /* @group Anuncio listo */
 
 .section-listo .box

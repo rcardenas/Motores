@@ -39,7 +39,8 @@ function motores_calculadora_block($op = 'list', $delta = 0, $edit = array()) {
 
 function motores_calculadora_get_calculadora(){
 	$output = '<div id="calcu-form"><form>
-	
+	  
+	  <h2>Datos del veh&iacute;culo</h2>
    		<div class="calc-item">
 		  <label>Marca:</label>
 		  <select name="marca" id="marca">
@@ -61,9 +62,9 @@ function motores_calculadora_get_calculadora(){
 		    <option value="Cabrio">Cabrio</option>
 		  </select>
 		</div>
-		<div class="calc-item azul">
-		  <label>Datos del Crédito:</label>
-		</div>
+		
+		  <h2>Datos del Crédito:</h2>
+		
 		<div class="calc-item">
 		  <label>Precio de venta al contado:</label>
 		  <input type="text" size="20" name="precio" id="precio" />
@@ -75,7 +76,7 @@ function motores_calculadora_get_calculadora(){
 		
 	<input type="button" value="Calcular" id="submit-calc" />
 	</form>
-	<div id="result"></div></div>';
+	<div id="result">&nbsp;</div></div>';
 	
 	return $output;
 }
