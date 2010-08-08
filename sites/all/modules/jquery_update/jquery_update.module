@@ -47,9 +47,11 @@ function jquery_update_theme_registry_alter(&$theme_registry) {
 function jquery_update_preprocess_page(&$variables) {
   // Only do this for pages that have JavaScript on them.
 
-  if (!empty($variables['scripts']) && $variables['directory']!='themes/garland' 
-    && $_GET['q']!='admin/build/block/list'
-    && !(arg(0) == 'node' && arg(3) == '4') ) {
+  $path = drupal_get_path_alias($_GET['q']);
+  // Compare with the internal and path alias (if any).
+  $page_match = drupal_match_path($path, variable_get('jupdate_paths',''));
+
+  if (!empty($variables['scripts']) && !$page_match ) {
   
     // Perform the logic if either jQuery Update's jquery.js is newer than
     // core's, or if we're using a different compression type.
@@ -153,6 +155,12 @@ function jquery_update_settings() {
     '#default_value' => variable_get('jquery_update_compression_type', 'pack'),
     '#description' => t('<cite>From <a href="http://docs.jquery.com/Downloading_jQuery">docs.jquery.com</a>:</cite> <q>The minified version, while having a larger file size than the packed version, is generally the best version to use on production deployments. The packed version requires non-trivial client-side processing time to uncompress the code.</q> "None" is provided for debugging purposes, but generally one of the compression options is recommended.'),
   );
+
+  $form['jupdate_paths']=array(
+	'#type'=> 'textarea',
+	'#title'=>'Include jquery update except for the following paths',
+	'#default_value'=>variable_get('jupdate_paths',' ')
+	);
 
   return system_settings_form($form);
 }
