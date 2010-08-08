@@ -1953,20 +1953,21 @@
 
 /* @group Review */
 
-.page-cart-checkout-review table
+.page-cart-checkout-review fieldset table
 {
 	margin: 0;
 	width: 400px;
+	float: none;
 	margin: 0 auto;
 }
-.page-cart-checkout-review thead tr
+.page-cart-checkout-review fieldset thead tr
 {
 	background-color: #666666;
 	color: #ffffff;
 	font-size: 16px;
 }
-.page-cart-checkout-review td,
-.page-cart-checkout-review th
+.page-cart-checkout-review fieldset td,
+.page-cart-checkout-review fieldset th
 {
 	padding: 8px;
 	border: 1px solid #cccccc;
@@ -2003,6 +2004,10 @@
 #uc-cart-checkout-review-form
 {
 	text-align: right;
+}
+.page-cart-checkout-review table
+{
+	float: right;
 }
 
 /* @end */
