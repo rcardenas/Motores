@@ -97,3 +97,16 @@ function motores_pago_enable_anuncio( $nid )
   drupal_goto('listo');
 }
 
+function motores_pago_uc_checkout_complete( $order, $user )
+{
+  $anuncio = node_load( $_SESSION['anuncio'] );
+  // relaciona el nuevo anuncio con su respectivo producto para ubercart
+  $anuncio->field_tipo_anunio[0]['nid'] = $order->products[0]->nid;
+  
+  if ( $order->payment_method != 'deposito' )
+  {
+    $anuncio->status = 1;
+  }
+  
+  node_save($anuncio);
+}
