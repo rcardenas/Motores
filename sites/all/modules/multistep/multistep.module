@@ -146,6 +146,9 @@ function multistep_fieldgroup_form(&$form, &$form_state, $form_id, &$group) {
  */
 function multistep_field_access($op, $field) {
   $type = $field['type_name'];
+  //if ($type == 'carro') print_r($field);
+  if ( $field['type'] == 'filefield' ) return;
+  //return;
   // Do nothing if multistep is not enabled for this node type.
   if (variable_get('multistep_expose_' . $type, 'disabled') != 'enabled') {
     return;
