@@ -43,6 +43,7 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
     switch ($form_id)
     {
       case 'carro_node_form':
+      case 'moto_node_form':
         
         drupal_add_js(drupal_get_path('module', 'motores_anuncio').'/anuncio_engine.js', $type = 'module', 'header', FALSE, FALSE);
         

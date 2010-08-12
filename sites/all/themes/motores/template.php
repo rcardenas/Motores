@@ -137,7 +137,7 @@ function motores_preprocess_page(&$vars, $hook) {
   }
   
   // Agregar body class para multistep en node creation y otras ondas
-  if ( $_GET['q'] == 'node/add/carro' )
+  if ( strstr( $_GET['q'], 'node/add/' ) )
   {
     $vars['body_classes'] .= ' multistep multistep-1';
     unset($vars['title']);
