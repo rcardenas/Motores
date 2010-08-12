@@ -137,40 +137,6 @@
     </div>
   </div>
   
-  <div id="seguridad" class="greybox">
-    <h2><?=t('Seguridad')?></h2>
-    <div class="seguridad-inner">
-      <div class="seguridad-row clearfix">
-        <div class="num">1</div>
-        <div class="desc"><?=t('Siempre que compre un auto usado asegúrese de revisar la documentación y el auto antes de hacer cualquier trato para evitar ser sorprendido.')?></div>
-      </div>
-      <div class="seguridad-row clearfix">
-        <div class="num">2</div>
-        <div class="desc"><?=t('Acuda a las autoridades correspondientes para comprobar la legalidad del auto que pretende adquirir.')?></div>
-      </div>
-      <div class="seguridad-row clearfix">
-        <div class="num">3</div>
-        <div class="desc"><?=t('Si le es posible acuda directamente a la agencia que vendió el auto con la documentación del mismo para que la agencia le confirme que el auto fue vendido por ellos.')?></div>
-      </div>
-      <div class="seguridad-row clearfix">
-        <div class="num">4</div>
-        <div class="desc"><?=t('No dé anticipos económicos hasta asegurarse de la legalidad del auto y que ha conocido e identificado al vendedor.')?></div>
-      </div>
-      <div class="seguridad-row clearfix">
-        <div class="num">5</div>
-        <div class="desc"><?=t('Mercado Absoluto Vehículos es sólo un medio de contacto entre vendedor y comprador. No son intermediarios ni mediadores en las operaciones entre compradores y vendedores de ninguna manera.')?></div>
-      </div>
-      <div class="seguridad-row clearfix">
-        <div class="num">6</div>
-        <div class="desc"><?=t('En Mercado Absoluto Vehículos <strong>no recibimos pagos a cuenta de operaciones entre vendedores y compradores</strong>.')?></div>
-      </div>
-    </div>
-  </div>
-  
-  <div id="last-bread" class="clearfix">
-    <div class="legend"><?=t('El vendedor asume la responsabilidad total por el anuncio y su contenido.')?></div>
-    <div class="back"><a href="#"><?=t('Volver arriba')?></a></div>
-  </div>
   <? else: ?>
   
   <div class="content">
