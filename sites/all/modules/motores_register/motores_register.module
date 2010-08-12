@@ -40,6 +40,7 @@ function motores_register_markup()
 
 function motores_register_form_alter( &$form, &$form_state, $form_id )
 {
+  if ( arg(0) == 'admin' ) return;
   if ( $form_id == 'user_login' )
   {
     drupal_add_js(drupal_get_path('module', 'motores_register').'/login_engine.js', $type = 'module', 'header', FALSE, FALSE);
