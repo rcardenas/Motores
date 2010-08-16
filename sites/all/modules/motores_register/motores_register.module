@@ -68,7 +68,9 @@ function motores_register_form_alter( &$form, &$form_state, $form_id )
     // weights
     $form['account']['#weight'] = 29;
     
-    print_r($form);
+    // ocultar datos de la agencia
+    unset( $form['Datos de la agencia'] );
+    
     // Prefix de forma
     if (isset($_GET['destination'])) 
     {
