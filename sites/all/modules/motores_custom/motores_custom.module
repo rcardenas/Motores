@@ -10,7 +10,7 @@ function motores_custom_init()
   if ( 
   ( $user->uid == '1' || in_array('editor', $user->roles) ) 
   && 
-  ( arg(2) == 'edit' || arg(1) == 'add' )
+  ( arg(2) == 'edit' || arg(1) == 'add' || arg(2) == 'delete' )
   ) 
   {
     $custom_theme = variable_get('admin_theme', '0');
