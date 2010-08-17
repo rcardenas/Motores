@@ -110,6 +110,25 @@ function motores_custom_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL){
   	      $node->nombre .= ' '.$c->name;
   	      $node->nombre_sin_anio .= $c->name.' ';
   	    }
+  	    
+  	    switch($node->field_tipo_anunio[0]['nid'])
+  	    {
+	        case 63: //gratuito, 30 dias
+	          
+	          
+	          
+	        break;
+	        case 53: //basico, 60 dias
+	          
+	          
+	          
+	        break;
+	        default: // premium
+	    
+	        break;	
+  	    }
+  	    //$node->vencimiento
+  	    
   	  break;
   	}
 	}
