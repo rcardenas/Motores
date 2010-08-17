@@ -115,17 +115,17 @@ function motores_custom_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL){
   	    {
 	        case 63: //gratuito, 30 dias
 	          
-	          $node->vigencia = strtotime( '+30 days' , $node->field_vigencia[0]['value'] );
+	          $node->vigencia = date( 'M/d/Y', strtotime( '+30 days' , $node->field_vigencia[0]['value'] ));
 	          
 	        break;
 	        case 53: //basico, 60 dias
 	          
-	          $node->vigencia = strtotime( '+60 days' , $node->field_vigencia[0]['value'] );
+	          $node->vigencia = date( 'M/d/Y', strtotime( '+60 days' , $node->field_vigencia[0]['value'] ));
 	          
 	        break;
 	        default: // premium
 	    
-	          $node->vigencia = strtotime( '+60 days' , $node->field_vigencia[0]['value'] );
+	          $node->vigencia = date( 'M/d/Y', strtotime( '+60 days' , $node->field_vigencia[0]['value'] ));
 	    
 	        break;	
   	    }
