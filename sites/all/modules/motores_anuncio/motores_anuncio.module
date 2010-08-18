@@ -178,6 +178,12 @@ function motores_anuncio_user( $op, &$edit, &$account )
   switch ($op)
   {
     case 'insert':
+    
+      //
+      // Mantiene el anuncio elegido por el usuario si el sistema
+      // le pide registrarse primero
+      //
+      
       if ( isset($_GET['p']) && $prod = $_GET['p'] )
       {
         // agrega el anuncio al carrito
@@ -212,21 +218,21 @@ function motores_anuncio_user( $op, &$edit, &$account )
           
             $vence = strtotime( '+6 months' , $pago );
             $account->vigencia = date( 'M/d/Y', $vence );
-            $account->vencido = ( $vence > time() ) ? false : true;
+            $account->vencido = ( time() > $vence );
           
           break;
           case 'Mensual':
             
             $vence = strtotime( '+1 month' , $pago );
             $account->vigencia = date( 'M/d/Y', $vence );
-            $account->vencido = ( $vence > time() ) ? false : true;
+            $account->vencido = ( time() > $vence );
             
           break;
           case 'Anual':
           
             $vence = strtotime( '+1 year' , $pago );
             $account->vigencia = date( 'M/d/Y', $vence );
-            $account->vencido = ( $vence > time() ) ? false : true;
+            $account->vencido = ( time() > $vence );
             
           break;
         }
