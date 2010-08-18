@@ -192,15 +192,46 @@ function motores_anuncio_user( $op, &$edit, &$account )
     
     case 'load':
     
+      //
+      // Calcula la fecha de vigencia de todos los anuncios de una agencia
+      // o lote
+      //
+      
       if ( in_array('agencia nuevos', $account->roles) || 
         in_array('agencia usados', $account->roles) ||
         in_array('agencia otros', $account->roles) ||
         in_array('lote usados', $account->roles) )
       {
-        print_r($account);
-        //$vence = strtotime( '+60 days' , $account->profile_ultimo_pago );
-        //$account->vigencia = 
+        
+        $pago = mktime(0,0,0,$account->profile_ultimo_pago['month'],
+          $account->profile_ultimo_pago['day'], $account->profile_ultimo_pago['year']);
+          
+        switch ( $account->profile_periodo_pago )
+        {
+          case 'Semestral':
+          
+            $vence = strtotime( '+6 months' , $pago );
+            $account->vigencia = date( 'M/d/Y', $vence );
+            $account->vencido = ( $vence > time() ) ? false : true;
+          
+          break;
+          case 'Mensual':
+            
+            $vence = strtotime( '+1 month' , $pago );
+            $account->vigencia = date( 'M/d/Y', $vence );
+            $account->vencido = ( $vence > time() ) ? false : true;
+            
+          break;
+          case 'Anual':
+          
+            $vence = strtotime( '+1 year' , $pago );
+            $account->vigencia = date( 'M/d/Y', $vence );
+            $account->vencido = ( $vence > time() ) ? false : true;
+            
+          break;
+        }
       }
+      print_r($account);
     break;
   }
 }
