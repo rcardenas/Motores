@@ -218,7 +218,7 @@ function motores_anuncio_user( $op, &$edit, &$account )
           
             $vence = strtotime( '+6 months' , $pago );
             $account->vigencia = date( 'M/d/Y', $vence );
-            $account->vencido = ( time() > $vence );
+            $account->vencido = ( time() > $vence )? 'si':'no';
           
           break;
           case 'Mensual':
