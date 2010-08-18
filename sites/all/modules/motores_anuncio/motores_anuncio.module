@@ -189,5 +189,18 @@ function motores_anuncio_user( $op, &$edit, &$account )
         drupal_goto('node/add/'.$_GET['t']);
       }
     break;
+    
+    case 'load':
+    
+      if ( in_array('agencia nuevos', $account->roles) || 
+        in_array('agencia usados', $account->roles) ||
+        in_array('agencia otros', $account->roles) ||
+        in_array('lote usados', $account->roles) )
+      {
+        print_r($account);
+        //$vence = strtotime( '+60 days' , $account->profile_ultimo_pago );
+        //$account->vigencia = 
+      }
+    break;
   }
 }
