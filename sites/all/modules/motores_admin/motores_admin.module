@@ -1,0 +1,169 @@
+<?php
+
+/*****************************
+  HOOKS
+*****************************/
+function motores_admin_menu()
+{
+  // Items disponibles en el menu
+  $items['admin/motores_admin'] = array(
+    'title' => t('Administrar anuncios y cuentas'),
+    'page callback' => 'motores_admin_main_menu',
+    'access arguments' => array('administer todo de motores'),
+  );
+  $items['admin/motores_admin/anuncios'] = array(
+    'title' => t('Anuncios'),
+    'page callback' => 'motores_admin_main_menu',
+    'access arguments' => array('administer todo de motores'),
+  );
+  $items['admin/motores_admin/agencias'] = array(
+    'title' => t('Agencias y lotes'),
+    'page callback' => 'motores_admin_main_menu_lotes',
+    'access arguments' => array('administer todo de motores'),
+  );
+  
+  // Callbacks
+  $items['motores_admin/unpublish'] = array(
+    'page callback' => 'motores_admin_despublicar',
+    'access arguments' => array('administer todo de motores'),
+    'type' => MENU_CALLBACK
+  );
+  $items['motores_admin/unpublish_user'] = array(
+    'page callback' => 'motores_admin_despublicar_user',
+    'access arguments' => array('administer todo de motores'),
+    'type' => MENU_CALLBACK
+  );
+  $items['motores_admin/publish'] = array(
+    'page callback' => 'motores_admin_publicar',
+    'access arguments' => array('administer todo de motores'),
+    'type' => MENU_CALLBACK
+  );
+  $items['motores_admin/publish_user'] = array(
+    'page callback' => 'motores_admin_publicar_user',
+    'access arguments' => array('administer todo de motores'),
+    'type' => MENU_CALLBACK
+  );
+  $items['motores_admin/delete_user'] = array(
+    'title' => t('Eliminar cuenta'),
+    'page callback' => 'motores_admin_eliminar_user',
+    'access arguments' => array('administer todo de motores'),
+    'type' => MENU_CALLBACK
+  );
+  $items['motores_admin/delete_user_proc'] = array(
+    'page callback' => 'motores_admin_eliminar_user_proc',
+    'access arguments' => array('administer todo de motores'),
+    'type' => MENU_CALLBACK
+  );
+  
+  return $items;
+}
+
+function motores_admin_perm()
+{
+  return array('administer todo de motores');
+}
+
+function motores_admin_init()
+{
+  global $custom_theme;
+  if ( arg(1) == 'delete_user' )
+  {
+    $custom_theme = variable_get('admin_theme', '0');
+    init_theme();
+  }
+}
+
+/*****************************
+  MAIN MENU
+*****************************/
+function motores_admin_main_menu()
+{
+  drupal_goto('admin/control_anuncios');
+}
+function motores_admin_main_menu_lotes()
+{
+  drupal_goto('admin/control_agencias');
+}
+
+/*****************************
+  PROCESAMIENTO DE USUARIOS Y CUENTAS
+*****************************/
+function motores_admin_despublicar()
+{
+  $node->nid = arg(2);
+  $node->status = 0;
+  node_save($node);
+  drupal_set_message(t('Anuncio %anuncio despublicado', array('%anuncio'=>'A-'.$node->nid)));
+  drupal_goto($_GET['destination']);
+}
+function motores_admin_publicar()
+{
+  $node->nid = arg(2);
+  $node->status = 1;
+  node_save($node);
+  drupal_set_message(t('Anuncio %anuncio publicado', array('%anuncio'=>'A-'.$node->nid)));
+  drupal_goto($_GET['destination']);
+}
+function motores_admin_despublicar_user()
+{
+  $sql = 
+  "SELECT n.nid, n.title 
+  FROM {node} n 
+  WHERE n.uid = %d";
+  $db_result = db_query(db_rewrite_sql($sql), arg(2));
+  
+  $node->status = 0;
+  while ($term = db_fetch_object($db_result)) 
+  {
+    $node->nid = $term->nid;
+    node_save($node);
+  }
+  
+  drupal_set_message(t('Anuncios de usuario %user despublicados', array('%user'=>'C-'.arg(2))));
+  drupal_goto($_GET['destination']);
+}
+function motores_admin_publicar_user()
+{
+  $sql = 
+  "SELECT n.nid, n.title 
+  FROM {node} n 
+  WHERE n.uid = %d";
+  $db_result = db_query(db_rewrite_sql($sql), arg(2));
+  
+  $node->status = 1;
+  while ($term = db_fetch_object($db_result)) 
+  {
+    $node->nid = $term->nid;
+    node_save($node);
+  }
+  
+  drupal_set_message(t('Anuncios de usuario %user publicados. No olvide actualizar la fecha de último pago del usuario.', array('%user'=>'C-'.arg(2))));
+  drupal_goto($_GET['destination']);
+}
+function motores_admin_eliminar_user_proc()
+{
+  $uid = arg(2);
+  
+  $sql = 
+  "SELECT n.nid, n.title 
+  FROM {node} n 
+  WHERE n.uid = %d";
+  $db_result = db_query(db_rewrite_sql($sql), $uid);
+  
+  while ($term = db_fetch_object($db_result)) 
+  {
+    node_delete($term->nid);
+  }
+  
+  // dale gas al usuario...
+  user_delete(array(),arg(2));
+  
+  drupal_set_message(t('Usuario %user y anuncios asociados eliminados.', array('%user'=>'C-'.arg(2))));
+  drupal_goto($_GET['destination']);
+}
+function motores_admin_eliminar_user()
+{
+  $r = "<p>".t('Est&aacute; seguro de que quiere eliminar la cuenta %uid? Todos sus anuncios serán eliminados para siempre también.',
+        array('%uid'=>'C-'.arg(2)))."</p><p>".l('Eliminar usuario y anuncios','motores_admin/delete_user_proc/'.arg(2),array('query'=>'destination='.$_GET['destination']))."</p>";
+  return $r;
+}
