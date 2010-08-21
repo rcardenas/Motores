@@ -73,6 +73,17 @@ function motores_admin_init()
   }
 }
 
+/**
+ * Implementation of hook_views_api().
+ */
+function motores_admin_views_api() {
+  return array(
+    'api' => 2,
+    'path' => drupal_get_path('module', 'motores_admin'),
+    //'path' => drupal_get_path('module', 'motores_admin') . '/includes',
+  );
+}
+
 /*****************************
   MAIN MENU
 *****************************/
