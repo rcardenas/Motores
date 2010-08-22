@@ -66,11 +66,7 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
           $form['#redirect'] = 'anuncio_preview/'.$form['#node']->nid;
         }
         
-        // las fotos se tratan especialmente
-        if ( arg(3) != '4' )
-        {
-          unset( $form['group_fotos'] );
-        }
+        
         
         /**********
         PASO 1
@@ -122,12 +118,39 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
         $form['group_describe']['field_especiales']['#prefix'] = 
          '<div class="nn clear-block"><div class="num">3</div><p>'.t('Opciones especiales de venta').'</p></div>';
         
+        $form['group_liga']['field_liga_agencia']['#prefix'] = 
+          '<div class="nn clear-block"><div class="num">5</div><p>'.t('Proporciona la liga del sitio de tu agencia').'</p></div>';
         
         /**********
         PASO 4
         **********/
-        //$form[]
         
+        // las fotos se tratan especialmente
+        if ( arg(3) != '4' )
+        {
+          unset( $form['group_fotos'] );
+          unset( $form['group_logo'] );
+        }
+        else
+        {
+          // validar si puede subir logo de agencia
+          if ( !(in_array('agencia nuevos', $user->roles) || in_array('agencia otros', $user->roles) ||
+                in_array('agencia usados', $user->roles) || in_array('lote usados', $user->roles)) )
+          {
+            unset($form['group_logo']);
+            unset($form['group_liga']);
+          }
+          
+          $form['group_fotos']['field_imagenes']['field_imagenes_add_more']['#value'] = t('Agregar otra foto');
+          $form['group_fotos']['#prefix'] = 
+          '<h2>'.t('Paso 4: Fotos').'</h2><p>'.t('Sube las fotos del automóvil aquí, en formato JPG, GIF o PNG. Recuerda que las puedes subir después.').'</p>';
+          $form['group_fotos']['field_imagenes']['#prefix'] = 
+            '<div class="nn clear-block"><div class="num">1</div><p>'.t('Fotos del vehículo').'</p></div>';
+          $form['group_logo']['field_logo_agencia']['#prefix'] = 
+            '<div class="nn clear-block"><div class="num">2</div><p>'.t('Logotipo de agencia').'</p></div>';
+          
+          //print_r($form);exit;
+        }
         break;
     }
   }

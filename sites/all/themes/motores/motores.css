@@ -1586,6 +1586,42 @@
 
 /* @group Multistep */
 
+/* @group Imagenes */
+
+#field_imagenes_values thead,
+#field_imagenes_values .description,
+#multistep-group_logo .description
+{
+	display: none;
+}
+#field_imagenes_values
+{
+	margin-left: 40px;
+	width: 500px;
+}
+#field_imagenes_values .even,
+#field_imagenes_values .odd
+{
+	background-color: #FFFFFF;
+	border: none;
+}
+#multistep-group_fotos .sticky-header
+{
+	display: none;
+}
+#multistep-group_fotos .content-add-more input
+{
+	display: block;
+	margin-left: auto;
+}
+#multistep-group_liga label,
+#multistep-group_logo label
+{
+	display: none;
+}
+
+/* @end */
+
 /* @group Preview */
 
 .section-anuncio-preview .preview-block
@@ -1709,10 +1745,6 @@
 	float: left;
 	width: 200px;
 	height: 30px;
-}
-#field_imagenes_values
-{
-	width: 100%;
 }
 .nn p
 {
