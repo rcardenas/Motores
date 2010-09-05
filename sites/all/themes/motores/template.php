@@ -331,7 +331,7 @@ function motores_preprocess_node(&$vars, $hook)
         // link a donde vas despues
         $cart = uc_cart_get_contents();
         // si el anuncio no es gratis, a pagar se ha dicho.
-        if ( $cart[0]->model != 1 )
+        if ( $cart[0]->model != 1 && $cart[0]->model != 4 )
         {
           $vars['next'] = 'cart/checkout';
           $vars['query'] = 'anuncio='.$vars['node']->nid;

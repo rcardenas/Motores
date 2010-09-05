@@ -87,6 +87,7 @@ function motores_pago_enable_anuncio( $nid )
   switch ($anuncio->model)
   {
     case 1: // gratuito
+    case 4: // anuncio de agencia
       uc_cart_empty($anuncio->cart_id);
       $node->status = 1;
     break;

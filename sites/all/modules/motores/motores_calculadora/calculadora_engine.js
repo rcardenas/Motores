@@ -1,4 +1,4 @@
-Drupal.behaviors.mensajes = function()
+Drupal.behaviors.calculadora = function()
 {
 	$('#submit-calc').click(function(){
 		$('#result').addClass('loading-calc');

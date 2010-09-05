@@ -1215,7 +1215,8 @@
 {
 	margin-top: 12px;
 }
-.anuncio h2
+.anuncio h2,
+#seguridad h2
 {
 	margin: 0;
 	color: #000000;
@@ -1341,12 +1342,22 @@
 	color: #0093FF;
 	font-weight: bold;
 }
-#block-views-vendedor-block_1 .views-field-value-1,
-#block-views-vendedor-block_1 .views-field-mail
+#block-views-vendedor-block_1 .views-field-mail,
+#block-views-vendedor-block_1 .views-field-field-liga-agencia-url,
+#block-views-vendedor-block_1 .views-field-value-2
 {
 	padding: 0 12px;
 	font-size: 12px;
 	color: #757979;
+}
+#block-views-vendedor-block_1 .imagecache-logo_agencia
+{
+	display: block;
+	margin: 0 auto;
+}
+#block-views-vendedor-block_1 .views-field-field-logo-agencia-fid
+{
+	padding-top: 15px;
 }
 .anuncio .content .descripcion
 {

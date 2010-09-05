@@ -157,6 +157,21 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
 }
 
 /*
+  Esta funcion se llama desde tarifas de vehiculos,
+  valida si el usuario es una agencia, porque no debe mostrarle precios,
+  nomas ir a crear el anuncio
+*/
+function motores_anuncio_validate_agencia()
+{
+  global $user;
+  if ( in_array('agencia nuevos', $user->roles) || in_array('agencia otros', $user->roles) ||
+        in_array('agencia usados', $user->roles) || in_array('lote usados', $user->roles) )
+  {
+    drupal_goto('anuncio/crear','p=agencia&t='.$_GET['t']);
+  }
+}
+
+/*
   Revisa si el usuario ya tiene cuenta como para comenzar
   el proceso de anuncio
 */
@@ -172,6 +187,8 @@ function motores_anuncio_configure_cart()
     break;
     case 'premium':
       $anuncio = '64';
+    case 'agencia':
+      $anuncio = '77';
     break;
   }
   
@@ -225,11 +242,8 @@ function motores_anuncio_user( $op, &$edit, &$account )
       // Calcula la fecha de vigencia de todos los anuncios de una agencia
       // o lote
       //
-      
-      if ( in_array('agencia nuevos', $account->roles) || 
-        in_array('agencia usados', $account->roles) ||
-        in_array('agencia otros', $account->roles) ||
-        in_array('lote usados', $account->roles) )
+      $account->cuenta_agencia = motores_anuncio_is_cuenta_agencia($account);
+      if ( $account->cuenta_agencia )
       {
         
         $pago = mktime(0,0,0,$account->profile_ultimo_pago['month'],
@@ -262,5 +276,105 @@ function motores_anuncio_user( $op, &$edit, &$account )
       }
       //print_r($account);
     break;
+  }
+}
+
+function motores_anuncio_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL)
+{
+
+	if ($op == 'load')
+	{
+  	switch ($node->type)
+  	{
+  	  case 'carro':
+  	    $node->nombre = $node->field_anio[0]['value'];
+  	    $node->nombre_sin_anio = '';
+  	    $carro = taxonomy_get_parents_all( $node->field_marca[0]['value'] );
+  	    $carro = array_reverse($carro);
+  	    foreach ( $carro as $c )
+  	    {
+  	      $node->nombre .= ' '.$c->name;
+  	      $node->nombre_sin_anio .= $c->name.' ';
+  	    }
+  	    
+  	    //
+  	    // Calcula la fecha de vigencia de todos los anuncios 
+  	    //
+  	    switch($node->field_tipo_anunio[0]['nid'])
+  	    {
+	        case 63: //gratuito, 30 dias
+	          
+	          $vence = strtotime( '+30 days' , $node->field_vigencia[0]['value'] );
+	          $node->vigencia = date( 'M/d/Y', $vence );
+	          $node->vencido = ( $vence > time() ) ? false : true;
+	          
+	        break;
+	        case 53: //basico, 60 dias
+	          
+	          $vence = strtotime( '+60 days' , $node->field_vigencia[0]['value'] );
+	          $node->vigencia = date( 'M/d/Y', $vence );
+	          $node->vencido = ( $vence > time() ) ? false : true;
+	          
+	        break;
+	        default: // premium
+	    
+	          $vence = strtotime( '+30 days' , $node->field_vigencia[0]['value'] );
+	          $node->vigencia = date( 'M/d/Y', $vence );
+	          $node->vencido = ( $vence > time() ) ? false : true;
+	    
+	        break;	
+  	    }
+  	    //$node->vencimiento
+  	    
+  	  break;
+  	}
+	}
+}
+
+/**
+ * Calcula si la cuenta de un usuario es de tipo agencia o normalita
+ */
+function motores_anuncio_is_cuenta_agencia($user)
+{
+  return (in_array('agencia nuevos', $user->roles) || 
+    in_array('agencia usados', $user->roles) ||
+    in_array('agencia otros', $user->roles) ||
+    in_array('lote usados', $user->roles));
+}
+
+/**
+ * Imprime el monto a pagar en dashboard
+ */
+function motores_anuncio_print_monto_a_pagar($data)
+{
+  global $user;
+  
+  if (motores_anuncio_is_cuenta_agencia($user))
+  {
+    $agencia = user_load($user->uid);
+    if ($agencia->vencido)
+    {
+      $r .= 'Pago '.$agencia->profile_periodo_pago.'<br/>Realiza tu pago';
+    }
+    else
+    {
+      $r .= '<span class="green">$0.00</span>';
+    }
+    return $r;
+  }
+  else
+  {
+    $sku = $data->node_node_data_field_tipo_anunio__uc_products_model;
+    $dist = strtotime( '+30 day', $data->node_created );
+    
+    if ( $dist > time() ) 
+    {
+      return '<span class="green">$0.00</span>';
+    }
+    else
+    {
+      return '$dist';
+    }
+    
   }
 }
