@@ -558,9 +558,21 @@ function motores_admin_precios()
   return system_settings_form( $form );
 }
 
-function motores_admin_precios_submit( $form_state )
+// Actualizar precios de anuncios de vehiculos en Drupal cuando los cambia el admin
+function motores_admin_precios_validate( $form, &$form_state )
 {
-  print_r($form_state);
+  $basico = $form_state['values']['precio_anuncio_basico'];
+  $premium = $form_state['values']['precio_anuncio_premium'];
+  
+  // basico
+  $basico_n = node_load('53');
+  $basico_n->sell_price = $basico;
+  node_save($basico_n);
+  
+  // basico
+  $premium_n = node_load('64');
+  $premium_n->sell_price = $premium;
+  node_save($premium_n);
 }
 
 /*****************************

@@ -968,6 +968,15 @@
 
 /* @group My Account */
 
+.deuda
+{
+	color: #FF0000;
+}
+.deuda .red
+{
+	font-size: 20px;
+	line-height: 21px;
+}
 .block-motores_custom
 {
 	font-size: 13px;
@@ -1089,6 +1098,7 @@
 .view-micuenta .views-field img
 {
 	display: block;
+	margin: 0 auto;
 }
 .view-micuenta .views-field
 {

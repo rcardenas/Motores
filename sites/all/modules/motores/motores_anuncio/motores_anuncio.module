@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * motores_anuncio.module ---------
+ *
+ * Controla todo lo que tiene que ver con un anuncio y su duenio.
+ * Fechas de vigencia, form alters, etc.
+ *
+ * Tambien despliega datos importantes en celdas del dashboard.
+ *
+ **/
+
+
 function motores_anuncio_menu()
 {
   $items['admin/settings/motores_anuncio'] = array(
@@ -118,8 +129,15 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
         $form['group_describe']['field_especiales']['#prefix'] = 
          '<div class="nn clear-block"><div class="num">3</div><p>'.t('Opciones especiales de venta').'</p></div>';
         
-        $form['group_liga']['field_liga_agencia']['#prefix'] = 
+        if (motores_anuncio_is_cuenta_agencia($user))
+        {
+          $form['group_liga']['field_liga_agencia']['#prefix'] = 
           '<div class="nn clear-block"><div class="num">5</div><p>'.t('Proporciona la liga del sitio de tu agencia').'</p></div>';
+        }
+        else
+        {
+          unset($form['group_liga']);
+        }
         
         /**********
         PASO 4
@@ -210,9 +228,10 @@ function motores_anuncio_configure_cart()
   }
 }
 
-/*
-  Despues de crear una cuenta, ahoooora si hazte el anuncio
-*/
+/**
+ * Modifica datos del usuario para vigencias y todo al momento de
+ * hacer user_load
+ */
 function motores_anuncio_user( $op, &$edit, &$account )
 {
   switch ($op)
@@ -242,6 +261,10 @@ function motores_anuncio_user( $op, &$edit, &$account )
       // Calcula la fecha de vigencia de todos los anuncios de una agencia
       // o lote
       //
+      // $user->vigencia   = fecha de vigencia del pago
+      // $user->vencido    = bandera de vencido o no
+      // $user->diezdias   = bandera de si son 10 dias antes del vencimiento (dashboard)
+      //
       $account->cuenta_agencia = motores_anuncio_is_cuenta_agencia($account);
       if ( $account->cuenta_agencia )
       {
@@ -254,22 +277,31 @@ function motores_anuncio_user( $op, &$edit, &$account )
           case 'Semestral':
           
             $vence = strtotime( '+6 months' , $pago );
+            $vencediez = strtotime( '-10 days' , $vence );
+            
             $account->vigencia = date( 'M/d/Y', $vence );
             $account->vencido = ( time() > $vence );
+            $account->diezdias = ( time() > $vencediez );
           
           break;
           case 'Mensual':
             
             $vence = strtotime( '+1 month' , $pago );
+            $vencediez = strtotime( '-10 days' , $vence );
+            
             $account->vigencia = date( 'M/d/Y', $vence );
             $account->vencido = ( time() > $vence );
+            $account->diezdias = ( time() > $vencediez );
             
           break;
           case 'Anual':
           
             $vence = strtotime( '+1 year' , $pago );
+            $vencediez = strtotime( '-10 days' , $vence );
+            
             $account->vigencia = date( 'M/d/Y', $vence );
             $account->vencido = ( time() > $vence );
+            $account->diezdias = ( time() > $vencediez );
             
           break;
         }
@@ -279,6 +311,10 @@ function motores_anuncio_user( $op, &$edit, &$account )
   }
 }
 
+/**
+ * Modifica datos de anuncios para vigencias y todo al momento de
+ * hacer node_load
+ */
 function motores_anuncio_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL)
 {
 
@@ -287,6 +323,10 @@ function motores_anuncio_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL)
   	switch ($node->type)
   	{
   	  case 'carro':
+  	  
+  	    //
+  	    // Carga nombre de carro con taxonomia y anio 
+  	    //
   	    $node->nombre = $node->field_anio[0]['value'];
   	    $node->nombre_sin_anio = '';
   	    $carro = taxonomy_get_parents_all( $node->field_marca[0]['value'] );
@@ -343,7 +383,32 @@ function motores_anuncio_is_cuenta_agencia($user)
 }
 
 /**
+ * Imprime la fecha de expedicion en el dashboard
+ * depende de que tipo de cuenta sea
+ */
+function motores_anuncio_print_fecha_expedicion($data)
+{
+  global $user;
+  
+  if (motores_anuncio_is_cuenta_agencia($user))
+  {
+    $agencia = user_load($user->uid);
+    $pago = mktime(0,0,0,$account->profile_ultimo_pago['month'],
+      $account->profile_ultimo_pago['day'], $account->profile_ultimo_pago['year']);
+      
+    return date('M/d/Y', $pago);
+  }
+  else
+  {
+    return date('M/d/Y', $data->node->field_vigencia[0]['value']);
+    
+  }
+}
+
+/**
  * Imprime el monto a pagar en dashboard
+ * se fija si faltan diez dias o ya es la fecha de vencimiento de anuncio o cuenta
+ * y te dice cuanto hay que pagar
  */
 function motores_anuncio_print_monto_a_pagar($data)
 {
@@ -352,9 +417,18 @@ function motores_anuncio_print_monto_a_pagar($data)
   if (motores_anuncio_is_cuenta_agencia($user))
   {
     $agencia = user_load($user->uid);
-    if ($agencia->vencido)
+    if ($agencia->diezdias)
     {
-      $r .= 'Pago '.$agencia->profile_periodo_pago.'<br/>Realiza tu pago';
+      // obtener el precio a pagar
+      if (in_array('agencia usados', $agencia->roles)) $rol = 'usados';
+      if (in_array('agencia nuevos', $agencia->roles)) $rol = 'nuevos';
+      if (in_array('lote usados', $agencia->roles)) $rol = 'lote';
+      if (in_array('agencia otros', $agencia->roles)) $rol = 'otros';
+      $precio_var = 'precio_'.$rol.'_'.$agencia->profile_num_anuncios.'_'.strtolower($agencia->profile_periodo_pago);
+      
+      // display
+      $r = '<div class="deuda"><span class="red">$'.variable_get($precio_var,'').'</span>';
+      $r .= '<br/>Pago '.$agencia->profile_periodo_pago.'<br/>Realiza tu pago</div>';
     }
     else
     {
@@ -367,13 +441,16 @@ function motores_anuncio_print_monto_a_pagar($data)
     $sku = $data->node_node_data_field_tipo_anunio__uc_products_model;
     $dist = strtotime( '+30 day', $data->node_created );
     
-    if ( $dist > time() ) 
+    if ( !$data->node->vencido ) 
     {
       return '<span class="green">$0.00</span>';
     }
     else
     {
-      return '$dist';
+      $r = '<div class="deuda"><span class="red">$'.variable_get('precio_anuncio_reposicion','').'</span>';
+      $r .= '<br/>Realiza tu pago</div>';
+      
+      return $r;
     }
     
   }
