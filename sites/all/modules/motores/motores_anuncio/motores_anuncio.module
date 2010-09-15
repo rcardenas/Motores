@@ -26,6 +26,12 @@ function motores_anuncio_menu()
     'access arguments' => array('access content')
   );
   
+  $items['anuncio/borrar'] = array(
+    'title' => t('Borrar anuncio'),
+    'page callback' => 'motores_anuncio_borrar',
+    'access arguments' => array('access content')
+  );
+  
   return $items;
 }
 
@@ -454,4 +460,19 @@ function motores_anuncio_print_monto_a_pagar($data)
     }
     
   }
+}
+
+/**
+ * Elimina anuncios desde el dashboard
+ */
+function motores_anuncio_borrar()
+{
+  $nids = explode(',', $_GET['nids']);
+  array_pop($nids);
+  
+  foreach ($nids as $n)
+  {
+    node_delete($n);
+  }
+  drupal_goto('micuenta');
 }

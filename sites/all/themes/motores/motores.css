@@ -1062,6 +1062,33 @@
 	color: #000;
 }
 
+.view-micuenta .anunciate
+{
+	display: block;
+	width: 110px;
+	height: 23px;
+	text-indent: -99em;
+	overflow: hidden;
+	background: url(img/btn_agregar.png) no-repeat;
+	float: left;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+.section-micuenta #content-header
+{
+	clear: both;
+}
+.view-micuenta .borrar
+{
+	display: block;
+	width: 101px;
+	height: 23px;
+	text-indent: -99em;
+	overflow: hidden;
+	background: url(img/btn_borrar.png) no-repeat;
+	float: left;
+}
+
 #sidebar-right .block .content,
 .section-micuenta #content-inner .block-motores_custom .content
 {
