@@ -90,6 +90,7 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
         PASO 1
         **********/
         unset($form['field_tipo_anunio']);
+        //$form['field_vigencia']['#type'] = 'hidden';
         $form['group_marca_modelo']['#prefix'] = '<h2>'.t('Paso 1: Marca y Modelo').'</h2>';
         $form['group_marca_modelo']['field_marca']['#prefix'] = 
           '<div class="nn clear-block"><div class="num">1</div><p>'.t('Seleccione la marca y modelo del vehículo que desea vender.').'</p></div>';

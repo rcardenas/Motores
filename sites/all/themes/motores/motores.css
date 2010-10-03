@@ -2763,3 +2763,8 @@
 /* @end */
 
 /* @end */
+
+.node-form .container-inline-date
+{
+  display: none;
+}
