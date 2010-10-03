@@ -72,6 +72,7 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
         
         // botones
         unset($form['buttons']['save']);
+        unset($form['buttons']['delete']);
         unset($form['buttons']['previous']);
         if (isset($form['buttons']['next']))
         { 
@@ -117,7 +118,7 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
         $form['group_detalles']['#prefix'] = 
         '<h2>'.t('Paso 3: Detalles').'</h2><p>'.t('Llena los siguientes datos describiendo las características del vehículo que deseas vender.
         Los campos obligatorios se indican con').' (<span class="form-required">*</span>).</p>';
-        $form['group_detalles']['field_ciudad']['#prefix'] = 
+        $form['group_detalles']['field_anuncio_estado']['#prefix'] = 
           '<div class="nn clear-block"><div class="num">1</div><p>'.t('Datos del vehículo').'</p></div>';
          /* <div class="nn form-item clear-block">
           <div class="preview-field">Marca: </div>
@@ -335,13 +336,15 @@ function motores_anuncio_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL)
   	    //
   	    $node->nombre = $node->field_anio[0]['value'];
   	    $node->nombre_sin_anio = '';
-  	    $carro = taxonomy_get_parents_all( $node->field_marca[0]['value'] );
-  	    $carro = array_reverse($carro);
-  	    foreach ( $carro as $c )
+
+  	    $carro = array();
+  	    foreach ( $node->field_marca as $m )
   	    {
-  	      $node->nombre .= ' '.$c->name;
-  	      $node->nombre_sin_anio .= $c->name.' ';
+  	      $c = taxonomy_get_term($m['value']);
+  	      $carro[] = $c->name;
   	    }
+  	    $node->nombre .= ' '.implode(' ', $carro);
+  	    $node->nombre_sin_anio .= implode(' ', $carro);
   	    
   	    //
   	    // Calcula la fecha de vigencia de todos los anuncios 

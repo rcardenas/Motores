@@ -1,0 +1,11 @@
+; $Id: facebookshare.info,v 1.2 2010/04/08 15:54:37 willsteinmetz Exp $
+name = "Facebook Share"
+description = "Adds a Facebook Share button so users can share a node in their Facebook stream"
+core = 6.x
+package = "Social Networking"
+; Information added by drupal.org packaging script on 2010-04-08
+version = "6.x-1.0"
+core = "6.x"
+project = "facebookshare"
+datestamp = "1270742419"
+

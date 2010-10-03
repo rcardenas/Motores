@@ -115,13 +115,19 @@ function motores_preprocess(&$vars, $hook) {
  * @param $hook
  *   The name of the template being rendered ("page" in this case.)
  */
-function motores_preprocess_page(&$vars, $hook) {
+function motores_preprocess_page(&$vars, $hook) 
+{
 	global $user;
 	
   switch ( $vars['node']->type )
   {
     case 'vehiculo':
     case 'carro':
+    
+    // Modificar el titulo que aparece en la ventana del browser
+    // para que muestre el nombre del vehiculo
+    $vars['head_title'] = $vars['node']->nombre.' | '.variable_get('site_name', 'Todo de Motores');
+    
     unset($vars['title']);
     unset($vars['tabs']);
     
@@ -158,6 +164,9 @@ function motores_preprocess_page(&$vars, $hook) {
 }
 // */
 
+/**
+ * Darle tema a la seccion de checkout review cuando compras un anuncio
+ */
 function motores_uc_cart_checkout_review( $panes, &$form )
 {
   global $user;
@@ -280,8 +289,7 @@ function motores_uc_cart_checkout_review( $panes, &$form )
  */
 
 function motores_preprocess_node(&$vars, $hook) 
-{
-  
+{  
   switch ( $vars['node']->type )
   {
     case 'page':
@@ -292,17 +300,6 @@ function motores_preprocess_node(&$vars, $hook)
       break;
     default:
     
-      // nombre del vehiculo
-      $vars['nombre'] = $vars['field_anio'][0]['value'];
-      $vars['nombre_sin_anio'] = '';
-      $carro = taxonomy_get_parents_all( $vars['field_marca'][0]['value'] );
-      $carro = array_reverse($carro);
-      foreach ( $carro as $c )
-      {
-        $vars['nombre'] .= ' '.$c->name;
-        $vars['nombre_sin_anio'] .= $c->name.' ';
-      }
-
       if ( $vars['page'] )
       {
         // este es un anuncio

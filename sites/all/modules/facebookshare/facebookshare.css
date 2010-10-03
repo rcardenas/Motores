@@ -1,0 +1,11 @@
+/* $Id: facebookshare.css,v 1.2 2010/04/08 15:54:37 willsteinmetz Exp $; */
+
+/**
+ * @file
+ * CSS styles for the Facebook Share module boxes
+ */
+
+.facebookshare-box {
+  float: right;
+  clear: right;
+}

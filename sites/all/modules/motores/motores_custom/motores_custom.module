@@ -2,8 +2,6 @@
 
 function motores_custom_init() 
 {
-  drupal_add_js(drupal_get_path('module', 'motores_custom').'/taxonomy_engine.js', $type = 'module', 'header', FALSE, FALSE);
-  
   // admin theme for admins
   global $custom_theme;
   global $user;
@@ -15,6 +13,10 @@ function motores_custom_init()
   {
     $custom_theme = variable_get('admin_theme', '0');
     init_theme();
+  }
+  else
+  {
+    drupal_add_js(drupal_get_path('module', 'motores_custom').'/taxonomy_engine.js', $type = 'module', 'header', FALSE, FALSE);
   }
 }
 

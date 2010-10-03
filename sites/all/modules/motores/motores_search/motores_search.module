@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * motores_search.module ---------
+ *
+ * Crea las formas de busqueda a lo largo de todo el sitio
+ * asi como la funcionalidad de la misma
+ *
+ **/
+
+
 /************************
  * HOOKS
  ************************/
@@ -206,6 +215,18 @@ function motores_search_refine_form( $form_state )
     '#type' => 'select',
     '#options' => array('-1'=>'Hasta') + $kms
   );  
+  
+  // checkboxes
+  $form['options'] = array(
+    '#type' => 'checkboxes',
+    '#options' =>
+    array(
+      'agencias' => t('Agencias y lotes'),
+      'particular' => t('Particular'),
+      'credito' => t('Sólo autos a crédito'),
+      'foto' => t('Con foto')
+    )
+  );
   
   // Submit
   $form['submit'] = array(

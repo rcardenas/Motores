@@ -87,8 +87,8 @@
           <div class="field-label"><?=t('Fecha de anuncio').': '?></div><?=format_date($created, 'custom', 'd/m/Y')?>
         </div>
       </div>
-      <h1><?=$nombre?></h1>
-      <div class="ubicacion"><?=t('Ubicación').': '.$field_ciudad[0]['view']?></div>
+      <h1><?=$node->nombre?></h1>
+      <div class="ubicacion"><?=t('Ubicación').': '.$field_anuncio_estado[0]['view']?></div>
     </div>
     
     <div id="scrollable-big" class="scrollable">
