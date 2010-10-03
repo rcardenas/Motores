@@ -324,6 +324,27 @@ function motores_anuncio_user( $op, &$edit, &$account )
  */
 function motores_anuncio_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL)
 {
+  /**
+   * Cuando se cree un anuncio, asociarle correctamente la taxonomia de marca
+   * y modelo, para que tenga todos los terminos (ej. "Audi"+"A3" en vez de solamente "A3")
+   */
+  if ($op == 'insert')
+  {
+    switch ($node->type)
+    {
+      case 'carro': // vocabulario: Marca-carro, vid: 3
+      
+      $modelo = $node->taxonomy[3][0];
+      $marca = taxonomy_get_parents($modelo);
+      $args = array_keys($marca);
+      //taxonomy_node_save($node, $args);
+      $node->field_marca[] = $node->field_marca[0];
+      $node->field_marca[0] = array('value'=>$args[0]);
+      node_save($node);
+      
+      break;
+    }
+  }
 
 	if ($op == 'load')
 	{
@@ -478,4 +499,15 @@ function motores_anuncio_borrar()
     node_delete($n);
   }
   drupal_goto('micuenta');
+}
+
+/**
+ * Implementation of hook_views_api().
+ */
+function motores_anuncio_views_api() {
+  return array(
+    'api' => 2,
+    'path' => drupal_get_path('module', 'motores_anuncio'),
+    //'path' => drupal_get_path('module', 'motores_anuncio') . '/includes',
+  );
 }
