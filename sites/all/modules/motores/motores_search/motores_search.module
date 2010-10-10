@@ -13,6 +13,17 @@
  * HOOKS
  ************************/
 
+function motores_search_menu()
+{
+  $items['motores_search/submit'] = array(
+    'title' => t('Search'),
+    'page callback' => 'motores_search_refine_form_submit',
+    'access arguments' => array('access content')
+  );
+  
+  return $items;
+}
+
 function motores_search_block( $op = 'list', $delta = 0, $edit = array() )
 {
   switch($op)
@@ -103,6 +114,8 @@ function motores_search_home_form()
 
 function motores_search_refine_form( $form_state )
 {
+  drupal_add_js(drupal_get_path('module', 'motores_search').'/motores_search.js', $type = 'module', 'header', FALSE, FALSE);
+  
   $form['top'] = array(
     '#value' => '<h3>Usados</h3>'
   );
@@ -237,20 +250,54 @@ function motores_search_refine_form( $form_state )
   return $form;
 }
 
-function motores_search_refine_form_submit( $form, &$form_state )
+function motores_search_refine_form_submit()
 {
-  $f = array();
+  $estado = ( $_POST['estado'] != -1 ) ? $_POST['estado'] : 0;
+  $marcas = ( $_POST['marcas'] != -1 ) ? $_POST['marcas'] : 0;
   
-  // Filters
-  if ( $_POST['marcas'] != '-1' )     $f['marca'] = $_POST['marcas'];
-  if ( $_POST['keywords'] )           $f['keys'] = $_POST['keywords'];
-  if ( $_POST['estado'] != '-1' )     $f['edo'] = $_POST['estado'];
-  if ( $_POST['precio_min'] != '-1' ) $f['precio[min]'] = $_POST['precio_min'];
-  if ( $_POST['precio_max'] != '-1' ) $f['precio[max]'] = $_POST['precio_max'];
-  if ( $_POST['year_min'] != '-1' )   $f['anio[min]'] = $_POST['year_min'];
-  if ( $_POST['year_max'] != '-1' )   $f['anio[max]'] = $_POST['year_max'];
-  if ( $_POST['km_min'] != '-1' )     $f['km[min]'] = $_POST['km_min'];
-  if ( $_POST['km_max'] != '-1' )     $f['km[max]'] = $_POST['km_max'];
+  print_r($_POST);
+  
+  $query = "SELECT DISTINCT n.nid FROM {node} n ";
+  
+  // Estado
+  if ( $estado || $marcas )
+  {
+    $query .= "INNER JOIN {term_node} t ON n.vid = t.vid ";
+  }
+
+  // WHERE clause
+  if ( $estado || $marcas )
+  {
+    $query .= "WHERE ";
+    $where = array();
+    
+    if ( $estado || $marcas )
+    {
+      $taxo = '';
+      if ( $estado )
+      {
+        $taxo = "(t.tid = %d ";
+      }
+      if ( $marcas )
+      {
+        $taxo .= "OR t.tid = %d";
+      }
+      $taxo .= ")";
+      $where[] = $taxo;
+    }
+    
+    $query .= implode(" AND ", $where);
+  }
+  
+  print_r($query);
+  print_r($estado);
+  $db_result = db_query(db_rewrite_sql($query), $estado, $marcas);
+  $result = array();
+  while ($res = db_fetch_object($db_result)) 
+  {
+    $result[] = $res;
+  }
+  print_r($result);exit;
   
   drupal_goto('busqueda/carro'.$args, http_build_query($f,'','&'));
 }

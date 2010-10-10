@@ -106,7 +106,13 @@
       <a class="nextPage">&nbsp;</a>
     </div>
     
+    
     <div class="additional-details">
+      <div class="thelinks">
+        <div class="print"><?=$node->content['print_links']['#value']?></div>
+        <div class="facebook"><?=$node->content['facebookshare']['#value']?></div>
+      </div>
+      
       <?=$field_version_rendered?>
       <?=$field_km_rendered?>
       <?=$field_color_rendered?>

@@ -1,0 +1,4 @@
+Drupal.behaviors.searchEngine = function()
+{
+  
+}

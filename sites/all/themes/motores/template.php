@@ -290,6 +290,7 @@ function motores_uc_cart_checkout_review( $panes, &$form )
 
 function motores_preprocess_node(&$vars, $hook) 
 {  
+  //print_r($vars['node']);exit;
   switch ( $vars['node']->type )
   {
     case 'page':

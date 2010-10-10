@@ -2768,3 +2768,58 @@
 {
   display: none;
 }
+
+/* @group Links de print y facebook */
+
+.thelinks .print span
+{
+	margin: 0;
+}
+.thelinks .print a
+{
+	text-decoration: none;
+	color: #999999;
+	font-size: 10px;
+}
+.thelinks .facebook
+{
+	border:1px solid #CCCCCC;
+	float:left;
+	height:45px;
+	margin-left:20px;
+	position:relative;
+	width:172px;
+	background: url("img/facebook.png") no-repeat scroll 7px 7px transparent;
+}
+.thelinks .facebook .facebookshare-box
+{
+	position:absolute;
+	right:10px;
+	top:13px;
+}
+.thelinks .print
+{
+	border:1px solid #CCCCCC;
+	float:left;
+	height:45px;
+	line-height:45px;
+	text-align:center;
+	width:172px;
+	background: url("img/printer.png") no-repeat scroll 13px center transparent;
+}
+.anuncio .content .print-link,
+.anuncio .content .facebookshare-box
+{
+	display: none;
+}
+.anuncio .facebookshare-box
+{
+	float: none;
+}
+.anuncio .thelinks
+{
+	float: right;
+	width: 400px;
+}
+
+/* @end */
