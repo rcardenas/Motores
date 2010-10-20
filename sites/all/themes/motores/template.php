@@ -119,6 +119,11 @@ function motores_preprocess_page(&$vars, $hook)
 {
 	global $user;
 	
+	if ( $vars['is_front'] )
+	{
+	  drupal_add_js(path_to_theme().'/js/front.js');
+	}
+	
   switch ( $vars['node']->type )
   {
     case 'vehiculo':

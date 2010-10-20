@@ -1545,8 +1545,9 @@
 }
 .front #content h2
 {
-	color: #FF4C00;
+	color: #FF0000;
 	margin-top: 0;
+	font-size: 20px;
 }
 .view-home .views-row
 {
@@ -2784,6 +2785,23 @@
 	padding-bottom: 10px;
 }
 
+.front #motores-search-refine-form #edit-submit-1
+{
+	display: block;
+	margin-left: auto;
+	margin-right: 10px;
+}
+.front #motores-search-refine-form #edit-keywords-wrapper #edit-submit-1
+{
+	margin: 0;
+	margin-top: 10px;
+	margin-left: auto;
+}
+.front #edit-anio-min,
+.front #edit-anio-max
+{
+	margin-top: 10px;
+}
 .front #motores-search-refine-form
 {
 	border-right:1px solid #CCCCCC;
@@ -2869,7 +2887,14 @@
 	border: none;
 	padding: 0;
 	background: url(img/bannersubaru.png) no-repeat;
-	height: 351px;
+	height: 442px;
+}
+#sidebar-right #block-block-5
+{
+	border: 2px solid #CBCBCB;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	-webkit-border-radius: 8px;
 }
 #sidebar-right #block-block-5 p
 {
