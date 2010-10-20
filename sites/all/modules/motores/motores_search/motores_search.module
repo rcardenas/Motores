@@ -313,6 +313,7 @@ function motores_search_refine_form_submit()
     // WHERE clause
     $query .= "WHERE ";
     $where = array();
+    $arguments = array();
     
     // filtrar por taxonomia
     if ( $estado || $marcas )
@@ -320,27 +321,28 @@ function motores_search_refine_form_submit()
       $tids = array();
       if ( $estado ) $tids[] = $estado;
       if ( $marcas ) $tids[] = $marcas;
-      $where[] = "t.tid IN (".implode(",", $tids).") ";
+      $where[] = "t.tid IN (".db_placeholders($tids).") ";
+      $arguments = $tids;
     }
     
     // filtrar por precio
-    if ( $precio_min ) $where[] = "p.field_precio_value >= ".$precio_min;
-    if ( $precio_max ) $where[] = "p.field_precio_value <= ".$precio_max;
+    if ( $precio_min ) { $where[] = "p.field_precio_value >= ".db_placeholders($precio_min); $arguments[] = $precio_min; }
+    if ( $precio_max ) { $where[] = "p.field_precio_value <= ".db_placeholders($precio_max); $arguments[] = $precio_max; }
     
     // filtrar por anio
-    if ( $anio_min ) $where[] = "a.field_anio_value >= ".$anio_min;
-    if ( $anio_max ) $where[] = "a.field_anio_value <= ".$anio_max;
+    if ( $anio_min ) { $where[] = "a.field_anio_value >= ".db_placeholders($anio_min); $arguments[] = $anio_min; }
+    if ( $anio_max ) { $where[] = "a.field_anio_value <= ".db_placeholders($anio_max); $arguments[] = $anio_max; }
     
     // filtrar por kilometraje
-    if ( $km_min ) $where[] = "k.field_km_value >= ".$km_min;
-    if ( $km_max ) $where[] = "k.field_km_value <= ".$km_max;
+    if ( $km_min ) { $where[] = "k.field_km_value >= ".db_placeholders($km_min); $arguments[] = $km_min; }
+    if ( $km_max ) { $where[] = "k.field_km_value <= ".db_placeholders($km_max); $arguments[] = $km_max; }
     
-    if ( $keywords ) $where[] = "nr.body LIKE ('%%".$keywords."%%')";
+    if ( $keywords ) { $where[] = "nr.body LIKE ('%%".db_placeholders($keywords)."%%')"; $arguments[] = $keywords; }
     
     $query .= implode(" AND ", $where);
     
     //print_r($query);
-    $db_result = db_query(db_rewrite_sql($query), $estado, $marcas);
+    $db_result = db_query(db_rewrite_sql($query), $arguments);
     $result = array();
     while ($res = db_fetch_object($db_result)) 
     {
