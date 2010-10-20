@@ -1,6 +1,20 @@
+function ajustaSearch()
+{
+  var w = $(window).width();
+  var d = w-320;
+  
+  $('#content').css('width',d+'px');
+  $('#content').css('margin-right','-'+d+'px');
+}
+
 Drupal.behaviors.searchEngine = function()
 {
-  var form = $('#motores-search-refine-form');
+  // resize de ventana
+  ajustaSearch();
+  $(window).resize(function(){ajustaSearch()});
+
+  // submit de forma
+  /*var form = $('#motores-search-refine-form');
   $('#edit-submit',form).click(function()
   {
     $.post(Drupal.settings.basePath+'motores_search/submit',
@@ -29,5 +43,5 @@ Drupal.behaviors.searchEngine = function()
     }
     );
   return false;
-  });
+  });*/
 }

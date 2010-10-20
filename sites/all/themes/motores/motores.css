@@ -2669,16 +2669,35 @@
 	-webkit-border-radius: 8px;
 	border-radius: 8px;
 }
-#motores-search-refine-form #edit-precio-min,
-#motores-search-refine-form #edit-precio-max,
-#motores-search-refine-form #edit-year-min,
-#motores-search-refine-form #edit-year-max,
-#motores-search-refine-form #edit-km-min,
-#motores-search-refine-form #edit-km-max
+.not-front #motores-search-refine-form #edit-precio-min,
+.not-front #motores-search-refine-form #edit-precio-max,
+.not-front #motores-search-refine-form #edit-year-min,
+.not-front #motores-search-refine-form #edit-year-max,
+.not-front #motores-search-refine-form #edit-km-min,
+.not-front #motores-search-refine-form #edit-km-max
 {
 	float: left;
 	width: 100px;
 	margin-right: 20px;
+}
+.front #motores-search-refine-form #edit-precio-min,
+.front #motores-search-refine-form #edit-precio-max,
+.front #motores-search-refine-form #edit-anio-min,
+.front #motores-search-refine-form #edit-anio-max,
+.front #motores-search-refine-form #edit-km-min,
+.front #motores-search-refine-form #edit-km-max
+{
+	float: left;
+	width: 130px;
+	margin-right: 20px;
+}
+.front #motores-search-refine-form #edit-km-max
+{
+	margin-top: -13px;
+}
+#motores-search-refine-form .form-checkboxes
+{
+	clear: both;
 }
 #motores-search-refine-form #edit-year-min,
 #motores-search-refine-form #edit-year-max
@@ -2765,6 +2784,22 @@
 	padding-bottom: 10px;
 }
 
+.front #motores-search-refine-form
+{
+	border-right:1px solid #CCCCCC;
+	width:50%;
+}
+.front #motores-search-refine-form #edit-keywords-wrapper
+{
+	margin-left:325px;
+	margin-top:-28px;
+	position:absolute;
+}
+.front #motores-search-refine-form #edit-keywords
+{
+	width: 278px;
+}
+
 /* @end */
 
 /* @end */
@@ -2843,7 +2878,7 @@
 
 /* @group Search results */
 
-/*.section-busqueda #page
+.section-busqueda #page
 {
 	width: auto;
 }
@@ -2852,7 +2887,8 @@
 {
 	width: 960px;
 	margin: 0 auto;
-}*/
+}
+
 .view-busqueda .badge-agencia .left img
 {
 	border: 4px solid #00843b;
