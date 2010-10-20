@@ -50,6 +50,12 @@
 ?>
 <div id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?> clearfix"><div class="node-inner">
 
+  <? if ( $agencia || $premium ): ?>
+  <div class="badge">
+    <?=$agencia_tipo?>
+  </div>
+  <? endif; ?>
+  
   <div class="left">
     <?=$search_image?>
   </div>

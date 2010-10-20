@@ -1699,6 +1699,11 @@
 {
 	color: #0099FF;
 }
+.view-anuncio-preview .print-link,
+.view-anuncio-preview .facebookshare-box
+{
+	display: none;
+}
 
 /* @end */
 
@@ -2820,6 +2825,62 @@
 {
 	float: right;
 	width: 400px;
+}
+
+/* @end */
+
+#sidebar-right #block-block-5 .content
+{
+	border: none;
+	padding: 0;
+	background: url(img/bannersubaru.png) no-repeat;
+	height: 351px;
+}
+#sidebar-right #block-block-5 p
+{
+	margin: 0;
+}
+
+/* @group Search results */
+
+/*.section-busqueda #page
+{
+	width: auto;
+}
+.section-busqueda #header,
+.section-busqueda #navbar
+{
+	width: 960px;
+	margin: 0 auto;
+}*/
+.view-busqueda .badge-agencia .left img
+{
+	border: 4px solid #00843b;
+}
+.view-busqueda .badge-premium .left img
+{
+	border: 4px solid #28257e;
+}
+.view-busqueda .badge-agencia .badge
+{
+	background: url(img/badge-green.png) no-repeat;
+}
+.view-busqueda .badge-premium .badge
+{
+	background: url(img/badge-blue.png) no-repeat;
+}
+.view-busqueda .left img
+{
+	border: 4px solid #ffffff;
+}
+.view-busqueda .badge
+{
+	font-weight:bold;
+	height:32px;
+	margin-left:400px;
+	padding-left:25px;
+	position:absolute;
+	text-transform:capitalize;
 }
 
 /* @end */

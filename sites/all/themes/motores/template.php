@@ -290,6 +290,7 @@ function motores_uc_cart_checkout_review( $panes, &$form )
 
 function motores_preprocess_node(&$vars, $hook) 
 {  
+  global $user;
   //print_r($vars['node']);exit;
   switch ( $vars['node']->type )
   {
@@ -349,6 +350,24 @@ function motores_preprocess_node(&$vars, $hook)
     $vars['search_image'] = l(theme('imagecache', 'search_result', $vars['field_imagenes'][0]['filepath'] ),
                               'node/'.$vars['nid'],
                               array('html'=>true));
+    
+    // averiguar si el anuncio lleva badge en los resultados de busqueda
+    $author = user_load($vars['node']->uid);
+    if ( motores_anuncio_is_cuenta_agencia($author) )
+    {
+      $vars['classes'] .= ' badge-agencia';
+      $vars['agencia'] = 1;
+      foreach ( $author->roles as $rol )
+      {
+        if ($rol != 'authenticated user') $vars['agencia_tipo'] = $rol;
+      }
+    }
+    elseif ( $vars['node']->field_tipo_anunio[0]['safe']['nid'] == '64' )
+    {
+      $vars['classes'] .= ' badge-premium';
+      $vars['agencia'] = 1;
+      $vars['agencia_tipo'] = $vars['node']->field_tipo_anunio[0]['safe']['title'];
+    }
   }
 }
 // */
