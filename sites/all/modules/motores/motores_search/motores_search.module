@@ -114,10 +114,10 @@ function motores_search_home_form()
 
 function motores_search_refine_form( $form_state )
 {
-  if (arg(0) == 'busqueda')
+  /*if (arg(0) == 'busqueda')
   {
     drupal_add_js(drupal_get_path('module', 'motores_search').'/motores_search.js', $type = 'module', 'header', FALSE, FALSE);
-  }
+  }*/
   //print_r($_SESSION['search_form_state']);
   //$form_state['storage'] = $_SESSION['search_form_state'];
   

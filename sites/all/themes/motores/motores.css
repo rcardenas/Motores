@@ -2903,7 +2903,7 @@
 
 /* @group Search results */
 
-.section-busqueda #page
+/*.section-busqueda #page
 {
 	width: auto;
 }
@@ -2912,7 +2912,7 @@
 {
 	width: 960px;
 	margin: 0 auto;
-}
+}*/
 
 .view-busqueda .badge-agencia .left img
 {
