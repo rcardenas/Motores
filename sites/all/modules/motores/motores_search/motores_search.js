@@ -5,6 +5,7 @@ function ajustaSearch()
   
   $('#content').css('width',d+'px');
   $('#content').css('margin-right','-'+d+'px');
+  $('.view-busqueda .right').css('width',(d-200)+'px')
 }
 
 Drupal.behaviors.searchEngine = function()
