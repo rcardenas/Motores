@@ -2914,6 +2914,11 @@
 	margin: 0 auto;
 }*/
 
+.front #content-bottom
+{
+	margin-top: 10px;
+}
+
 .view-busqueda .badge-agencia .left img
 {
 	border: 4px solid #00843b;
