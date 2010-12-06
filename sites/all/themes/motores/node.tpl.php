@@ -78,7 +78,7 @@
   <?php endif; ?>
 
   <? if ($page && $anuncio): ?>
-  <div id="main-desc" class="greybox">
+  <div id="main-desc" class="ha">
     
     <div class="desc-inner">
       <div class="precio-fecha">

@@ -1,6 +1,17 @@
 Drupal.behaviors.checkboxes = function()
 {
   $('#edit-field-anio-value').attr('size','10');
+  
+  var x = 1;
+  $('.multistep .group-equipo').children('.form-item').each(function(){
+  	if(x%2 == 0){
+  		$(this).addClass('even');
+  	}
+  	x++;
+  $(this).addClass('clearfix');
+  });
+  
+  $('.multistep .group-equipo .form-checkboxes .form-item').removeClass('even');
 }
 
 Drupal.behaviors.eula = function()

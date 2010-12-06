@@ -35,6 +35,26 @@
     margin: 0;
     padding: 10px;
   }
+  .clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+.clearfix {
+	display: inline-block;
+}
+ 
+html[xmlns] .clearfix {
+	display: block;
+}
+ 
+* html .clearfix {
+	height: 1%;
+}
 
   #page
   {
@@ -1806,7 +1826,12 @@
 	font-weight: bold;
 	padding-top: 4px;
 }
-#edit-field-marca-value-wrapper select
+#edit-field-marca-value-wrapper select,
+#edit-field-marca-moto-value-wrapper select,
+#edit-field-marca-lancha-value-wrapper select,
+#edit-field-marca-camioneta-value-wrapper select,
+#edit-field-marca-extremo-value-wrapper select,
+#edit-field-marca-otro-value-wrapper select
 {
 	margin-right: 20px;
 	width: 250px;
@@ -1818,6 +1843,20 @@
 	display: block;
 	margin-left: auto;
 }
+.multistep .group-opciones label{
+	display: none;
+}
+.multistep .group-opciones label.option{
+	display: block;
+}/*
+.multistep .group-equipo .form-item{
+	width: 250px;
+	float: left;
+}
+.multistep .group-equipo .form-item.even{
+	float: right;
+
+}*/
 .section-anuncio-preview .form-submit
 {
 	width: 60px;

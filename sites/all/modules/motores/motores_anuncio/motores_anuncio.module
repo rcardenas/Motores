@@ -92,11 +92,11 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
         
         
         /**********
-        PASO 1
+        PASO 2
         **********/
         unset($form['field_tipo_anunio']);
         //$form['field_vigencia']['#type'] = 'hidden';
-        $form['group_marca_modelo']['#prefix'] = '<h2>'.t('Paso 1: Marca y Modelo').'</h2>';
+        $form['group_marca_modelo']['#prefix'] = '<h2>'.t('Paso 2: Marca y Modelo').'</h2>';
         $form['group_marca_modelo']['field_marca']['#prefix'] = 
           '<div class="nn clear-block"><div class="num">1</div><p>'.t('Seleccione la marca y modelo del vehículo que desea vender.').'</p></div>';
         $form['group_marca_modelo']['#suffix'] =
@@ -111,20 +111,20 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
         
         
         /**********
-        PASO 2
+        PASO 3
         **********/
-        $form['group_anio_submodelo']['#prefix'] = '<h2>'.t('Paso 2: Año y Submodelo').'</h2>';
+        $form['group_anio_submodelo']['#prefix'] = '<h2>'.t('Paso 3: Año y Submodelo').'</h2>';
         $form['group_anio_submodelo']['field_anio']['#prefix'] = 
           '<div class="nn clear-block"><div class="num">1</div><p>'.t('Seleccione la marca y sub-modelo del vehículo que desea:').'</p></div>';
         
         
         /**********
-        PASO 3
+        PASO 4
         **********/
         $form['group_detalles']['#prefix'] = 
-        '<h2>'.t('Paso 3: Detalles').'</h2><p>'.t('Llena los siguientes datos describiendo las características del vehículo que deseas vender.
+        '<h2>'.t('Paso 4: Detalles').'</h2><p>'.t('Llena los siguientes datos describiendo las características del vehículo que deseas vender.
         Los campos obligatorios se indican con').' (<span class="form-required">*</span>).</p>';
-        $form['group_detalles']['field_anuncio_estado']['#prefix'] = 
+        $form['group_detalles']['field_precio']['#prefix'] = 
           '<div class="nn clear-block"><div class="num">1</div><p>'.t('Datos del vehículo').'</p></div>';
          /* <div class="nn form-item clear-block">
           <div class="preview-field">Marca: </div>
@@ -153,7 +153,7 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
         }
         
         /**********
-        PASO 4
+        PASO 5
         **********/
         
         // las fotos se tratan especialmente
@@ -174,7 +174,7 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
           
           $form['group_fotos']['field_imagenes']['field_imagenes_add_more']['#value'] = t('Agregar otra foto');
           $form['group_fotos']['#prefix'] = 
-          '<h2>'.t('Paso 4: Fotos').'</h2><p>'.t('Sube las fotos del automóvil aquí, en formato JPG, GIF o PNG. Recuerda que las puedes subir después.').'</p>';
+          '<h2>'.t('Paso 5: Fotos').'</h2><p>'.t('Sube las fotos del automóvil aquí, en formato JPG, GIF o PNG. Recuerda que las puedes subir después.').'</p>';
           $form['group_fotos']['field_imagenes']['#prefix'] = 
             '<div class="nn clear-block"><div class="num">1</div><p>'.t('Fotos del vehículo').'</p></div>';
           $form['group_logo']['field_logo_agencia']['#prefix'] = 
@@ -191,7 +191,7 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
     ************************************/
     
       case 'moto_node_form':
-        
+      
         drupal_add_js(drupal_get_path('module', 'motores_anuncio').'/anuncio_engine.js', $type = 'module', 'header', FALSE, FALSE);
         
         //print_r($form);exit;
@@ -199,6 +199,10 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
         // container div
         $form['#prefix'] = '<div class="anuncio600">';
         $form['#suffix'] = '</div>';
+        
+        if(arg(3)!=3){
+        	unset($form['body_field']);
+        }
         
         // botones
         unset($form['buttons']['save']);
@@ -217,12 +221,11 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
         
         
         /**********
-        PASO 1
+        PASO 2
         **********/
         unset($form['field_tipo_anunio']);
         //$form['field_vigencia']['#type'] = 'hidden';
-        print_r($form);
-        $form['group_marca_modelo']['#prefix'] = '<h2>'.t('Paso 1: Marca y Modelo').'</h2>';
+        $form['group_marca_modelo']['#prefix'] = '<h2>'.t('Paso 2: Marca y Modelo').'</h2>';
         $form['group_marca_modelo']['field_marca_moto']['#prefix'] = 
           '<div class="nn clear-block"><div class="num">1</div><p>'.t('Seleccione la marca y modelo del vehículo que desea vender.').'</p></div>';
         $form['group_marca_modelo']['#suffix'] =
@@ -237,20 +240,20 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
         
         
         /**********
-        PASO 2
+        PASO 3
         **********/
-        $form['group_anio_submodelo']['#prefix'] = '<h2>'.t('Paso 2: Año y Submodelo').'</h2>';
+        $form['group_anio_submodelo']['#prefix'] = '<h2>'.t('Paso 3: Año y Submodelo').'</h2>';
         $form['group_anio_submodelo']['field_anio']['#prefix'] = 
           '<div class="nn clear-block"><div class="num">1</div><p>'.t('Seleccione la marca y sub-modelo del vehículo que desea:').'</p></div>';
         
         
         /**********
-        PASO 3
+        PASO 4
         **********/
         $form['group_detalles']['#prefix'] = 
-        '<h2>'.t('Paso 3: Detalles').'</h2><p>'.t('Llena los siguientes datos describiendo las características del vehículo que deseas vender.
+        '<h2>'.t('Paso 4: Detalles').'</h2><p>'.t('Llena los siguientes datos describiendo las características del vehículo que deseas vender.
         Los campos obligatorios se indican con').' (<span class="form-required">*</span>).</p>';
-        $form['group_detalles']['field_anuncio_estado']['#prefix'] = 
+        $form['group_detalles']['field_precio']['#prefix'] = 
           '<div class="nn clear-block"><div class="num">1</div><p>'.t('Datos del vehículo').'</p></div>';
          /* <div class="nn form-item clear-block">
           <div class="preview-field">Marca: </div>
@@ -259,19 +262,14 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
           <div class="preview-field">Año: <span>'.$form['#node']->field_anio[0]['value'].'</span></div>
           </div>
           ';*/
-        $form['body_field']['#prefix'] = '<fieldset><div class="nn clear-block"><div class="num">4</div><p>'.t('Describe tu auto').'</p></div>';
+         $form['body_field']['#prefix'] = '<fieldset><div class="nn clear-block"><div class="num">2</div><p>'.t('Describe tu moto').'</p></div>';
         $form['body_field']['#suffix'] = '</fieldset>';
         unset($form['body_field']['format']);
-        
-        $form['group_equipo']['field_cristales']['#prefix'] = 
-          '<div class="nn clear-block"><div class="num">2</div><p>'.t('Equipo').'</p></div>';
-        $form['group_describe']['field_especiales']['#prefix'] = 
-         '<div class="nn clear-block"><div class="num">3</div><p>'.t('Opciones especiales de venta').'</p></div>';
-        
+                
         if (motores_anuncio_is_cuenta_agencia($user))
         {
           $form['group_liga']['field_liga_agencia']['#prefix'] = 
-          '<div class="nn clear-block"><div class="num">5</div><p>'.t('Proporciona la liga del sitio de tu agencia').'</p></div>';
+          '<div class="nn clear-block"><div class="num">3</div><p>'.t('Proporciona la liga del sitio de tu agencia').'</p></div>';
         }
         else
         {
@@ -279,7 +277,7 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
         }
         
         /**********
-        PASO 4
+        PASO 5
         **********/
         
         // las fotos se tratan especialmente
@@ -300,7 +298,266 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
           
           $form['group_fotos']['field_imagenes']['field_imagenes_add_more']['#value'] = t('Agregar otra foto');
           $form['group_fotos']['#prefix'] = 
-          '<h2>'.t('Paso 4: Fotos').'</h2><p>'.t('Sube las fotos del automóvil aquí, en formato JPG, GIF o PNG. Recuerda que las puedes subir después.').'</p>';
+          '<h2>'.t('Paso 5: Fotos').'</h2><p>'.t('Sube las fotos del automóvil aquí, en formato JPG, GIF o PNG. Recuerda que las puedes subir después.').'</p>';
+          $form['group_fotos']['field_imagenes']['#prefix'] = 
+            '<div class="nn clear-block"><div class="num">1</div><p>'.t('Fotos del vehículo').'</p></div>';
+          $form['group_logo']['field_logo_agencia']['#prefix'] = 
+            '<div class="nn clear-block"><div class="num">2</div><p>'.t('Logotipo de agencia').'</p></div>';
+          
+          //print_r($form);exit;
+        }
+        break;
+        
+        
+    /************************************
+    *              LANCHAS              *
+    ************************************/
+    
+      case 'lancha_node_form':
+    
+        drupal_add_js(drupal_get_path('module', 'motores_anuncio').'/anuncio_engine.js', $type = 'module', 'header', FALSE, FALSE);
+        
+        //print_r($form);exit;
+        
+        // container div
+        $form['#prefix'] = '<div class="anuncio600">';
+        $form['#suffix'] = '</div>';
+        
+        
+         if(arg(3)!=3){
+        	unset($form['body_field']);
+        }
+        
+        // botones
+        unset($form['buttons']['save']);
+        unset($form['buttons']['delete']);
+        unset($form['buttons']['previous']);
+        if (isset($form['buttons']['next']))
+        { 
+          $form['buttons']['next']['#value'] = t('Continuar');
+        }
+        else
+        {
+          $form['buttons']['done']['#value'] = t('Continuar');
+          $form['#redirect'] = 'anuncio_preview/'.$form['#node']->nid;
+        }
+        
+        
+        
+        /**********
+        PASO 2
+        **********/
+        unset($form['field_tipo_anunio']);
+        //$form['field_vigencia']['#type'] = 'hidden';
+        $form['group_marca_modelo']['#prefix'] = '<h2>'.t('Paso 2: Marca y Modelo').'</h2>';
+        $form['group_marca_modelo']['field_marca_lancha']['#prefix'] = 
+          '<div class="nn clear-block"><div class="num">1</div><p>'.t('Seleccione la marca y modelo del vehículo que desea vender.').'</p></div>';
+        $form['group_marca_modelo']['#suffix'] =
+          '<fieldset>
+            <div class="nn clear-block"><div class="num">2</div><p>'.t('Aceptar el reglamento de publicación de anuncios en Mercado Absoluto Vehículos.').'</p></div>
+          
+            <div class="form-item">
+              <textarea id="eula" readonly="readonly">'.variable_get( 'motores_anuncio_eula', '' ).'</textarea>
+              <input type="checkbox"/> '.t('He leído y acepto las condiciones del reglamento.').'
+            </div>
+          </fieldset>';
+        
+        
+        /**********
+        PASO 3
+        **********/
+        $form['group_anio_submodelo']['#prefix'] = '<h2>'.t('Paso 3: Año y Submodelo').'</h2>';
+        $form['group_anio_submodelo']['field_anio']['#prefix'] = 
+          '<div class="nn clear-block"><div class="num">1</div><p>'.t('Seleccione la marca y sub-modelo del vehículo que desea:').'</p></div>';
+        
+        
+        /**********
+        PASO 4
+        **********/
+        $form['group_detalles']['#prefix'] = 
+        '<h2>'.t('Paso 4: Detalles').'</h2><p>'.t('Llena los siguientes datos describiendo las características del vehículo que deseas vender.
+        Los campos obligatorios se indican con').' (<span class="form-required">*</span>).</p>';
+        $form['group_detalles']['field_anuncio_estado']['#prefix'] = 
+          '<div class="nn clear-block"><div class="num">1</div><p>'.t('Datos del vehículo').'</p></div>';
+         /* <div class="nn form-item clear-block">
+          <div class="preview-field">Marca: </div>
+          <div class="preview-field">Submodelo: <span>'.$form['#node']->field_version[0]['value'].'</span></div>
+          <div class="preview-field">Modelo: </div>
+          <div class="preview-field">Año: <span>'.$form['#node']->field_anio[0]['value'].'</span></div>
+          </div>
+          ';*/
+         $form['body_field']['#prefix'] = '<fieldset><div class="nn clear-block"><div class="num">4</div><p>'.t('Describe tu lancha').'</p></div>';
+        $form['body_field']['#suffix'] = '</fieldset>';
+        unset($form['body_field']['format']);
+        
+        $form['group_equipo']['field_blindaje']['#prefix'] = 
+          '<div class="nn clear-block"><div class="num">2</div><p>'.t('Equipo').'</p></div>';
+          
+        $form['group_opciones']['field_especiales']['#prefix'] = 
+         '<div class="nn clear-block"><div class="num">3</div><p>'.t('Opciones especiales de venta').'</p></div>';
+        
+        if (motores_anuncio_is_cuenta_agencia($user))
+        {
+          $form['group_liga']['field_liga_agencia']['#prefix'] = 
+          '<div class="nn clear-block"><div class="num">5</div><p>'.t('Proporciona la liga del sitio de tu agencia').'</p></div>';
+        }
+        else
+        {
+          unset($form['group_liga']);
+        }
+        
+        /**********
+        PASO 5
+        **********/
+        
+        // las fotos se tratan especialmente
+        if ( arg(3) != '4' )
+        {
+          unset( $form['group_fotos'] );
+          unset( $form['group_logo'] );
+        }
+        else
+        {
+          // validar si puede subir logo de agencia
+          if ( !(in_array('agencia nuevos', $user->roles) || in_array('agencia otros', $user->roles) ||
+                in_array('agencia usados', $user->roles) || in_array('lote usados', $user->roles)) )
+          {
+            unset($form['group_logo']);
+            unset($form['group_liga']);
+          }
+          
+          $form['group_fotos']['field_imagenes']['field_imagenes_add_more']['#value'] = t('Agregar otra foto');
+          $form['group_fotos']['#prefix'] = 
+          '<h2>'.t('Paso 5: Fotos').'</h2><p>'.t('Sube las fotos del automóvil aquí, en formato JPG, GIF o PNG. Recuerda que las puedes subir después.').'</p>';
+          $form['group_fotos']['field_imagenes']['#prefix'] = 
+            '<div class="nn clear-block"><div class="num">1</div><p>'.t('Fotos del vehículo').'</p></div>';
+          $form['group_logo']['field_logo_agencia']['#prefix'] = 
+            '<div class="nn clear-block"><div class="num">2</div><p>'.t('Logotipo de agencia').'</p></div>';
+          
+          //print_r($form);exit;
+        }
+        break;
+
+        
+    /************************************
+    *           CAMIONETAS              *
+    ************************************/
+    
+      case 'camioneta_node_form':
+    
+        drupal_add_js(drupal_get_path('module', 'motores_anuncio').'/anuncio_engine.js', $type = 'module', 'header', FALSE, FALSE);
+        
+        //print_r($form);exit;
+        
+        // container div
+        $form['#prefix'] = '<div class="anuncio600">';
+        $form['#suffix'] = '</div>';
+        
+         if(arg(3)!=3){
+        	unset($form['body_field']);
+        }
+        
+        // botones
+        unset($form['buttons']['save']);
+        unset($form['buttons']['delete']);
+        unset($form['buttons']['previous']);
+        if (isset($form['buttons']['next']))
+        { 
+          $form['buttons']['next']['#value'] = t('Continuar');
+        }
+        else
+        {
+          $form['buttons']['done']['#value'] = t('Continuar');
+          $form['#redirect'] = 'anuncio_preview/'.$form['#node']->nid;
+        }
+        
+        
+        
+        /**********
+        PASO 2
+        **********/
+        unset($form['field_tipo_anunio']);
+        //$form['field_vigencia']['#type'] = 'hidden';
+        $form['group_marca_modelo']['#prefix'] = '<h2>'.t('Paso 2: Marca y Modelo').'</h2>';
+        $form['group_marca_modelo']['field_marca']['#prefix'] = 
+          '<div class="nn clear-block"><div class="num">1</div><p>'.t('Seleccione la marca y modelo del vehículo que desea vender.').'</p></div>';
+        $form['group_marca_modelo']['#suffix'] =
+          '<fieldset>
+            <div class="nn clear-block"><div class="num">2</div><p>'.t('Aceptar el reglamento de publicación de anuncios en Mercado Absoluto Vehículos.').'</p></div>
+          
+            <div class="form-item">
+              <textarea id="eula" readonly="readonly">'.variable_get( 'motores_anuncio_eula', '' ).'</textarea>
+              <input type="checkbox"/> '.t('He leído y acepto las condiciones del reglamento.').'
+            </div>
+          </fieldset>';
+        
+        
+        /**********
+        PASO 3
+        **********/
+        $form['group_anio_submodelo']['#prefix'] = '<h2>'.t('Paso 3: Año y Submodelo').'</h2>';
+        $form['group_anio_submodelo']['field_anio']['#prefix'] = 
+          '<div class="nn clear-block"><div class="num">1</div><p>'.t('Seleccione la marca y sub-modelo del vehículo que desea:').'</p></div>';
+        
+        
+        /**********
+        PASO 4
+        **********/
+        $form['group_detalles']['#prefix'] = 
+        '<h2>'.t('Paso 4: Detalles').'</h2><p>'.t('Llena los siguientes datos describiendo las características del vehículo que deseas vender.
+        Los campos obligatorios se indican con').' (<span class="form-required">*</span>).</p>';
+        $form['group_detalles']['field_precio']['#prefix'] = 
+          '<div class="nn clear-block"><div class="num">1</div><p>'.t('Datos del vehículo').'</p></div>';
+         /* <div class="nn form-item clear-block">
+          <div class="preview-field">Marca: </div>
+          <div class="preview-field">Submodelo: <span>'.$form['#node']->field_version[0]['value'].'</span></div>
+          <div class="preview-field">Modelo: </div>
+          <div class="preview-field">Año: <span>'.$form['#node']->field_anio[0]['value'].'</span></div>
+          </div>
+          ';*/
+         $form['body_field']['#prefix'] = '<fieldset><div class="nn clear-block"><div class="num">4</div><p>'.t('Describe tu camioneta').'</p></div>';
+        $form['body_field']['#suffix'] = '</fieldset>';
+        unset($form['body_field']['format']);
+        
+        $form['group_equipo']['field_cristales']['#prefix'] = 
+          '<div class="nn clear-block"><div class="num">2</div><p>'.t('Equipo').'</p></div>';
+          
+        $form['group_opciones']['field_especiales']['#prefix'] = 
+         '<div class="nn clear-block"><div class="num">3</div><p>'.t('Opciones especiales de venta').'</p></div>';
+        
+        if (motores_anuncio_is_cuenta_agencia($user))
+        {
+          $form['group_liga']['field_liga_agencia']['#prefix'] = 
+          '<div class="nn clear-block"><div class="num">5</div><p>'.t('Proporciona la liga del sitio de tu agencia').'</p></div>';
+        }
+        else
+        {
+          unset($form['group_liga']);
+        }
+        
+        /**********
+        PASO 5
+        **********/
+        
+        // las fotos se tratan especialmente
+        if ( arg(3) != '4' )
+        {
+          unset( $form['group_fotos'] );
+          unset( $form['group_logo'] );
+        }
+        else
+        {
+          // validar si puede subir logo de agencia
+          if ( !(in_array('agencia nuevos', $user->roles) || in_array('agencia otros', $user->roles) ||
+                in_array('agencia usados', $user->roles) || in_array('lote usados', $user->roles)) )
+          {
+            unset($form['group_logo']);
+            unset($form['group_liga']);
+          }
+          
+          $form['group_fotos']['field_imagenes']['field_imagenes_add_more']['#value'] = t('Agregar otra foto');
+          $form['group_fotos']['#prefix'] = 
+          '<h2>'.t('Paso 5: Fotos').'</h2><p>'.t('Sube las fotos del automóvil aquí, en formato JPG, GIF o PNG. Recuerda que las puedes subir después.').'</p>';
           $form['group_fotos']['field_imagenes']['#prefix'] = 
             '<div class="nn clear-block"><div class="num">1</div><p>'.t('Fotos del vehículo').'</p></div>';
           $form['group_logo']['field_logo_agencia']['#prefix'] = 
@@ -312,6 +569,264 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
         
         
         
+    /************************************
+    *              EXTREMO              *
+    ************************************/
+    
+      case 'extremo_node_form':
+    
+        drupal_add_js(drupal_get_path('module', 'motores_anuncio').'/anuncio_engine.js', $type = 'module', 'header', FALSE, FALSE);
+        
+        //print_r($form);exit;
+        
+        // container div
+        $form['#prefix'] = '<div class="anuncio600">';
+        $form['#suffix'] = '</div>';
+        
+       
+         //print_r();
+          //if(arg(3)!=3){
+        	//unset($form['body_field']);
+          //}
+                
+        // botones
+        unset($form['buttons']['save']);
+        unset($form['buttons']['delete']);
+        unset($form['buttons']['previous']);
+        if (isset($form['buttons']['next']))
+        { 
+          $form['buttons']['next']['#value'] = t('Continuar');
+        }
+        else
+        {
+          $form['buttons']['done']['#value'] = t('Continuar');
+          $form['#redirect'] = 'anuncio_preview/'.$form['#node']->nid;
+        }
+        
+        
+        
+        /**********
+        PASO 2
+        **********/
+        unset($form['field_tipo_anunio']);
+        //$form['field_vigencia']['#type'] = 'hidden';
+        $form['group_marca_modelo']['#prefix'] = '<h2>'.t('Paso 2: Marca y Modelo').'</h2>';
+        $form['group_marca_modelo']['field_marca_extremo']['#prefix'] = 
+          '<div class="nn clear-block"><div class="num">1</div><p>'.t('Seleccione la marca y modelo del vehículo que desea vender.').'</p></div>';
+        $form['group_marca_modelo']['#suffix'] =
+          '<fieldset>
+            <div class="nn clear-block"><div class="num">2</div><p>'.t('Aceptar el reglamento de publicación de anuncios en Mercado Absoluto Vehículos.').'</p></div>
+          
+            <div class="form-item">
+              <textarea id="eula" readonly="readonly">'.variable_get( 'motores_anuncio_eula', '' ).'</textarea>
+              <input type="checkbox"/> '.t('He leído y acepto las condiciones del reglamento.').'
+            </div>
+          </fieldset>';
+        
+        
+        /**********
+        PASO 3
+        **********/
+        $form['group_anio_submodelo']['#prefix'] = '<h2>'.t('Paso 3: Año y Submodelo').'</h2>';
+        $form['group_anio_submodelo']['field_anio']['#prefix'] = 
+          '<div class="nn clear-block"><div class="num">1</div><p>'.t('Seleccione la marca y sub-modelo del vehículo que desea:').'</p></div>';
+        
+        
+        /**********
+        PASO 4
+        **********/
+        $form['group_detalles']['#prefix'] = 
+        '<h2>'.t('Paso 4: Detalles').'</h2><p>'.t('Llena los siguientes datos describiendo las características del vehículo que deseas vender.
+        Los campos obligatorios se indican con').' (<span class="form-required">*</span>).</p>';
+        $form['group_detalles']['field_precio']['#prefix'] = 
+          '<div class="nn clear-block"><div class="num">1</div><p>'.t('Datos del vehículo').'</p></div>';
+         /* <div class="nn form-item clear-block">
+          <div class="preview-field">Marca: </div>
+          <div class="preview-field">Submodelo: <span>'.$form['#node']->field_version[0]['value'].'</span></div>
+          <div class="preview-field">Modelo: </div>
+          <div class="preview-field">Año: <span>'.$form['#node']->field_anio[0]['value'].'</span></div>
+          </div>
+          ';*/
+         $form['body_field']['#prefix'] = '<fieldset><div class="nn clear-block"><div class="num">4</div><p>'.t('Describe tu vehiculo extremo').'</p></div>';
+        $form['body_field']['#suffix'] = '</fieldset>';
+        unset($form['body_field']['format']);
+        
+        $form['group_equipo']['field_cristales']['#prefix'] = 
+          '<div class="nn clear-block"><div class="num">2</div><p>'.t('Equipo').'</p></div>';
+          
+        $form['group_opciones']['field_especiales']['#prefix'] = 
+         '<div class="nn clear-block"><div class="num">3</div><p>'.t('Opciones especiales de venta').'</p></div>';
+        
+        if (motores_anuncio_is_cuenta_agencia($user))
+        {
+          $form['group_liga']['field_liga_agencia']['#prefix'] = 
+          '<div class="nn clear-block"><div class="num">5</div><p>'.t('Proporciona la liga del sitio de tu agencia').'</p></div>';
+        }
+        else
+        {
+          unset($form['group_liga']);
+        }
+        
+        /**********
+        PASO 5
+        **********/
+        
+        // las fotos se tratan especialmente
+        if ( arg(3) != '4' )
+        {
+          unset( $form['group_fotos'] );
+          unset( $form['group_logo'] );
+        }
+        else
+        {
+          // validar si puede subir logo de agencia
+          if ( !(in_array('agencia nuevos', $user->roles) || in_array('agencia otros', $user->roles) ||
+                in_array('agencia usados', $user->roles) || in_array('lote usados', $user->roles)) )
+          {
+            unset($form['group_logo']);
+            unset($form['group_liga']);
+          }
+          
+          $form['group_fotos']['field_imagenes']['field_imagenes_add_more']['#value'] = t('Agregar otra foto');
+          $form['group_fotos']['#prefix'] = 
+          '<h2>'.t('Paso 5: Fotos').'</h2><p>'.t('Sube las fotos del automóvil aquí, en formato JPG, GIF o PNG. Recuerda que las puedes subir después.').'</p>';
+          $form['group_fotos']['field_imagenes']['#prefix'] = 
+            '<div class="nn clear-block"><div class="num">1</div><p>'.t('Fotos del vehículo').'</p></div>';
+          $form['group_logo']['field_logo_agencia']['#prefix'] = 
+            '<div class="nn clear-block"><div class="num">2</div><p>'.t('Logotipo de agencia').'</p></div>';
+          
+          //print_r($form);exit;
+        }
+        break;
+        
+    /************************************
+    *              OTROS                *
+    ************************************/
+    
+      case 'otros_node_form':
+    
+        drupal_add_js(drupal_get_path('module', 'motores_anuncio').'/anuncio_engine.js', $type = 'module', 'header', FALSE, FALSE);
+        
+        //print_r($form);exit;
+        
+        // container div
+        $form['#prefix'] = '<div class="anuncio600">';
+        $form['#suffix'] = '</div>';
+        
+         //print_r();
+         if(arg(3)!=3){
+        	unset($form['body_field']);
+        }
+        
+        // botones
+        unset($form['buttons']['save']);
+        unset($form['buttons']['delete']);
+        unset($form['buttons']['previous']);
+        if (isset($form['buttons']['next']))
+        { 
+          $form['buttons']['next']['#value'] = t('Continuar');
+        }
+        else
+        {
+          $form['buttons']['done']['#value'] = t('Continuar');
+          $form['#redirect'] = 'anuncio_preview/'.$form['#node']->nid;
+        }
+        
+        
+        
+        /**********
+        PASO 2
+        **********/
+        unset($form['field_tipo_anunio']);
+        //$form['field_vigencia']['#type'] = 'hidden';
+        $form['group_marca_modelo']['#prefix'] = '<h2>'.t('Paso 2: Marca y Modelo').'</h2>';
+        $form['group_marca_modelo']['field_marca_otros']['#prefix'] = 
+          '<div class="nn clear-block"><div class="num">1</div><p>'.t('Seleccione la marca y modelo del vehículo que desea vender.').'</p></div>';
+        $form['group_marca_modelo']['#suffix'] =
+          '<fieldset>
+            <div class="nn clear-block"><div class="num">2</div><p>'.t('Aceptar el reglamento de publicación de anuncios en Mercado Absoluto Vehículos.').'</p></div>
+          
+            <div class="form-item">
+              <textarea id="eula" readonly="readonly">'.variable_get( 'motores_anuncio_eula', '' ).'</textarea>
+              <input type="checkbox"/> '.t('He leído y acepto las condiciones del reglamento.').'
+            </div>
+          </fieldset>';
+        
+        
+        /**********
+        PASO 3
+        **********/
+        $form['group_anio_submodelo']['#prefix'] = '<h2>'.t('Paso 3: Año y Submodelo').'</h2>';
+        $form['group_anio_submodelo']['field_anio']['#prefix'] = 
+          '<div class="nn clear-block"><div class="num">1</div><p>'.t('Seleccione la marca y sub-modelo del vehículo que desea:').'</p></div>';
+        
+        
+        /**********
+        PASO 4
+        **********/
+        $form['group_detalles']['#prefix'] = 
+        '<h2>'.t('Paso 4: Detalles').'</h2><p>'.t('Llena los siguientes datos describiendo las características del vehículo que deseas vender.
+        Los campos obligatorios se indican con').' (<span class="form-required">*</span>).</p>';
+        $form['group_detalles']['field_precio']['#prefix'] = 
+          '<div class="nn clear-block"><div class="num">1</div><p>'.t('Datos del vehículo').'</p></div>';
+         /* <div class="nn form-item clear-block">
+          <div class="preview-field">Marca: </div>
+          <div class="preview-field">Submodelo: <span>'.$form['#node']->field_version[0]['value'].'</span></div>
+          <div class="preview-field">Modelo: </div>
+          <div class="preview-field">Año: <span>'.$form['#node']->field_anio[0]['value'].'</span></div>
+          </div>
+          ';*/
+         $form['body_field']['#prefix'] = '<fieldset><div class="nn clear-block"><div class="num">4</div><p>'.t('Describe tu vehiculo extremo').'</p></div>';
+        $form['body_field']['#suffix'] = '</fieldset>';
+        unset($form['body_field']['format']);
+        
+        $form['group_equipo']['field_blindaje']['#prefix'] = 
+          '<div class="nn clear-block"><div class="num">2</div><p>'.t('Equipo').'</p></div>';
+          
+        $form['group_opciones']['field_especiales']['#prefix'] = 
+         '<div class="nn clear-block"><div class="num">3</div><p>'.t('Opciones especiales de venta').'</p></div>';
+        
+        if (motores_anuncio_is_cuenta_agencia($user))
+        {
+          $form['group_liga']['field_liga_agencia']['#prefix'] = 
+          '<div class="nn clear-block"><div class="num">5</div><p>'.t('Proporciona la liga del sitio de tu agencia').'</p></div>';
+        }
+        else
+        {
+          unset($form['group_liga']);
+        }
+        
+        /**********
+        PASO 5
+        **********/
+        
+        // las fotos se tratan especialmente
+        if ( arg(3) != '4' )
+        {
+          unset( $form['group_fotos'] );
+          unset( $form['group_logo'] );
+        }
+        else
+        {
+          // validar si puede subir logo de agencia
+          if ( !(in_array('agencia nuevos', $user->roles) || in_array('agencia otros', $user->roles) ||
+                in_array('agencia usados', $user->roles) || in_array('lote usados', $user->roles)) )
+          {
+            unset($form['group_logo']);
+            unset($form['group_liga']);
+          }
+          
+          $form['group_fotos']['field_imagenes']['field_imagenes_add_more']['#value'] = t('Agregar otra foto');
+          $form['group_fotos']['#prefix'] = 
+          '<h2>'.t('Paso 5: Fotos').'</h2><p>'.t('Sube las fotos del automóvil aquí, en formato JPG, GIF o PNG. Recuerda que las puedes subir después.').'</p>';
+          $form['group_fotos']['field_imagenes']['#prefix'] = 
+            '<div class="nn clear-block"><div class="num">1</div><p>'.t('Fotos del vehículo').'</p></div>';
+          $form['group_logo']['field_logo_agencia']['#prefix'] = 
+            '<div class="nn clear-block"><div class="num">2</div><p>'.t('Logotipo de agencia').'</p></div>';
+          
+          //print_r($form);exit;
+        }
+        break;    
         
         
         
@@ -494,6 +1009,55 @@ function motores_anuncio_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL)
       $node->field_marca[0] = array('value'=>$args[0]);
       node_save($node);
       break;
+    
+    
+     case 'camioneta': // vocabulario: Marca-moto, vid: 3
+      
+      $modelo = $node->taxonomy[3][0];
+      $marca = taxonomy_get_parents($modelo);
+      $args = array_keys($marca);
+      //taxonomy_node_save($node, $args);
+      $node->field_marca[] = $node->field_marca[0];
+      $node->field_marca[0] = array('value'=>$args[0]);
+      node_save($node);
+      break;
+    
+    
+     case 'lancha': // vocabulario: Marca-moto, vid: 5
+      
+      $modelo = $node->taxonomy[5][0];
+      $marca = taxonomy_get_parents($modelo);
+      $args = array_keys($marca);
+      //taxonomy_node_save($node, $args);
+      $node->field_marca[] = $node->field_marca[0];
+      $node->field_marca[0] = array('value'=>$args[0]);
+      node_save($node);
+      break;
+    
+    
+     case 'extremo': // vocabulario: Marca-moto, vid: 9
+      
+      $modelo = $node->taxonomy[9][0];
+      $marca = taxonomy_get_parents($modelo);
+      $args = array_keys($marca);
+      //taxonomy_node_save($node, $args);
+      $node->field_marca[] = $node->field_marca[0];
+      $node->field_marca[0] = array('value'=>$args[0]);
+      node_save($node);
+      break;
+    
+    
+     case 'otros': // vocabulario: Marca-moto, vid: 8
+      
+      $modelo = $node->taxonomy[8][0];
+      $marca = taxonomy_get_parents($modelo);
+      $args = array_keys($marca);
+      //taxonomy_node_save($node, $args);
+      $node->field_marca[] = $node->field_marca[0];
+      $node->field_marca[0] = array('value'=>$args[0]);
+      node_save($node);
+      break;
+    
     }
   }
 
@@ -596,6 +1160,59 @@ function motores_anuncio_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL)
   	    //$node->vencimiento
   	    
   	  break;
+  	  
+  	  
+  	  case 'camioneta':
+  	  case 'lancha':
+  	  case 'extremo':
+  	  case 'otros':
+  	  
+  	    //
+  	    // Carga nombre de carro con taxonomia y anio 
+  	    //
+  	    $node->nombre = $node->field_anio[0]['value'];
+  	    $node->nombre_sin_anio = '';
+
+  	    $camioneta = array();
+  	    foreach ( $node->field_marca as $m )
+  	    {
+  	      $c = taxonomy_get_term($m['value']);
+  	      $camioneta[] = $c->name;
+  	    }
+  	    $node->nombre .= ' '.implode(' ', $camioneta);
+  	    $node->nombre_sin_anio .= implode(' ', $camioneta);
+  	    
+  	    //
+  	    // Calcula la fecha de vigencia de todos los anuncios 
+  	    //
+  	    switch($node->field_tipo_anunio[0]['nid'])
+  	    {
+	        case 63: //gratuito, 30 dias
+	          
+	          $vence = strtotime( '+30 days' , $node->field_vigencia[0]['value'] );
+	          $node->vigencia = date( 'M/d/Y', $vence );
+	          $node->vencido = ( $vence > time() ) ? false : true;
+	          
+	        break;
+	        case 53: //basico, 60 dias
+	          
+	          $vence = strtotime( '+60 days' , $node->field_vigencia[0]['value'] );
+	          $node->vigencia = date( 'M/d/Y', $vence );
+	          $node->vencido = ( $vence > time() ) ? false : true;
+	          
+	        break;
+	        default: // premium
+	    
+	          $vence = strtotime( '+30 days' , $node->field_vigencia[0]['value'] );
+	          $node->vigencia = date( 'M/d/Y', $vence );
+	          $node->vencido = ( $vence > time() ) ? false : true;
+	    
+	        break;	
+  	    }
+  	    //$node->vencimiento
+  	    
+  	  break;
+
   	}
 	}
 }

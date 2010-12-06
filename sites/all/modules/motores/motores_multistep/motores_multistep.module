@@ -23,27 +23,36 @@ function motores_multistep_block($op = 'list', $delta = 0, $edit = array())
 
 function motores_multistep_markup()
 {
-  $t[] = t('Marca y modelo');
-  $t[] = t('A&ntilde;o y submodelo');
-  $t[] = t('Detalles');
-  $t[] = t('Fotos');
-  $t[] = t('Revisi&oacute;n');
-  $t[] = t('Registro');
-  $t[] = t('Pago');
-  $t[] = t('Tu anuncio listo');
-  
+  $t[] = t('Registro'); //0
+  $t[] = t('Marca y modelo'); //1
+  $t[] = t('A&ntilde;o y submodelo'); //2
+  $t[] = t('Detalles'); //3
+  $t[] = t('Fotos'); //4
+  $t[] = t('Revisi&oacute;n'); //5
+  $t[] = t('Pago'); //6
+  $t[] = t('Tu anuncio listo'); //7
+ /*
+  $t[] = t('Marca y modelo'); //0
+  $t[] = t('A&ntilde;o y submodelo'); //1
+  $t[] = t('Detalles'); //2
+  $t[] = t('Fotos'); //3
+  $t[] = t('Revisi&oacute;n'); //4
+  $t[] = t('Registro'); //5
+  $t[] = t('Pago'); //6
+  $t[] = t('Tu anuncio listo'); //7
+*/  
   $active = -1;
   if ( strpos($_GET['q'], 'node/add/') >= 0 )
   {
-    $active = 0;
+    $active = 1;
   }
   if ( arg(2) == 'edit' )
   {
-    $active = arg(3) - 1;
+    $active = arg(3);
   }
   if ( arg(0) == 'anuncio_preview' )
   {
-    $active = 4;
+    $active = 5;
   }
   if ( arg(0) == 'cart' )
   {

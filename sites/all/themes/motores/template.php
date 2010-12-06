@@ -128,6 +128,11 @@ function motores_preprocess_page(&$vars, $hook)
   {
     case 'vehiculo':
     case 'carro':
+    case 'moto':
+    case 'lancha':
+    case 'camioneta':
+    case 'extremo':
+    case 'otros':
     
     // Modificar el titulo que aparece en la ventana del browser
     // para que muestre el nombre del vehiculo
