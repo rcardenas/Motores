@@ -191,7 +191,8 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
     ************************************/
     
       case 'moto_node_form':
-      
+      case 'edit_moto_node_form':
+       
         drupal_add_js(drupal_get_path('module', 'motores_anuncio').'/anuncio_engine.js', $type = 'module', 'header', FALSE, FALSE);
         
         //print_r($form);exit;
@@ -990,7 +991,16 @@ function motores_anuncio_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL)
       case 'carro': // vocabulario: Marca-carro, vid: 3
       
       $modelo = $node->taxonomy[3][0];
-      $marca = taxonomy_get_parents($modelo);
+      if($node->taxonomy[3][0]){
+      	$marca = taxonomy_get_parents($modelo);
+      }else{
+      	print_r($node->taxonomy[3]);
+      	if($node->taxonomy[3]=="Otro modelo"){
+      	$marca = $node->field_otro_modelo[0];
+      	}else{
+      	$marca = $node->taxonomy[3];
+      	}
+      }
       $args = array_keys($marca);
       //taxonomy_node_save($node, $args);
       $node->field_marca[] = $node->field_marca[0];
@@ -1000,13 +1010,17 @@ function motores_anuncio_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL)
       
       
       case 'moto': // vocabulario: Marca-moto, vid: 4
-      
+     
       $modelo = $node->taxonomy[4][0];
-      $marca = taxonomy_get_parents($modelo);
+      if($node->taxonomy[4][0]){
+      	$marca = taxonomy_get_parents($modelo);
+      }else{
+      	$marca = $node->taxonomy[4];
+      }
       $args = array_keys($marca);
       //taxonomy_node_save($node, $args);
-      $node->field_marca[] = $node->field_marca[0];
-      $node->field_marca[0] = array('value'=>$args[0]);
+      $node->field_marca_moto[] = $node->field_marca_moto[0];
+      $node->field_marca_moto[0] = array('value'=>$args[0]);
       node_save($node);
       break;
     
@@ -1014,11 +1028,15 @@ function motores_anuncio_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL)
      case 'camioneta': // vocabulario: Marca-moto, vid: 3
       
       $modelo = $node->taxonomy[3][0];
-      $marca = taxonomy_get_parents($modelo);
+      if($node->taxonomy[3][0]){
+      	$marca = taxonomy_get_parents($modelo);
+      }else{
+      	$marca = $node->taxonomy[3];
+      }
       $args = array_keys($marca);
       //taxonomy_node_save($node, $args);
-      $node->field_marca[] = $node->field_marca[0];
-      $node->field_marca[0] = array('value'=>$args[0]);
+      $node->field_marca_camioneta[] = $node->field_marca_camioneta[0];
+      $node->field_marca_camioneta[0] = array('value'=>$args[0]);
       node_save($node);
       break;
     
@@ -1026,11 +1044,15 @@ function motores_anuncio_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL)
      case 'lancha': // vocabulario: Marca-moto, vid: 5
       
       $modelo = $node->taxonomy[5][0];
-      $marca = taxonomy_get_parents($modelo);
+      if($node->taxonomy[5][0]){
+      	$marca = taxonomy_get_parents($modelo);
+      }else{
+      	$marca = $node->taxonomy[5];
+      }
       $args = array_keys($marca);
       //taxonomy_node_save($node, $args);
-      $node->field_marca[] = $node->field_marca[0];
-      $node->field_marca[0] = array('value'=>$args[0]);
+      $node->field_marca_lancha[] = $node->field_marca_lancha[0];
+      $node->field_marca_lancha[0] = array('value'=>$args[0]);
       node_save($node);
       break;
     
@@ -1038,11 +1060,15 @@ function motores_anuncio_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL)
      case 'extremo': // vocabulario: Marca-moto, vid: 9
       
       $modelo = $node->taxonomy[9][0];
-      $marca = taxonomy_get_parents($modelo);
+      if($node->taxonomy[9][0]){
+      	$marca = taxonomy_get_parents($modelo);
+      }else{
+      	$marca = $node->taxonomy[9];
+      }
       $args = array_keys($marca);
       //taxonomy_node_save($node, $args);
-      $node->field_marca[] = $node->field_marca[0];
-      $node->field_marca[0] = array('value'=>$args[0]);
+      $node->field_marca_extremo[] = $node->field_marca_extremo[0];
+      $node->field_marca_extremo[0] = array('value'=>$args[0]);
       node_save($node);
       break;
     
@@ -1050,11 +1076,15 @@ function motores_anuncio_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL)
      case 'otros': // vocabulario: Marca-moto, vid: 8
       
       $modelo = $node->taxonomy[8][0];
-      $marca = taxonomy_get_parents($modelo);
+      if($node->taxonomy[8][0]){
+      	$marca = taxonomy_get_parents($modelo);
+      }else{
+      	$marca = $node->taxonomy[8];
+      }
       $args = array_keys($marca);
       //taxonomy_node_save($node, $args);
-      $node->field_marca[] = $node->field_marca[0];
-      $node->field_marca[0] = array('value'=>$args[0]);
+      $node->field_marca_otros[] = $node->field_marca_otros[0];
+      $node->field_marca_otros[0] = array('value'=>$args[0]);
       node_save($node);
       break;
     
@@ -1077,7 +1107,11 @@ function motores_anuncio_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL)
   	    foreach ( $node->field_marca as $m )
   	    {
   	      $c = taxonomy_get_term($m['value']);
-  	      $carro[] = $c->name;
+  	      if($c->name == "Otro modelo"){
+  	      	$carro[] = $node->field_otro_modelo[0]['value'];
+  	      }else{
+  	      	$carro[] = $c->name;
+  	      }
   	    }
   	    $node->nombre .= ' '.implode(' ', $carro);
   	    $node->nombre_sin_anio .= implode(' ', $carro);
@@ -1122,10 +1156,14 @@ function motores_anuncio_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL)
   	    $node->nombre_sin_anio = '';
 
   	    $moto = array();
-  	    foreach ( $node->field_marca as $m )
+  	    foreach ( $node->field_marca_moto as $m )
   	    {
   	      $c = taxonomy_get_term($m['value']);
-  	      $moto[] = $c->name;
+  	      if($c->name == "Otro modelo"){
+  	      	$moto[] = $node->field_otro_modelo[0]['value'];
+  	      }else{
+  	      	$moto[] = $c->name;
+  	      }
   	    }
   	    $node->nombre .= ' '.implode(' ', $moto);
   	    $node->nombre_sin_anio .= implode(' ', $moto);
@@ -1163,9 +1201,6 @@ function motores_anuncio_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL)
   	  
   	  
   	  case 'camioneta':
-  	  case 'lancha':
-  	  case 'extremo':
-  	  case 'otros':
   	  
   	    //
   	    // Carga nombre de carro con taxonomia y anio 
@@ -1174,10 +1209,15 @@ function motores_anuncio_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL)
   	    $node->nombre_sin_anio = '';
 
   	    $camioneta = array();
-  	    foreach ( $node->field_marca as $m )
+  	    foreach ( $node->field_marca_camioneta as $m )
   	    {
   	      $c = taxonomy_get_term($m['value']);
-  	      $camioneta[] = $c->name;
+  	      if($c->name == "Otro modelo"){
+  	      	$camioneta[] = $node->field_otro_modelo[0]['value'];
+  	      }else{
+  	      	$camioneta[] = $c->name;
+  	      }
+
   	    }
   	    $node->nombre .= ' '.implode(' ', $camioneta);
   	    $node->nombre_sin_anio .= implode(' ', $camioneta);
@@ -1212,6 +1252,167 @@ function motores_anuncio_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL)
   	    //$node->vencimiento
   	    
   	  break;
+  	  
+  	  case 'lancha':
+  	  
+  	    //
+  	    // Carga nombre de carro con taxonomia y anio 
+  	    //
+  	    $node->nombre = $node->field_anio[0]['value'];
+  	    $node->nombre_sin_anio = '';
+
+  	    $camioneta = array();
+  	    foreach ( $node->field_marca_lancha as $m )
+  	    {
+  	       $c = taxonomy_get_term($m['value']);
+  	      if($c->name == "Otro modelo"){
+  	      	$camioneta[] = $node->field_otro_modelo[0]['value'];
+  	      }else{
+  	      	$camioneta[] = $c->name;
+  	      }
+
+  	    }
+  	    $node->nombre .= ' '.implode(' ', $camioneta);
+  	    $node->nombre_sin_anio .= implode(' ', $camioneta);
+  	    
+  	    //
+  	    // Calcula la fecha de vigencia de todos los anuncios 
+  	    //
+  	    switch($node->field_tipo_anunio[0]['nid'])
+  	    {
+	        case 63: //gratuito, 30 dias
+	          
+	          $vence = strtotime( '+30 days' , $node->field_vigencia[0]['value'] );
+	          $node->vigencia = date( 'M/d/Y', $vence );
+	          $node->vencido = ( $vence > time() ) ? false : true;
+	          
+	        break;
+	        case 53: //basico, 60 dias
+	          
+	          $vence = strtotime( '+60 days' , $node->field_vigencia[0]['value'] );
+	          $node->vigencia = date( 'M/d/Y', $vence );
+	          $node->vencido = ( $vence > time() ) ? false : true;
+	          
+	        break;
+	        default: // premium
+	    
+	          $vence = strtotime( '+30 days' , $node->field_vigencia[0]['value'] );
+	          $node->vigencia = date( 'M/d/Y', $vence );
+	          $node->vencido = ( $vence > time() ) ? false : true;
+	    
+	        break;	
+  	    }
+  	    //$node->vencimiento
+  	    
+  	  break;
+ 
+ 	  case 'extremo':
+  	  
+  	    //
+  	    // Carga nombre de carro con taxonomia y anio 
+  	    //
+  	    $node->nombre = $node->field_anio[0]['value'];
+  	    $node->nombre_sin_anio = '';
+
+  	    $camioneta = array();
+  	    foreach ( $node->field_marca_extremo as $m )
+  	    {
+  	       $c = taxonomy_get_term($m['value']);
+  	      if($c->name == "Otro modelo"){
+  	      	$camioneta[] = $node->field_otro_modelo[0]['value'];
+  	      }else{
+  	      	$camioneta[] = $c->name;
+  	      }
+
+  	    }
+  	    $node->nombre .= ' '.implode(' ', $camioneta);
+  	    $node->nombre_sin_anio .= implode(' ', $camioneta);
+  	    
+  	    //
+  	    // Calcula la fecha de vigencia de todos los anuncios 
+  	    //
+  	    switch($node->field_tipo_anunio[0]['nid'])
+  	    {
+	        case 63: //gratuito, 30 dias
+	          
+	          $vence = strtotime( '+30 days' , $node->field_vigencia[0]['value'] );
+	          $node->vigencia = date( 'M/d/Y', $vence );
+	          $node->vencido = ( $vence > time() ) ? false : true;
+	          
+	        break;
+	        case 53: //basico, 60 dias
+	          
+	          $vence = strtotime( '+60 days' , $node->field_vigencia[0]['value'] );
+	          $node->vigencia = date( 'M/d/Y', $vence );
+	          $node->vencido = ( $vence > time() ) ? false : true;
+	          
+	        break;
+	        default: // premium
+	    
+	          $vence = strtotime( '+30 days' , $node->field_vigencia[0]['value'] );
+	          $node->vigencia = date( 'M/d/Y', $vence );
+	          $node->vencido = ( $vence > time() ) ? false : true;
+	    
+	        break;	
+  	    }
+  	    //$node->vencimiento
+  	    
+  	  break;
+  	  
+  	   case 'otros':
+  	  
+  	    //
+  	    // Carga nombre de carro con taxonomia y anio 
+  	    //
+  	    $node->nombre = $node->field_anio[0]['value'];
+  	    $node->nombre_sin_anio = '';
+
+  	    $camioneta = array();
+  	    foreach ( $node->field_marca_otros as $m )
+  	    {
+  	       $c = taxonomy_get_term($m['value']);
+  	      if($c->name == "Otro modelo"){
+  	      	$camioneta[] = $node->field_otro_modelo[0]['value'];
+  	      }else{
+  	      	$camioneta[] = $c->name;
+  	      }
+
+  	    }
+  	    $node->nombre .= ' '.implode(' ', $camioneta);
+  	    $node->nombre_sin_anio .= implode(' ', $camioneta);
+  	    
+  	    //
+  	    // Calcula la fecha de vigencia de todos los anuncios 
+  	    //
+  	    switch($node->field_tipo_anunio[0]['nid'])
+  	    {
+	        case 63: //gratuito, 30 dias
+	          
+	          $vence = strtotime( '+30 days' , $node->field_vigencia[0]['value'] );
+	          $node->vigencia = date( 'M/d/Y', $vence );
+	          $node->vencido = ( $vence > time() ) ? false : true;
+	          
+	        break;
+	        case 53: //basico, 60 dias
+	          
+	          $vence = strtotime( '+60 days' , $node->field_vigencia[0]['value'] );
+	          $node->vigencia = date( 'M/d/Y', $vence );
+	          $node->vencido = ( $vence > time() ) ? false : true;
+	          
+	        break;
+	        default: // premium
+	    
+	          $vence = strtotime( '+30 days' , $node->field_vigencia[0]['value'] );
+	          $node->vigencia = date( 'M/d/Y', $vence );
+	          $node->vencido = ( $vence > time() ) ? false : true;
+	    
+	        break;	
+  	    }
+  	    //$node->vencimiento
+  	    
+  	  break;
+
+
 
   	}
 	}
