@@ -1,6 +1,6 @@
 <div id="node-<?php print $node->nid; ?>" class="anuncio600 <?php print $classes; ?>"><div class="node-inner">
   
-  <h2><?=t('Paso 5: Revisi&oacute;n')?></h2>
+  <h2><?=t('Paso 6: Revisi&oacute;n')?></h2>
   <p><?=t('Revise que toda la informaci&oacute;n proporcionada sea la correcta.')?></p>
 
   <fieldset class="clear-block">

@@ -117,7 +117,6 @@ function motores_preprocess(&$vars, $hook) {
  */
 function motores_preprocess_page(&$vars, $hook) 
 {
-	global $user;
 	
 	if ( $vars['is_front'] )
 	{
@@ -128,6 +127,11 @@ function motores_preprocess_page(&$vars, $hook)
   {
     case 'vehiculo':
     case 'carro':
+    case 'moto':
+    case 'lancha':
+    case 'camioneta':
+    case 'extremo':
+    case 'otros':
     
     // Modificar el titulo que aparece en la ventana del browser
     // para que muestre el nombre del vehiculo
@@ -135,6 +139,10 @@ function motores_preprocess_page(&$vars, $hook)
     
     unset($vars['title']);
     unset($vars['tabs']);
+   
+   	//dpm($vars['node']);
+    
+    
     
     // Si se esta editando el nodo, poner body classes del multistep
     if ( arg(2) == 'edit' )
@@ -409,3 +417,4 @@ function motores_preprocess_block(&$vars, $hook) {
 {
   print_r($vars);
 }*/
+

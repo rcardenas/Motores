@@ -78,7 +78,7 @@
   <?php endif; ?>
 
   <? if ($page && $anuncio): ?>
-  <div id="main-desc" class="greybox">
+  <div id="main-desc" class="ha">
     
     <div class="desc-inner">
       <div class="precio-fecha">
@@ -139,6 +139,16 @@
         <?=$field_equipo_rendered?>
         <?=$field_proteccion_rendered?>
         <?=$field_seguridad_rendered?>
+      </div>
+       <div class="detalles-row clearfix">
+        <?=$field_blindaje_rendered?>
+        <?=$field_performance_rendered?>
+        <?=$field_documentacion_rendered?>
+      </div>
+      <div class="detalles-row clearfix">
+        <?=$field_extra_rendered?>
+        <?=$field_gadgets_rendered?>
+        <?=$field_otro_rendered?>
       </div>
     </div>
   </div>
