@@ -334,14 +334,14 @@ function db_rewrite_sql($query, $primary_table = 'n', $primary_field = 'nid',  $
 
   if (!empty($where) || !empty($join)) {
     $pattern = '{
-      # Beginning of the string
+      #Beginning of the string
       ^
       ((?P<anonymous_view>
-        # Everything within this set of parentheses is named "anonymous view"
+        #Everything within this set of parentheses is named "anonymous view"
         (?:
-          [^()]++                   # anything not parentheses
+          [^()]++                   #anything not parentheses
         |
-          \( (?P>anonymous_view) \)          # an open parenthesis, more "anonymous view" and finally a close parenthesis.
+          \( (?P>anonymous_view) \)          #an open parenthesis, more "anonymous view" and finally a close parenthesis.
         )*
       )[^()]+WHERE)
     }x';

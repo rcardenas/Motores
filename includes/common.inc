@@ -988,19 +988,19 @@ function valid_email_address($mail) {
 function valid_url($url, $absolute = FALSE) {
   if ($absolute) {
     return (bool)preg_match("
-      /^                                                      # Start at the beginning of the text
-      (?:ftp|https?|feed):\/\/                                # Look for ftp, http, https or feed schemes
-      (?:                                                     # Userinfo (optional) which is typically
-        (?:(?:[\w\.\-\+!$&'\(\)*\+,;=]|%[0-9a-f]{2})+:)*      # a username or a username and password
-        (?:[\w\.\-\+%!$&'\(\)*\+,;=]|%[0-9a-f]{2})+@          # combination
+      /^                                                      #Start at the beginning of the text
+      (?:ftp|https?|feed):\/\/                                #Look for ftp, http, https or feed schemes
+      (?:                                                     #Userinfo (optional) which is typically
+        (?:(?:[\w\.\-\+!$&'\(\)*\+,;=]|%[0-9a-f]{2})+:)*      #a username or a username and password
+        (?:[\w\.\-\+%!$&'\(\)*\+,;=]|%[0-9a-f]{2})+@          #combination
       )?
       (?:
-        (?:[a-z0-9\-\.]|%[0-9a-f]{2})+                        # A domain name or a IPv4 address
-        |(?:\[(?:[0-9a-f]{0,4}:)*(?:[0-9a-f]{0,4})\])         # or a well formed IPv6 address
+        (?:[a-z0-9\-\.]|%[0-9a-f]{2})+                        #A domain name or a IPv4 address
+        |(?:\[(?:[0-9a-f]{0,4}:)*(?:[0-9a-f]{0,4})\])         #or a well formed IPv6 address
       )
-      (?::[0-9]+)?                                            # Server port number (optional)
+      (?::[0-9]+)?                                            #Server port number (optional)
       (?:[\/|\?]
-        (?:[\w#!:\.\?\+=&@$'~*,;\/\(\)\[\]\-]|%[0-9a-f]{2})   # The path and query (optional)
+        (?:[\w#!:\.\?\+=&@$'~*,;\/\(\)\[\]\-]|%[0-9a-f]{2})   #The path and query (optional)
       *)?
     $/xi", $url);
   }
@@ -2022,8 +2022,8 @@ function drupal_load_stylesheet($file, $optimize = NULL) {
     if ($_optimize) {
       // Perform some safe CSS optimizations.
       $contents = preg_replace('<
-        \s*([@{}:;,]|\)\s|\s\()\s* |  # Remove whitespace around separators, but keep space around parentheses.
-        /\*([^*\\\\]|\*(?!/))+\*/     # Remove comments that are not CSS hacks.
+        \s*([@{}:;,]|\)\s|\s\()\s* |  #Remove whitespace around separators, but keep space around parentheses.
+        /\*([^*\\\\]|\*(?!/))+\*/     #Remove comments that are not CSS hacks.
         >x', '\1', $contents);
     }
 
@@ -3567,17 +3567,17 @@ function drupal_parse_info_file($filename) {
 
   $data = file_get_contents($filename);
   if (preg_match_all('
-    @^\s*                           # Start at the beginning of a line, ignoring leading whitespace
+    @^\s*                           #Start at the beginning of a line, ignoring leading whitespace
     ((?:
-      [^=;\[\]]|                    # Key names cannot contain equal signs, semi-colons or square brackets,
-      \[[^\[\]]*\]                  # unless they are balanced and not nested
+      [^=;\[\]]|                    #Key names cannot contain equal signs, semi-colons or square brackets,
+      \[[^\[\]]*\]                  #unless they are balanced and not nested
     )+?)
-    \s*=\s*                         # Key/value pairs are separated by equal signs (ignoring white-space)
+    \s*=\s*                         #Key/value pairs are separated by equal signs (ignoring white-space)
     (?:
-      ("(?:[^"]|(?<=\\\\)")*")|     # Double-quoted string, which may contain slash-escaped quotes/slashes
-      (\'(?:[^\']|(?<=\\\\)\')*\')| # Single-quoted string, which may contain slash-escaped quotes/slashes
-      ([^\r\n]*?)                   # Non-quoted string
-    )\s*$                           # Stop at the next end of a line, ignoring trailing whitespace
+      ("(?:[^"]|(?<=\\\\)")*")|     #Double-quoted string, which may contain slash-escaped quotes/slashes
+      (\'(?:[^\']|(?<=\\\\)\')*\')| #Single-quoted string, which may contain slash-escaped quotes/slashes
+      ([^\r\n]*?)                   #Non-quoted string
+    )\s*$                           #Stop at the next end of a line, ignoring trailing whitespace
     @msx', $data, $matches, PREG_SET_ORDER)) {
     foreach ($matches as $match) {
       // Fetch the key and value string

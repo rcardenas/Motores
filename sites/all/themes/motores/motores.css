@@ -2378,11 +2378,24 @@
 .page-user-register #user-register,
 #user-profile-form
 {
+}
+
+.page-user-register #user-register fieldset , .page-user-password #user-pass
+{
 	border: 2px solid #CFCFCF;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
-}
+	margin-top: 15px;
+	}
+
+ .page-user-password #user-pass div
+ {
+    width: 600px;
+	margin: 10px auto;
+
+	 }
+
 .page-user-register #user-register fieldset div,
 #user-profile-form fieldset div
 {
@@ -2498,12 +2511,10 @@
 .page-user-register #user-register h2,
 #user-profile-form h2
 {
-	background-color: #0093FF;
-	color: #FFFFFF;
 	padding: 10px 12px;
 	margin-top: 0;
 	margin-bottom: 20px;
-	text-align: center;
+	text-align:left;
 }
 /* @end */
 /* @group Home top search */
@@ -2949,4 +2960,13 @@
 	text-transform:capitalize;
 }
 
-/* @end */
+#multistep-group_equipo .form-item
+{
+	width: 250px;
+	float:left;
+	}
+#search-container .form-checkboxes .form-item
+{
+	width: 50%;
+	float:left;
+	}
