@@ -2661,7 +2661,9 @@ html[xmlns] .clearfix {
 }
 /* @end */
 /* @group Refine search */
-#block-motores_search-0 .content
+#block-motores_search-0 .content,
+#block-motores_search-3 .content,
+#block-motores_search-4 .content
 {
 	background-color: #0093FF;
 	padding: 10px;
@@ -2673,22 +2675,32 @@ html[xmlns] .clearfix {
 	border-bottom-left-radius: 8px;
 	border-bottom-right-radius: 8px;
 }
-#block-motores_search-0 .form-item
+#block-motores_search-0 .form-item,
+#block-motores_search-3 .form-item,
+#block-motores_search-4 .form-item
 {
 	margin: 0;
 	margin-bottom: 10px;
 }
 #block-motores_search-0 .form-text,
-#block-motores_search-0 .form-select
+#block-motores_search-0 .form-select,
+#block-motores_search-3 .form-text,
+#block-motores_search-3 .form-select,
+#block-motores_search-4 .form-text,
+#block-motores_search-4 .form-select
 {
 	width: 220px;
 }
-#block-motores_search-0 #edit-keywords-1-wrapper
+#block-motores_search-0 #edit-keywords-1-wrapper,
+#block-motores_search-3 #edit-keywords-1-wrapper,
+#block-motores_search-4 #edit-keywords-1-wrapper
 {
 	border-bottom: 1px solid #D3D3D3;
 	padding-bottom: 10px;
 }
-#block-motores_search-0 h3
+#block-motores_search-0 h3,
+#block-motores_search-3 h3,
+#block-motores_search-4 h3
 {
 	font-weight: normal;
 	margin: 0;
@@ -2696,12 +2708,16 @@ html[xmlns] .clearfix {
 	border-bottom: 1px solid #D3D3D3;
 	padding-bottom: 10px;
 }
-#block-motores_search-0 label
+#block-motores_search-0 label,
+#block-motores_search-3 label,
+#block-motores_search-4 label
 {
 	color: #0093FF;
 	margin-bottom: 10px;
 }
-#block-motores_search-0 .content form
+#block-motores_search-0 .content form,
+#block-motores_search-3 .content form,
+#block-motores_search-4 .content form
 {
 	background-color: #FFFFFF;
 	padding: 10px;
@@ -2714,7 +2730,19 @@ html[xmlns] .clearfix {
 .not-front #motores-search-refine-form #edit-year-min,
 .not-front #motores-search-refine-form #edit-year-max,
 .not-front #motores-search-refine-form #edit-km-min,
-.not-front #motores-search-refine-form #edit-km-max
+.not-front #motores-search-refine-form #edit-km-max,
+.not-front #motores-search-refine-nuevos-form #edit-precio-min-1,
+.not-front #motores-search-refine-nuevos-form #edit-precio-max-1,
+.not-front #motores-search-refine-nuevos-form #edit-year-min-1,
+.not-front #motores-search-refine-nuevos-form #edit-year-max-1,
+.not-front #motores-search-refine-nuevos-form #edit-km-min-1,
+.not-front #motores-search-refine-nuevos-form #edit-km-max-1,
+.not-front #motores-search-refine-motos-form #edit-precio-min-2,
+.not-front #motores-search-refine-motos-form #edit-precio-max-2,
+.not-front #motores-search-refine-motos-form #edit-year-min-2,
+.not-front #motores-search-refine-motos-form #edit-year-max-2,
+.not-front #motores-search-refine-motos-form #edit-km-min-2,
+.not-front #motores-search-refine-motos-form #edit-km-max-2
 {
 	float: left;
 	width: 100px;
@@ -2725,32 +2753,56 @@ html[xmlns] .clearfix {
 .front #motores-search-refine-form #edit-anio-min,
 .front #motores-search-refine-form #edit-anio-max,
 .front #motores-search-refine-form #edit-km-min,
-.front #motores-search-refine-form #edit-km-max
+.front #motores-search-refine-form #edit-km-max,
+.front #motores-search-refine-nuevos-form #edit-precio-min-1,
+.front #motores-search-refine-nuevos-form #edit-precio-max-1,
+.front #motores-search-refine-nuevos-form #edit-anio-min-1,
+.front #motores-search-refine-nuevos-form #edit-anio-max-1,
+.front #motores-search-refine-nuevos-form #edit-km-min-1,
+.front #motores-search-refine-nuevos-form #edit-km-max-1,
+.front #motores-search-refine-motos-form #edit-precio-min-2,
+.front #motores-search-refine-motos-form #edit-precio-max-2,
+.front #motores-search-refine-motos-form #edit-anio-min-2,
+.front #motores-search-refine-motos-form #edit-anio-max-2,
+.front #motores-search-refine-motos-form #edit-km-min-2,
+.front #motores-search-refine-motos-form #edit-km-max-2
 {
 	float: left;
 	width: 130px;
 	margin-right: 20px;
 }
-.front #motores-search-refine-form #edit-km-max
+.front #motores-search-refine-form #edit-km-max,
+.front #motores-search-refine-nuevos-form #edit-km-max-1,
+.front #motores-search-refine-motos-form #edit-km-max-2
 {
 	margin-top: -13px;
 }
-#motores-search-refine-form .form-checkboxes
+#motores-search-refine-form .form-checkboxes,
+#motores-search-refine-motos-form .form-checkboxes,
+#motores-search-refine-nuevos-form .form-checkboxes
 {
 	clear: both;
 }
 #motores-search-refine-form #edit-year-min,
-#motores-search-refine-form #edit-year-max
+#motores-search-refine-form #edit-year-max,
+#motores-search-refine-motos-form #edit-year-min,
+#motores-search-refine-motos-form #edit-year-max,
+#motores-search-refine-nuevos-form #edit-year-min,
+#motores-search-refine-nuevos-form #edit-year-max
 {
 	margin-top: 10px;
 }
-#motores-search-refine-form #edit-submit
+#motores-search-refine-form #edit-submit,
+#motores-search-refine-motos-form #edit-submit,
+#motores-search-refine-nuevos-form #edit-submit
 {
 	clear: both;
 	margin-top: 10px;
 	margin-left: 165px;
 }
-#motores-search-refine-form #edit-km-min-wrapper
+#motores-search-refine-form #edit-km-min-wrapper,
+#motores-search-refine-motos-form #edit-km-min-wrapper,
+#motores-search-refine-nuevos-form #edit-km-min-wrapper
 {
 	clear: both;
 	padding-top: 10px;
@@ -2824,13 +2876,17 @@ html[xmlns] .clearfix {
 	padding-bottom: 10px;
 }
 
-.front #motores-search-refine-form #edit-submit-1
+.front #motores-search-refine-form #edit-submit-1,
+.front #motores-search-refine-nuevos-form #edit-submit-2,
+.front #motores-search-refine-motos-form #edit-submit-3
 {
 	display: block;
 	margin-left: auto;
 	margin-right: 10px;
 }
-.front #motores-search-refine-form #edit-keywords-wrapper #edit-submit-1
+.front #motores-search-refine-form #edit-keywords-1-wrapper #edit-submit-1,
+.front #motores-search-refine-nuevos-form #edit-keywords-2-wrapper #edit-submit-2,
+.front #motores-search-refine-motos-form #edit-keywords-3-wrapper #edit-submit-3
 {
 	margin: 0;
 	margin-top: 10px;
@@ -2841,18 +2897,24 @@ html[xmlns] .clearfix {
 {
 	margin-top: 10px;
 }
-.front #motores-search-refine-form
+.front #motores-search-refine-form,
+.front #motores-search-refine-nuevos-form,
+.front #motores-search-refine-motos-form
 {
 	border-right:1px solid #CCCCCC;
 	width:50%;
 }
-.front #motores-search-refine-form #edit-keywords-wrapper
+.front #motores-search-refine-form #edit-keywords-1-wrapper,
+.front #motores-search-refine-nuevos-form #edit-keywords-2-wrapper,
+.front #motores-search-refine-motos-form #edit-keywords-3-wrapper
 {
 	margin-left:325px;
 	margin-top:-28px;
 	position:absolute;
 }
-.front #motores-search-refine-form #edit-keywords
+.front #motores-search-refine-form #edit-keywords-1,
+.front #motores-search-refine-nuevos-form #edit-keywords-2,
+.front #motores-search-refine-motos-form #edit-keywords-3
 {
 	width: 278px;
 }
@@ -2986,6 +3048,11 @@ html[xmlns] .clearfix {
 	padding-left:25px;
 	position:absolute;
 	text-transform:capitalize;
+}
+
+.front #motores-search-refine-nuevos-form,
+.front #motores-search-refine-motos-form{
+	display: none;
 }
 
 /* @end */
