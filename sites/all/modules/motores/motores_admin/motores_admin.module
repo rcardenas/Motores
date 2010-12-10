@@ -657,3 +657,20 @@ function motores_admin_eliminar_user()
         array('%uid'=>'C-'.arg(2)))."</p><p>".l('Eliminar usuario y anuncios','motores_admin/delete_user_proc/'.arg(2),array('query'=>'destination='.$_GET['destination']))."</p>";
   return $r;
 }
+
+
+
+function motores_admin_form_alter(&$form, $form_state, $form_id) {
+
+global $user;
+
+	switch ($form_id)
+	{
+		case 'user_pass':
+		 
+		 $form['name']['#prefix'] = '<h2>Se te olvid&oacute; tu contrase&ntilde;a de Todo de Motores?</h2><div class="recupera-contra">Introduce el correo electr&oacute;nico que utilizaste para crear tu cuenta. Inmediatamente te enviaremos un correo con una liga de una p&aacute;gina que te permita reestablecer  tu contraseña.</div>';
+		 
+		 $form['submit']['#value'] = 'Continuar';
+		break;
+	}
+}
