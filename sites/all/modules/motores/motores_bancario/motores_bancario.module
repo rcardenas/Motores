@@ -1,0 +1,35 @@
+<?php
+// $Id$
+/**
+* @file
+* A Test Module.
+*/
+
+/*******************************************************************************
+* Hook Functions (Drupal)
+******************************************************************************/
+
+/**
+* Display help and module information
+* @param path which path of the site we're displaying help
+* @param arg array that holds the current path as would be returned from arg() function
+* @return help text for the path
+*/
+function motores_bancario_help($path, $arg) {
+    //$output = '<p>'.  t("motores_bancario is a simple module to test functions and pages in Drupal");
+    //    The line above outputs in ALL admin/module pages
+    switch ($path) {
+        case "admin/help/motores_bancario":
+        $output = '<p>'.  t("motores_bancario is a simple module to test functions and pages in Drupal") .'</p>';
+            break;
+    }
+    return $output;
+} // function motores_bancario_help
+
+/**
+* Valid permissions for this module
+* @return array An array of valid permissions for the motores_bancario module
++ç
+**/
+
+?>

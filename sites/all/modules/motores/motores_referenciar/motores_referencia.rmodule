@@ -1,0 +1,16 @@
+<?php
+function motores_referencia_help($path, $arg) {
+    //$output = '<p>'.  t("test_module is a simple module to test functions and pages in Drupal");
+    //    The line above outputs in ALL admin/module pages
+    switch ($path) {
+        case "admin/help/motores_referencia":
+        $output = '<p>'.  t("test_module is a simple module to test functions and pages in Drupal") .'</p>';
+            break;
+    }
+    return $output;
+} // function test_module_help
+
+function motores_referencia_perm() {
+    return array('administer motores_referencia', 'access motores_referencia content');
+} // function test_module_perm()
+?>

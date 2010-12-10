@@ -1,0 +1,45 @@
+<?php
+// $Id$
+
+/**
+* Install the motores_referencia module, including it's content (node)
+* type.
+* @file
+*/
+
+/**
+* Implementation of hook_install()
+*/
+function motores_referencia_install() {
+    drupal_install_schema('motores_referencia');
+    db_query("DELETE FROM {cache}");
+}
+
+/**
+* Implementation of hook_uninstall()
+*/
+function motores_referencia_uninstall() {
+    drupal_uninstall_schema('motores_referencia');
+}
+
+/**
+* Implementation of hook_schema()
+* @return array of Schema API table definitions.
+*/
+function motores_referencia_schema() {
+    $schema['motores_referencia_log'] = array(
+        'fields' => array(
+            'id' => array('type' => 'serial', 'size' => 'big', 'unsigned' => TRUE, 'not null' => TRUE,
+                'description'=> "Log ID"),
+           
+            'timestamp' => array('type' => 'int', 'not null' => TRUE, 'default' => 0,
+                'description'=> "Timestamp (Unix Timestamp, which is limited to values above Jan 1, 1970)"),
+            'message' => array('type' => 'text', 'not null' => FALSE,
+                'description'=> "Log messages."),  //NOTE:  On MySQL, text fields cannot have default values.
+        ),
+        'primary key' => array('id') //Don't put a comma after primary key definition, since doing so will cause database errors.
+    );
+   
+    return $schema;
+}
+?>

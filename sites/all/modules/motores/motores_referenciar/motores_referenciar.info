@@ -1,0 +1,6 @@
+; $Id$
+name = Motores referencia
+description = referencia financiera.
+core = 6.x
+package = Techbase
+
