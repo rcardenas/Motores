@@ -1005,7 +1005,32 @@ function motores_anuncio_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL)
       //taxonomy_node_save($node, $args);
       $node->field_marca[] = $node->field_marca[0];
       $node->field_marca[0] = array('value'=>$args[0]);
-      node_save($node);
+      
+  	    //
+  	    // Carga nombre de carro con taxonomia y anio para guardarlos en base de datos
+  	    //
+  	    $node->nombre = $node->field_anio[0]['value'];
+  	    $node->nombre_sin_anio = '';
+
+  	    $carro = array();
+  	    foreach ( $node->field_marca as $m )
+  	    {
+  	      $c = taxonomy_get_term($m['value']);
+  	      if($c->name == "Otro modelo"){
+  	      	$carro[] = $node->field_otro_modelo[0]['value'];
+  	      	$node->field_fake_name[0]['value'] = $node->field_otro_modelo[0]['value'];
+  	      }else{
+  	      	$else = true;
+  	      	$carro[] = $c->name;
+  	      }
+  	    }
+  	    $node->nombre .= ' '.implode(' ', $carro);
+  	    $node->nombre_sin_anio .= implode(' ', $carro);
+      
+      	if($else){
+        $node->field_fake_name[0]['value']=$node->nombre;
+        }
+
       break;
       
       
@@ -1021,7 +1046,34 @@ function motores_anuncio_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL)
       //taxonomy_node_save($node, $args);
       $node->field_marca_moto[] = $node->field_marca_moto[0];
       $node->field_marca_moto[0] = array('value'=>$args[0]);
+      
+       //
+  	    // Carga nombre de carro con taxonomia y anio para guardarlos en base de datos
+  	    //
+  	    $node->nombre = $node->field_anio[0]['value'];
+  	    $node->nombre_sin_anio = '';
+
+  	    $carro = array();
+  	    foreach ( $node->field_marca_moto as $m )
+  	    {
+  	      $c = taxonomy_get_term($m['value']);
+  	      if($c->name == "Otro modelo"){
+  	      	$carro[] = $node->field_otro_modelo[0]['value'];
+  	      	$node->field_fake_name[0]['value'] = $node->field_otro_modelo[0]['value'];
+  	      }else{
+  	      	$else = true;
+  	      	$carro[] = $c->name;
+  	      }
+  	    }
+  	    $node->nombre .= ' '.implode(' ', $carro);
+  	    $node->nombre_sin_anio .= implode(' ', $carro);
+      
+      	if($else){
+        $node->field_fake_name[0]['value']=$node->nombre;
+        }
+        
       node_save($node);
+      print_r($vars['node']);
       break;
     
     
@@ -1037,6 +1089,29 @@ function motores_anuncio_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL)
       //taxonomy_node_save($node, $args);
       $node->field_marca_camioneta[] = $node->field_marca_camioneta[0];
       $node->field_marca_camioneta[0] = array('value'=>$args[0]);
+      
+       //
+  	    // Carga nombre de carro con taxonomia y anio para guardarlos en base de datos
+  	    //
+  	    $node->nombre = $node->field_anio[0]['value'];
+  	    $node->nombre_sin_anio = '';
+
+  	    $carro = array();
+  	    foreach ( $node->field_marca_camioneta as $m )
+  	    {
+  	      $c = taxonomy_get_term($m['value']);
+  	      if($c->name == "Otro modelo"){
+  	      	$carro[] = $node->field_otro_modelo[0]['value'];
+  	      }else{
+  	      	$carro[] = $c->name;
+  	      }
+  	    }
+  	    $node->nombre .= ' '.implode(' ', $carro);
+  	    $node->nombre_sin_anio .= implode(' ', $carro);
+      
+      
+        $node->field_fake_name[0]['value']=$node->nombre;
+        
       node_save($node);
       break;
     
@@ -1053,6 +1128,29 @@ function motores_anuncio_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL)
       //taxonomy_node_save($node, $args);
       $node->field_marca_lancha[] = $node->field_marca_lancha[0];
       $node->field_marca_lancha[0] = array('value'=>$args[0]);
+      
+       //
+  	    // Carga nombre de carro con taxonomia y anio para guardarlos en base de datos
+  	    //
+  	    $node->nombre = $node->field_anio[0]['value'];
+  	    $node->nombre_sin_anio = '';
+
+  	    $carro = array();
+  	    foreach ( $node->field_marca_lancha as $m )
+  	    {
+  	      $c = taxonomy_get_term($m['value']);
+  	      if($c->name == "Otro modelo"){
+  	      	$carro[] = $node->field_otro_modelo[0]['value'];
+  	      }else{
+  	      	$carro[] = $c->name;
+  	      }
+  	    }
+  	    $node->nombre .= ' '.implode(' ', $carro);
+  	    $node->nombre_sin_anio .= implode(' ', $carro);
+      
+      
+        $node->field_fake_name[0]['value']=$node->nombre;
+        
       node_save($node);
       break;
     
@@ -1069,6 +1167,29 @@ function motores_anuncio_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL)
       //taxonomy_node_save($node, $args);
       $node->field_marca_extremo[] = $node->field_marca_extremo[0];
       $node->field_marca_extremo[0] = array('value'=>$args[0]);
+      
+       //
+  	    // Carga nombre de carro con taxonomia y anio para guardarlos en base de datos
+  	    //
+  	    $node->nombre = $node->field_anio[0]['value'];
+  	    $node->nombre_sin_anio = '';
+
+  	    $carro = array();
+  	    foreach ( $node->field_marca_extremo as $m )
+  	    {
+  	      $c = taxonomy_get_term($m['value']);
+  	      if($c->name == "Otro modelo"){
+  	      	$carro[] = $node->field_otro_modelo[0]['value'];
+  	      }else{
+  	      	$carro[] = $c->name;
+  	      }
+  	    }
+  	    $node->nombre .= ' '.implode(' ', $carro);
+  	    $node->nombre_sin_anio .= implode(' ', $carro);
+      
+      
+        $node->field_fake_name[0]['value']=$node->nombre;
+        
       node_save($node);
       break;
     
@@ -1085,6 +1206,29 @@ function motores_anuncio_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL)
       //taxonomy_node_save($node, $args);
       $node->field_marca_otros[] = $node->field_marca_otros[0];
       $node->field_marca_otros[0] = array('value'=>$args[0]);
+      
+       //
+  	    // Carga nombre de carro con taxonomia y anio para guardarlos en base de datos
+  	    //
+  	    $node->nombre = $node->field_anio[0]['value'];
+  	    $node->nombre_sin_anio = '';
+
+  	    $carro = array();
+  	    foreach ( $node->field_marca_otros as $m )
+  	    {
+  	      $c = taxonomy_get_term($m['value']);
+  	      if($c->name == "Otro modelo"){
+  	      	$carro[] = $node->field_otro_modelo[0]['value'];
+  	      }else{
+  	      	$carro[] = $c->name;
+  	      }
+  	    }
+  	    $node->nombre .= ' '.implode(' ', $carro);
+  	    $node->nombre_sin_anio .= implode(' ', $carro);
+      
+      
+        $node->field_fake_name[0]['value']=$node->nombre;
+        
       node_save($node);
       break;
     
