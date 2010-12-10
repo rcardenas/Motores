@@ -308,11 +308,50 @@ html[xmlns] .clearfix {
   #closure-blocks /* Wrapper for any blocks placed in the closure region */
   {
 	border-top:3px solid #CBCBCB;
+    background-color: #3A3A3A;
 	color:#757979;
 	font-size:12px;
 	margin-top:24px;
-	text-align:center;
+	text-align:left;
   }
+  #closure-blocks a:link , #closure-blocks a:visited ,  #closure-blocks a:hover, #closure-blocks a:active {
+	color: #CCC;
+	text-decoration: none;
+}
+   #footer_logo
+{
+	width:191px;
+	height:91px;
+	background-image: url(footer.png);
+	}
+ #footer_links
+{
+	width:80%;
+	float:left;
+	}	
+ .footer_linea_link,  .footer_linea_marca
+{
+	padding-top: 10px;
+	padding-bottom: 5px;
+	width:100%;
+	float:none;
+	}
+ .footer_linea_marca
+{
+	font-size: xx-small;
+	padding-left: 20px;
+	}
+
+#FooterlinkSup li {
+	list-style-type: none;
+	padding-right: 10px;
+	padding-left: 10px;
+	list-style-image: url(img/divider.png);
+	float: left;
+	font-size: x-small;
+	margin-left: 10px;
+}
+
 
 /** Drupal nodes **/
   .node /* Node wrapper */
