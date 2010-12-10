@@ -3102,4 +3102,8 @@ html[xmlns] .clearfix {
 	display: none;
 }
 
+#edit-field-fake-name-0-value-wrapper{
+	visibility: hidden;
+}
+
 /* @end */
