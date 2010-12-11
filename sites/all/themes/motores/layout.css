@@ -35,9 +35,15 @@
   }
   #closure-blocks
   {
-	margin: 0px;
-	padding: 0px;
-	   }
+    /*
+     * If you want to make the page a fixed width and centered in the viewport,
+     * this is the standards-compliant way to do that. See also the ie.css file
+     * for the necessary IE5 hack to center a div.
+     */
+    margin-left: auto;
+    margin-right: auto;
+    width: 960px;
+  }
 
   #page-inner
   {

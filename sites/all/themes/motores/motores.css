@@ -1519,7 +1519,7 @@ html[xmlns] .clearfix {
 	width: 100%;
 	margin: 0;
 }
-.page-crear-anuncio .table,
+.page-crear-anuncio #content .table,
 .section-tarifas .table
 {
 	border: 2px solid #CFCFCF;
