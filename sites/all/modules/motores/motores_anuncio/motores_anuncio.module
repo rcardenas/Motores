@@ -115,7 +115,7 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
         **********/
         $form['group_anio_submodelo']['#prefix'] = '<h2>'.t('Paso 3: Año y Submodelo').'</h2>';
         $form['group_anio_submodelo']['field_anio']['#prefix'] = 
-          '<div class="nn clear-block"><div class="num">1</div><p>'.t('Seleccione la marca y sub-modelo del vehículo que desea:').'</p></div>';
+          '<div class="nn clear-block"><div class="num">1</div><p>'.t('Seleccione el año y sub-modelo del vehículo que desea:').'</p></div>';
         
         
         /**********

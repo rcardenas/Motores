@@ -308,50 +308,11 @@ html[xmlns] .clearfix {
   #closure-blocks /* Wrapper for any blocks placed in the closure region */
   {
 	border-top:3px solid #CBCBCB;
-    background-color: #3A3A3A;
 	color:#757979;
 	font-size:12px;
 	margin-top:24px;
-	text-align:left;
+	text-align:center;
   }
-  #closure-blocks a:link , #closure-blocks a:visited ,  #closure-blocks a:hover, #closure-blocks a:active {
-	color: #CCC;
-	text-decoration: none;
-}
-   #footer_logo
-{
-	width:191px;
-	height:91px;
-	background-image: url(footer.png);
-	}
- #footer_links
-{
-	width:80%;
-	float:left;
-	}	
- .footer_linea_link,  .footer_linea_marca
-{
-	padding-top: 10px;
-	padding-bottom: 5px;
-	width:100%;
-	float:none;
-	}
- .footer_linea_marca
-{
-	font-size: xx-small;
-	padding-left: 20px;
-	}
-
-#FooterlinkSup li {
-	list-style-type: none;
-	padding-right: 10px;
-	padding-left: 10px;
-	list-style-image: url(img/divider.png);
-	float: left;
-	font-size: x-small;
-	margin-left: 10px;
-}
-
 
 /** Drupal nodes **/
   .node /* Node wrapper */
@@ -1519,7 +1480,7 @@ html[xmlns] .clearfix {
 	width: 100%;
 	margin: 0;
 }
-.page-crear-anuncio #content .table,
+.page-crear-anuncio .table,
 .section-tarifas .table
 {
 	border: 2px solid #CFCFCF;
@@ -2456,9 +2417,6 @@ html[xmlns] .clearfix {
 .page-user-register #user-register,
 #user-profile-form
 {
-	width: 676px;
-	margin-left: 142px;	
-	
 }
 
 .page-user-register #user-register fieldset , .page-user-password #user-pass
@@ -2468,19 +2426,13 @@ html[xmlns] .clearfix {
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
 	margin-top: 15px;
-	
 	}
 
- .page-user-password #user-pass 
+ .page-user-password #user-pass div
  {
-	width: 645px;
-	margin-top: 10px;
-	margin-right: auto;
-	margin-bottom: 10px;
-	margin-left: auto;
-	padding-right: 15px;
-	padding-left: 15px;
-	padding-bottom: 15px;
+    width: 600px;
+	margin: 10px auto;
+
 	 }
 
 .page-user-register #user-register fieldset div,
@@ -2490,10 +2442,6 @@ html[xmlns] .clearfix {
 	margin: 10px auto;
 	height: 30px;
 }
-.page-user-register #content-header, .page-user-register #register-msg, .page-user-password #content-header
-{
-	margin-left: 142px;
-	}
 .page-user-register #user-register fieldset #usa
 {
 	margin: 0;
@@ -3151,11 +3099,7 @@ html[xmlns] .clearfix {
 	}
 .front #motores-search-refine-nuevos-form,
 .front #motores-search-refine-motos-form{
-	display: none;
-}
-
-#edit-field-fake-name-0-value-wrapper{
-	visibility: hidden;
+	display:none;
 }
 
 /* @end */

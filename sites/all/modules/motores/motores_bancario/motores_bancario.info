@@ -1,0 +1,8 @@
+; $Id$
+name = motores_bancario
+description = A motores_bancario.
+core = 6.x
+
+package = "Test"
+
+version = "6.x-0.1-dev"

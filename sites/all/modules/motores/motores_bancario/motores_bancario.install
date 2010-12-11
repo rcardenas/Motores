@@ -1,0 +1,43 @@
+<?php
+// $Id$
+
+/**
+* Install the motores_bancario module, including it's content (node)
+* type.
+* @file
+*/
+
+/**
+* Implementation of hook_install()
+*/
+function motores_bancario_install() {
+    drupal_install_schema('motores_bancario');
+    db_query("DELETE FROM {cache}");
+	db_query("ALTER TABLE `motores_referencia` CHANGE `id` `id` VARCHAR( 40 ) NOT NULL"); 
+}
+
+/**
+* Implementation of hook_uninstall()
+*/
+function motores_bancario_uninstall() {
+    drupal_uninstall_schema('motores_bancario');
+}
+
+/**
+* Implementation of hook_schema()
+* @return array of Schema API table definitions.
+*/
+function motores_bancario_schema() {
+    $schema['motores_referencia'] = array(
+    'fields' => array(
+            'id' => array('type' => 'int', 'size' => 'big', 'unsigned' => TRUE, 'not null' => TRUE,'description'=> "Referencia Bancaria"),
+         'libre' => array('type' => 'int', 'not null' => TRUE, 'default' => 0, 'description'=> "Marca si esta usada o no la referencia"),
+          'tipo' => array('type' => 'text', 'not null' => FALSE,'description'=> "Para que tipo de anuncio es "), 
+			 //NOTE:  On MySQL, text fields cannot have default values.
+        ),
+        'primary key' => array('id') //Don't put a comma after primary key definition, since doing so will cause database errors.
+    );
+   
+    return $schema;
+}
+?>
