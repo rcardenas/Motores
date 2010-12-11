@@ -20,6 +20,12 @@ function motores_search_menu()
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK
   );
+  $items['sorting'] = array(
+  	'title' => '',
+    'page callback' => 'motores_search_refine_form_submit',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK
+  );
   
   return $items;
 }
@@ -381,6 +387,7 @@ function motores_search_refine_form_submit()
   $km_min = ( $_POST['km_min'] != -1 ) ? $_POST['km_min'] : 0;
   $km_max = ( $_POST['km_max'] != -1 ) ? $_POST['km_max'] : 0;
   $keywords = ( $_POST['keywords'] != -1 ) ? $_POST['keywords'] : 0;
+  //$sort = ( $_GET['sort'] != -1 ) ? $_POST['sort'] : 0;
   
   
   // crear arreglo $form_state
@@ -402,15 +409,15 @@ function motores_search_refine_form_submit()
     {
       $query .= "INNER JOIN {term_node} t ON n.vid = t.vid ";
     }
-    if ( $precio_min || $precio_max )
+    if ( $precio_min || $precio_max || ($sort==1) )
     {
       $query .= "LEFT JOIN {content_field_precio} p ON n.vid = p.vid ";
     }
-    if ( $anio_min || $anio_max )
+    if ( $anio_min || $anio_max || ($sort==2) )
     {
       $query .= "LEFT JOIN {content_field_anio} a ON n.vid = a.vid ";
     }
-    if ( $km_min || $km_max )
+    if ( $km_min || $km_max || ($sort==3) )
     {
       $query .= "LEFT JOIN {content_field_km} k ON n.vid = k.vid ";
     }
@@ -459,6 +466,24 @@ function motores_search_refine_form_submit()
 					}
     
     $query .= implode(" AND ", $where);
+   /* 
+    if($sort){
+    	switch($sort){
+    		case 1:
+    			$query .= ' ORDER BY p.field_precio_value DESC';
+    		break;
+    	
+    		case 2:
+    			$query .= ' ORDER BY a.field_anio_value DESC';
+    		break;
+    		
+    		case 3:
+    			$query .= ' ORDER BY k.field_km_value DESC';
+    		break;
+    	}
+    }
+     */
+    
     //echo $query;
     //print_r($query);
     $db_result = db_query(db_rewrite_sql($query), $arguments);
