@@ -91,7 +91,7 @@ function motores_search_top_form()
     '3' => t('Motocicletas'),
     '4' => t('Extremo'),
     '5' => t('Lanchas'),
-    '6' => t('Otros veh&iacute;culos')
+    '6' => t('Otros vehículos')
   );
   $form['option'] = array(
     '#type' => 'select',

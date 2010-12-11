@@ -2456,6 +2456,9 @@ html[xmlns] .clearfix {
 .page-user-register #user-register,
 #user-profile-form
 {
+	width: 676px;
+	margin-left: 142px;	
+	
 }
 
 .page-user-register #user-register fieldset , .page-user-password #user-pass
@@ -2465,13 +2468,19 @@ html[xmlns] .clearfix {
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
 	margin-top: 15px;
+	
 	}
 
- .page-user-password #user-pass div
+ .page-user-password #user-pass 
  {
-    width: 600px;
-	margin: 10px auto;
-
+	width: 645px;
+	margin-top: 10px;
+	margin-right: auto;
+	margin-bottom: 10px;
+	margin-left: auto;
+	padding-right: 15px;
+	padding-left: 15px;
+	padding-bottom: 15px;
 	 }
 
 .page-user-register #user-register fieldset div,
@@ -2481,6 +2490,10 @@ html[xmlns] .clearfix {
 	margin: 10px auto;
 	height: 30px;
 }
+.page-user-register #content-header, .page-user-register #register-msg, .page-user-password #content-header
+{
+	margin-left: 142px;
+	}
 .page-user-register #user-register fieldset #usa
 {
 	margin: 0;

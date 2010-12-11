@@ -35,7 +35,7 @@ function motores_menus_markup()
           <a id="3" href="javascript:void(0)">'.t('Motocicletas').'</a>
           <a id="4" href="javascript:void(0)">'.t('Extremo').'</a>
           <a id="5" href="javascript:void(0)">'.t('Lanchas').'</a>
-          <a id="6" href="javascript:void(0)">'.t('Otros veh&iacute;culos').'</a>
+          <a id="6" href="javascript:void(0)">'.t('Otros vehículos').'</a>
         </div>
         <div id="autos-camionetas" class="clearfix panel">'.motores_menus_vocabulary('3').'</div>
         <div id="motos" class="clearfix panel">'.motores_menus_vocabulary('4').'</div>
