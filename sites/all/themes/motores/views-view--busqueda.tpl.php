@@ -30,34 +30,34 @@
  */
 ?>
 <? 
-	/*if(arg(1)=='usados')
+	if(arg(1)=='usados')
 	{
 		echo t('Ordenar por: ');	
-		echo l( t('Precio'), 'sorting/1').' - ';
-		echo l( t('Ano'), 'sorting/2').' - ';
-		echo l( t('Kilometraje'), 'sorting/3');
+		echo l( t('Precio'), 'sorting', array('query'=>'sort=1&type=usados')).' - ';
+		echo l( t('Ano'), 'sorting', array('query'=>'sort=2&type=usados')).' - ';
+		echo l( t('Kilometraje'), 'sorting', array('query'=>'sort=3&type=usados'));
 	}
 	else if(arg(1)=='nuevos')
 	{
 		echo t('Ordenar por: ');	
-		echo l( t('Precio'), 'busqueda/nuevos', array('query'=>'sort=1')).' - ';
-		echo l( t('Ano'), 'busqueda/nuevos', array('query'=>'sort=2')).' - ';
-		echo l( t('Kilometraje'), 'busqueda/nuevos', array('query'=>'sort=3'));
+		echo l( t('Precio'), 'sorting', array('query'=>'sort=1&type=nuevos')).' - ';
+		echo l( t('Ano'), 'sorting', array('query'=>'sort=2&type=nuevos')).' - ';
+		echo l( t('Kilometraje'), 'sorting', array('query'=>'sort=3&type=nuevos'));
 	}
 	else if(arg(1)=='motos')
 	{
 		echo t('Ordenar por: ');	
-		echo l( t('Precio'), 'busqueda/motos', array('query'=>'sort=1')).' - ';
-		echo l( t('Ano'), 'busqueda/motos', array('query'=>'sort=2')).' - ';
-		echo l( t('Kilometraje'), 'busqueda/motos', array('query'=>'sort=3'));
+		echo l( t('Precio'), 'sorting', array('query'=>'sort=1&type=motos')).' - ';
+		echo l( t('Ano'), 'sorting', array('query'=>'sort=2&type=motos')).' - ';
+		echo l( t('Kilometraje'), 'motos/usados/3', array('query'=>'sort=3&type=motos'));
 	}
 	else
 	{
 		echo t('Ordenar por: ');	
-		echo l( t('Precio'), 'busqueda', array('query'=>'sort=1')).' - ';
-		echo l( t('Ano'), 'busqueda', array('query'=>'sort=2')).' - ';
-		echo l( t('Kilometraje'), 'busqueda', array('query'=>'sort=3'));
-	}*/
+		echo l( t('Precio'), 'sorting', array('query'=>'sort=1&type=global')).' - ';
+		echo l( t('Ano'), 'sorting', array('query'=>'sort=2&type=global')).' - ';
+		echo l( t('Kilometraje'), 'sorting', array('query'=>'sort=3&type=global'));
+	}
 ?>
 
 
