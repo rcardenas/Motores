@@ -20,6 +20,12 @@ function motores_search_menu()
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK
   );
+  $items['sorting'] = array(
+  	'title' => '',
+    'page callback' => 'motores_search_sorting',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK
+  );
   
   return $items;
 }
@@ -381,6 +387,7 @@ function motores_search_refine_form_submit()
   $km_min = ( $_POST['km_min'] != -1 ) ? $_POST['km_min'] : 0;
   $km_max = ( $_POST['km_max'] != -1 ) ? $_POST['km_max'] : 0;
   $keywords = ( $_POST['keywords'] != -1 ) ? $_POST['keywords'] : 0;
+  //$sort = ( $_GET['sort'] != -1 ) ? $_POST['sort'] : 0;
   
   
   // crear arreglo $form_state
@@ -402,15 +409,15 @@ function motores_search_refine_form_submit()
     {
       $query .= "INNER JOIN {term_node} t ON n.vid = t.vid ";
     }
-    if ( $precio_min || $precio_max )
+    if ( $precio_min || $precio_max || ($sort==1) )
     {
       $query .= "LEFT JOIN {content_field_precio} p ON n.vid = p.vid ";
     }
-    if ( $anio_min || $anio_max )
+    if ( $anio_min || $anio_max || ($sort==2) )
     {
       $query .= "LEFT JOIN {content_field_anio} a ON n.vid = a.vid ";
     }
-    if ( $km_min || $km_max )
+    if ( $km_min || $km_max || ($sort==3) )
     {
       $query .= "LEFT JOIN {content_field_km} k ON n.vid = k.vid ";
     }
@@ -459,6 +466,24 @@ function motores_search_refine_form_submit()
 					}
     
     $query .= implode(" AND ", $where);
+   /* 
+    if($sort){
+    	switch($sort){
+    		case 1:
+    			$query .= ' ORDER BY p.field_precio_value DESC';
+    		break;
+    	
+    		case 2:
+    			$query .= ' ORDER BY a.field_anio_value DESC';
+    		break;
+    		
+    		case 3:
+    			$query .= ' ORDER BY k.field_km_value DESC';
+    		break;
+    	}
+    }
+     */
+    
     //echo $query;
     //print_r($query);
     $db_result = db_query(db_rewrite_sql($query), $arguments);
@@ -1046,5 +1071,157 @@ function motores_search_refine_motos_form_submit()
   }
   
   drupal_goto('busqueda/motos');
+}
+
+
+/////////////////////////////////////////
+// SORTING DE LAS BUSQUEDAS FILTRADAS //
+///////////////////////////////////////
+
+function motores_search_sorting(){
+
+ // recolectar variables de busqueda
+  $estado =  $_SESSION['search_form_state']['estado'];
+  $marcas =  $_SESSION['search_form_state']['marcas'];
+  $precio_min = $_SESSION['search_form_state']['precio_min'];
+  $precio_max = $_SESSION['search_form_state']['precio_max'];
+  $anio_min = $_SESSION['search_form_state']['anio_min'];
+  $anio_max = $_SESSION['search_form_state']['anio_max'];
+  $km_min = $_SESSION['search_form_state']['km_min'];
+  $km_max = $_SESSION['search_form_state']['km_max'];
+  $keywords = $_SESSION['search_form_state']['keywords'];
+  $sort =  $_GET['sort'];
+  $type =  $_GET['type'];
+  
+  
+  
+  if ( $estado or $marcas or $precio_min or $precio_max or $anio_min or $anio_max or $km_min or $km_max or $keywords )
+  {
+    // construir query
+    
+    
+    
+    $query = "SELECT DISTINCT n.nid FROM {node} n ";
+    if ( $estado || $marcas )
+    {
+      $query .= "INNER JOIN {term_node} t ON n.vid = t.vid ";
+    }
+    if ( $precio_min || $precio_max )
+    {
+      $query .= "LEFT JOIN {content_field_precio} p ON n.vid = p.vid ";
+    }
+    if ( $anio_min || $anio_max )
+    {
+      $query .= "LEFT JOIN {content_field_anio} a ON n.vid = a.vid ";
+    }
+    if ( $km_min || $km_max )
+    {
+      $query .= "LEFT JOIN {content_field_km} k ON n.vid = k.vid ";
+    }
+    if ( $particular ){
+    	$query .= "LEFT JOIN {users_roles} usr ON n.uid = usr.uid ";
+    }
+    if ( $keywords )
+    {
+      $query .= "LEFT JOIN {node_revisions} nr ON n.vid = nr.vid ";
+      $query .= "LEFT JOIN {content_field_fake_name} nt ON n.vid = nt.vid ";
+      $query .= "LEFT JOIN {content_field_otro_modelo} om ON n.vid = om.vid ";
+    }
+    if ( $type == 'nuevos' ){
+      $query .= "LEFT JOIN {users_roles} usr ON n.uid = usr.uid ";
+    }
+    
+   
+    // WHERE clause
+    $query .= "WHERE ";
+    $where = array();
+    $arguments = array();
+    
+    // filtrar por taxonomia
+    if ( $estado || $marcas )
+    {
+      $tids = array();
+      if ( $estado ) $tids[] = $estado;
+      if ( $marcas ) $tids[] = $marcas;
+      $where[] = "t.tid IN (".db_placeholders($tids).") ";
+      $arguments = $tids;
+    }
+    
+    // filtrar por precio
+    if ( $precio_min ) { $where[] = "p.field_precio_value >= ".db_placeholders($precio_min); $arguments[] = $precio_min; }
+    if ( $precio_max ) { $where[] = "p.field_precio_value <= ".db_placeholders($precio_max); $arguments[] = $precio_max; }
+    
+    // filtrar por anio
+    if ( $anio_min ) { $where[] = "a.field_anio_value >= ".db_placeholders($anio_min); $arguments[] = $anio_min; }
+    if ( $anio_max ) { $where[] = "a.field_anio_value <= ".db_placeholders($anio_max); $arguments[] = $anio_max; }
+    
+    // filtrar por kilometraje
+    if ( $km_min ) { $where[] = "k.field_km_value >= ".db_placeholders($km_min); $arguments[] = $km_min; }
+    if ( $km_max ) { $where[] = "k.field_km_value <= ".db_placeholders($km_max); $arguments[] = $km_max; }
+    
+    
+    switch ( $type ){
+    	case 'nuevos':
+    	 	$rol_nuevos = 4;
+    		$where[] = "usr.uid = ".db_placeholders($rol_nuevos); $arguments[] =  $rol_nuevos;
+    	break;
+    	
+    	case 'motos':
+    		$motos = 'moto';
+   			$where[] = "n.type = '%s'"; $arguments[] = $motos;
+    	break;
+    
+    }
+    
+    
+    
+    if ( $keywords ) { $where[] = "nr.body LIKE ('%%%s%%') OR nt.field_fake_name_value LIKE ('%%%s%%') OR om.field_otro_modelo_value LIKE ('%%%s%%')";     				    				
+    					$arguments[] = $keywords;
+						$arguments[] = $keywords; 
+						$arguments[] = $keywords; 
+					}
+    
+    $query .= implode(" AND ", $where);
+        
+
+    //print_r($query);
+    $db_result = db_query(db_rewrite_sql($query), $arguments);
+    $result = array();
+    while ($res = db_fetch_object($db_result)) 
+    {
+      $result[] = $res;
+    }
+    //print_r($result);
+    foreach ( $result as $r )
+    {
+      $nids[] = $r->nid;
+    }
+  }
+  
+  if ( $nids )
+  {
+    //$view = views_get_view( 'busqueda' );
+    //$view->set_arguments( array(implode(',',$nids)) );
+    //echo $view->execute_display( 'default' );
+    $_SESSION['search_results'] = implode(',',$nids);
+  }
+  else
+  {
+    $_SESSION['search_results'] = '';
+  }
+  
+  switch ($type){
+  	case 'usados':
+  	case 'nuevos':
+  	case 'motos': 
+  		drupal_goto('busqueda/'.$type.'/'.$sort);
+  	break;
+  	
+  	case 'global':
+  		drupal_goto('busqueda/'.$sort);
+  	break;
+  }
+  
+
 }
 

@@ -49,6 +49,7 @@ function motores_menus_markup()
 function motores_menus_vocabulary( $vid )
 {
   $v = taxonomy_get_tree($vid, 0, -1, 1);
+  
   $carros = '<div class="col">';
   foreach ( $v as $i => $car )
   {
@@ -62,10 +63,78 @@ function motores_menus_vocabulary( $vid )
     
     $neim = ( strlen($car->name) > 13 ) ? substr($car->name,0,10).'...' : $car->name;
     
-    $carros .= l( $neim, 'busqueda/carro', array('attributes'=>$attr) );
+    $carros .= l( $neim, 'midq', array('attributes'=>$attr, 'query'=>'t='.$car->tid ) );
     if ( $last ) $carros .= '</div><div class="col">';
   }
   $carros .= '</div>';
   
   return $carros;
+}
+
+function motores_menus_menu()
+{
+  $items['midq'] = array(
+  	'title' => t(''),
+    'page callback' => 'motores_busqueda_inter', 
+    'access arguments' => array('access content'),  
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+
+function motores_busqueda_inter(){
+ 
+  unset($_SESSION['search_form_state']['estado']);
+  unset($_SESSION['search_form_state']['marcas'] );
+  unset($_SESSION['search_form_state']['precio_min']);
+  unset($_SESSION['search_form_state']['precio_max']);
+  unset($_SESSION['search_form_state']['anio_min']);
+  unset($_SESSION['search_form_state']['anio_max']);
+  unset($_SESSION['search_form_state']['km_min'] );
+  unset($_SESSION['search_form_state']['km_max']);
+  unset($_SESSION['search_form_state']['keywords']);
+
+  
+  
+  $tids = $_GET['t'];
+  $query = "SELECT DISTINCT n.nid FROM {node} n ";
+  $query .= "INNER JOIN {term_node} t ON n.vid = t.vid ";
+  
+  $query .= "WHERE ";
+  $where = array();
+  $arguments = array();
+  
+  $where[] = "t.tid IN (".db_placeholders($tids).") ";
+  $arguments = $tids;
+  
+  $query .= implode(" AND ", $where);
+ 
+ 	$db_result = db_query(db_rewrite_sql($query), $arguments);
+    $result = array();
+    while ($res = db_fetch_object($db_result)) 
+    {
+      $result[] = $res;
+    }
+    
+    foreach ( $result as $r )
+    {
+      $nids[] = $r->nid;
+    }
+    
+     if ( $nids )
+  {
+    //$view = views_get_view( 'busqueda' );
+    //$view->set_arguments( array(implode(',',$nids)) );
+    //echo $view->execute_display( 'default' );
+    $_SESSION['search_results'] = implode(',',$nids);
+  }
+  else
+  {
+    $_SESSION['search_results'] = '';
+  }
+  
+  drupal_goto('busqueda');
+
+
 }
