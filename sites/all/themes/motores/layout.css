@@ -40,10 +40,10 @@
      * this is the standards-compliant way to do that. See also the ie.css file
      * for the necessary IE5 hack to center a div.
      */
-    margin-left: auto;
-    margin-right: auto;
-    width: 960px;
-  }
+	      margin-left: 0px;
+    margin-right: 0px;
+
+	   }
 
   #page-inner
   {

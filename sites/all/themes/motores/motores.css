@@ -1519,7 +1519,7 @@ html[xmlns] .clearfix {
 	width: 100%;
 	margin: 0;
 }
-.page-crear-anuncio #content .table,
+.page-crear-anuncio #page .table,
 .section-tarifas .table
 {
 	border: 2px solid #CFCFCF;
@@ -3158,4 +3158,76 @@ html[xmlns] .clearfix {
 	visibility: hidden;
 }
 
+/*servicios*/
+#Servicio_Bienvenida, #Servicio_lista, #Servicio_contacto {
+	border: 2px solid #CFCFCF;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+#Servicio_Bienvenida, #Servicio_lista {
+	width:607px;
+	float:left;
+	margin-right:23px;
+	margin-bottom: 24px;
+}
+#Servicio_Bienvenida #Servicio_Bienvenida_texto {
+	width:510px;
+	float:left;
+    height:112px;
+}
+#Servicio_Bienvenida #Servicio_Bienvenida_image {
+	width:87px;
+	height:112px;
+	float:left;
+	background-image:url(img/servicios.png)
+	
+}
+
+
+#Servicio_contacto {
+	width:262px;
+	float:left;
+	height:112px;
+	margin-bottom: 24px;
+}
+#Servicio_contacto .bar , #Servicio_lista .bar{
+    margin: 0;
+	height: 10px;
+	width: 100%;
+	border-top: 1px solid #CFCFCF;
+	}
+	
+
+#Servicio_lista .Ligas{
+	width:151px;
+	float: left;
+	
+
+}
+
+#Servicio_lista .Ligas li {
+	list-style-type: none;	
+}
+.section-servicios h1.title
+{
+	display: none;
+}
+ .section-servicios #Servicio_Bienvenida h1
+{
+	color: #fd3500;
+}
+
+#Servicio_Bienvenida , #Servicio_lista .Servicio_lista_ligas{
+    padding-right: 15px;
+	padding-bottom: 15px;
+	padding-left: 15px;
+}
+
+ #Servicio_lista #Servicio_lista_ligas, #Servicio_contacto #Servicio_lista_ligas{
+    padding-right: 15px;
+	padding-bottom: 15px;
+	padding-left: 15px;
+}
+/*Termina Servicios*/
 /* @end */
