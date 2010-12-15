@@ -305,15 +305,28 @@ html[xmlns] .clearfix {
   }
 
 /** closure **/
+    #closure-blocks-1 /* Wrapper for any blocks placed in the closure region */
+  {
+    background-color: #3A3A3A;
+    border-top: 3px solid #CBCBCB;
+    margin-top: 24px;
+    text-align: left;
+    width: 100%;
+	  }
+
+  
   #closure-blocks /* Wrapper for any blocks placed in the closure region */
   {
-	border-top:3px solid #CBCBCB;
     background-color: #3A3A3A;
-	color:#757979;
-	font-size:12px;
-	margin-top:24px;
-	text-align:left;
-  }
+    /*border-top: 3px solid #CBCBCB;*/
+    color: #757979;
+    font-size: 12px;
+    margin-left: auto;
+    margin-right: auto;
+   /* margin-top: 24px;*/
+    text-align: left;
+    width: 970px;
+	  }
   #closure-blocks a:link , #closure-blocks a:visited ,  #closure-blocks a:hover, #closure-blocks a:active {
 	color: #CCC;
 	text-decoration: none;
@@ -711,7 +724,7 @@ html[xmlns] .clearfix {
     text-align: right;
   }
 
-  #user-login-form /* Drupal's pointer login form */
+  #user-login-form /* Drupal's default login form */
   {
     text-align: left;
   }
@@ -788,7 +801,8 @@ html[xmlns] .clearfix {
 	-webkit-border-radius: 8px;
 	border-radius: 8px;
 	background: #FF4C00;
-	cursor:pointer;
+		cursor:pointer;
+
 }
 
   .container-inline div, .container-inline label /* Inline labels and form divs */
@@ -804,7 +818,7 @@ html[xmlns] .clearfix {
   }
 
 /** OpenID **/
-  /* The pointer styling for the OpenID login link seems to assume Garland's
+  /* The default styling for the OpenID login link seems to assume Garland's
    * styling of list items.
    */
   #user-login-form ul /* OpenID creates a new ul above the login form's links. */
@@ -872,7 +886,7 @@ html[xmlns] .clearfix {
 {
 	margin-left: 140px;
 }
-#pointers-camionetas
+#autos-camionetas
 {
 	left: 141px;
 }
@@ -1185,7 +1199,7 @@ html[xmlns] .clearfix {
 .view-micuenta .views-field img
 {
 	display: block;
-	margin: 0 pointer;
+	margin: 0 auto;
 }
 .view-micuenta .views-field
 {
@@ -1450,7 +1464,7 @@ html[xmlns] .clearfix {
 #block-views-vendedor-block_1 .imagecache-logo_agencia
 {
 	display: block;
-	margin: 0 pointer;
+	margin: 0 auto;
 }
 #block-views-vendedor-block_1 .views-field-field-logo-agencia-fid
 {
@@ -1471,7 +1485,7 @@ html[xmlns] .clearfix {
 .view-tarifa-contratacion
 {
 	width: 600px;
-	margin: 0 pointer;
+	margin: 0 auto;
 }
 .view-tarifa-contratacion h1
 {
@@ -1520,7 +1534,7 @@ html[xmlns] .clearfix {
 	width: 100%;
 	margin: 0;
 }
-.page-crear-anuncio #page .table,
+.page-crear-anuncio .table,
 .section-tarifas .table
 {
 	border: 2px solid #CFCFCF;
@@ -1571,7 +1585,7 @@ html[xmlns] .clearfix {
 	display: block;
 	width: 14px;
 	height: 11px;
-	margin: 0 pointer;
+	margin: 0 auto;
 	text-indent: -99em;
 	overflow: hidden;
 }
@@ -1721,7 +1735,7 @@ html[xmlns] .clearfix {
 #multistep-group_fotos .content-add-more input
 {
 	display: block;
-	margin-left: pointer;
+	margin-left: auto;
 }
 #multistep-group_liga label,
 #multistep-group_logo label
@@ -1807,13 +1821,13 @@ html[xmlns] .clearfix {
 .anuncio600
 {
 	width: 600px;
-	margin: 0 pointer;
+	margin: 0 auto;
 	margin-top: 60px;
 }
 .view-anuncio-preview .attachment
 {
 	width: 596px;
-	margin: 0 pointer;
+	margin: 0 auto;
 }
 .multistep .messages
 {
@@ -1881,8 +1895,9 @@ html[xmlns] .clearfix {
 .section-anuncio-preview .form-submit
 {
 	display: block;
-	margin-left: pointer;
-	cursor:pointer;
+	margin-left: auto;
+    cursor:pointer;
+
 }
 .multistep .group-opciones label{
 	display: none;
@@ -1902,7 +1917,8 @@ html[xmlns] .clearfix {
 {
 	width: 60px;
 	text-align: center;
-	cursor:pointer;
+    cursor:pointer;
+
 }
 .multistep-tabs ul
 {
@@ -2068,7 +2084,7 @@ html[xmlns] .clearfix {
 	-webkit-border-radius: 8px;
 	border-radius: 8px;
 	display: block;
-	margin-left: pointer;
+	margin-left: auto;
 	background: #FF4C00;
 }
 
@@ -2079,7 +2095,7 @@ html[xmlns] .clearfix {
 .section-listo .box
 {
 	width: 600px;
-	margin: 0 pointer;
+	margin: 0 auto;
 	margin-top: 30px;
 }
 .section-listo h1.title
@@ -2125,7 +2141,7 @@ html[xmlns] .clearfix {
 	margin: 0;
 	width: 400px;
 	float: none;
-	margin: 0 pointer;
+	margin: 0 auto;
 }
 .page-cart-checkout-review fieldset thead tr
 {
@@ -2157,7 +2173,7 @@ html[xmlns] .clearfix {
 .page-cart-checkout-review .description
 {
 	width: 400px;
-	margin: 10px pointer;
+	margin: 10px auto;
 	color: #09f;
 }
 .page-cart-checkout-review .description2,
@@ -2301,7 +2317,7 @@ html[xmlns] .clearfix {
 .page-user-login #user-login #edit-submit
 {
 	display: block;
-	margin-left: pointer;
+	margin-left: auto;
 }
 .page-user-login #user-login .form-text
 {
@@ -2459,9 +2475,10 @@ html[xmlns] .clearfix {
 .page-user-register #user-register,
 #user-profile-form
 {
-	width: 676px;
-	margin-left: 142px;	
-	
+		width: 676px;
+		margin-left:auto;
+		margin-right:auto;
+
 }
 
 .page-user-register #user-register fieldset , .page-user-password #user-pass
@@ -2478,25 +2495,22 @@ html[xmlns] .clearfix {
  {
 	width: 645px;
 	margin-top: 10px;
-	margin-right: pointer;
+	margin-right: auto;
 	margin-bottom: 10px;
-	margin-left: pointer;
+	margin-left: auto;
 	padding-right: 15px;
 	padding-left: 15px;
 	padding-bottom: 15px;
 	 }
 
+
 .page-user-register #user-register fieldset div,
 #user-profile-form fieldset div
 {
 	width: 600px;
-	margin: 10px pointer;
+	margin: 10px auto;
 	height: 30px;
 }
-.page-user-register #content-header, .page-user-register #register-msg, .page-user-password #content-header
-{
-	margin-left: 142px;
-	}
 .page-user-register #user-register fieldset #usa
 {
 	margin: 0;
@@ -2549,7 +2563,7 @@ html[xmlns] .clearfix {
 #user-profile-form #edit-profile-sexo-Mujer-wrapper
 {
 	float: left;
-	width: pointer;
+	width: auto;
 	margin: 0;
 }
 #edit-profile-tel1-num,
@@ -2575,12 +2589,12 @@ html[xmlns] .clearfix {
 #user-profile-form #edit-profile-tel2-num-wrapper
 {
 	float: left;
-	width: pointer;
+	width: auto;
 }
 #user-profile-form #edit-submit
 {
 	display: block;
-	margin-left: pointer;
+	margin-left: auto;
 	margin-right: 12px;
 	margin-bottom: 12px;
 }
@@ -2629,7 +2643,8 @@ html[xmlns] .clearfix {
 	-webkit-border-radius: 8px;
 	border-radius: 8px;
 	background: #5e5e5e;
-	cursor:pointer;
+    cursor:pointer;
+
 }
 #motores-search-top-form
 {
@@ -2702,7 +2717,7 @@ html[xmlns] .clearfix {
 .view-productos .views-row img
 {
 	display: block;
-	margin: 0 pointer;
+	margin: 0 auto;
 }
 .view-productos .views-field-title
 {
@@ -2974,9 +2989,8 @@ html[xmlns] .clearfix {
 .front #motores-search-refine-motos-form #edit-submit-3
 {
 	display: block;
-	margin-left: pointer;
+	margin-left: auto;
 	margin-right: 10px;
-	cursor:pointer;
 }
 .front #motores-search-refine-form #edit-keywords-1-wrapper #edit-submit-1,
 .front #motores-search-refine-nuevos-form #edit-keywords-2-wrapper #edit-submit-2,
@@ -2984,7 +2998,7 @@ html[xmlns] .clearfix {
 {
 	margin: 0;
 	margin-top: 10px;
-	margin-left: pointer;
+	margin-left: auto;
 }
 .front #edit-anio-min,
 .front #edit-anio-max
@@ -3100,13 +3114,13 @@ html[xmlns] .clearfix {
 
 /*.section-busqueda #page
 {
-	width: pointer;
+	width: auto;
 }
 .section-busqueda #header,
 .section-busqueda #navbar
 {
 	width: 960px;
-	margin: 0 pointer;
+	margin: 0 auto;
 }*/
 
 .front #content-bottom
@@ -3157,10 +3171,6 @@ html[xmlns] .clearfix {
 .front #motores-search-refine-nuevos-form,
 .front #motores-search-refine-motos-form{
 	display: none;
-}
-
-#edit-field-fake-name-0-value-wrapper{
-	visibility: hidden;
 }
 
 /*servicios*/
