@@ -122,6 +122,8 @@ function motores_preprocess_page(&$vars, $hook)
 	{
 	  drupal_add_js(path_to_theme().'/js/front.js');
 	}
+
+	drupal_add_js(path_to_theme().'/js/filtros.js');
 	
   switch ( $vars['node']->type )
   {
