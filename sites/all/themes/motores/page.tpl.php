@@ -226,7 +226,8 @@
   </div></div> <!-- /#page-inner, /#page -->
 
   <?php if ($closure_region): ?>
-    <div id="closure-blocks" class="region region-closure"><?php print $closure_region; ?></div>
+       <div id="closure-blocks-1" class="region region-closure-1">
+ <div id="closure-blocks" class="region region-closure"><?php print $closure_region; ?></div></div>
   <?php endif; ?>
 
   <?php print $closure; ?>
