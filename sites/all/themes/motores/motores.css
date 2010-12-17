@@ -2690,6 +2690,7 @@ html[xmlns] .clearfix {
 	-webkit-border-radius: 8px;
 	border-radius: 8px;
 	color: #000000;
+	height: 290px;
 }
 #search-tabs a.active
 {
@@ -3235,11 +3236,12 @@ html[xmlns] .clearfix {
 #Servicio_lista .Ligas li {
 	list-style-type: none;	
 }
-.section-servicios h1.title
+.section-servicios h1.title, .section-proximamente h1.title
 {
 	display: none;
 }
  .section-servicios #Servicio_Bienvenida h1
+
 {
 	color: #fd3500;
 }
