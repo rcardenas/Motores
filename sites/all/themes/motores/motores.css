@@ -363,7 +363,11 @@ html[xmlns] .clearfix {
 	float: left;
 	font-size: x-small;
 	margin-left: 10px;
+	text-align: top;
+
 }
+#FooterlinkSup li a { vertical-align: middle; }
+
 
 
 /** Drupal nodes **/
