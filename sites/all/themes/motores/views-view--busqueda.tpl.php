@@ -30,33 +30,66 @@
  */
 ?>
 <? 
+
+//l( t('Precio'), 'sorting', array('query'=>'sort=1&type=usados')).' - ';
+//l( t('Ano'), 'sorting', array('query'=>'sort=2&type=usados')).' - ';
+//l( t('Kilometraje'), 'sorting', array('query'=>'sort=3&type=usados'));
+
 	if(arg(1)=='usados')
 	{
-		echo t('Ordenar por: ');	
-		echo l( t('Precio'), 'sorting', array('query'=>'sort=1&type=usados')).' - ';
-		echo l( t('Ano'), 'sorting', array('query'=>'sort=2&type=usados')).' - ';
-		echo l( t('Kilometraje'), 'sorting', array('query'=>'sort=3&type=usados'));
+		echo t('Ordenar por: ');
+		echo '<select id="filtrar-usados" name="filtrar-estados">';	
+		echo '<option value="precio">Precio</option>';
+		echo '<option value="ano">A&ntilde;o</option>';
+		echo '<option value="km">Kilometraje</option>';
+		echo '</select>';
+		echo l( t('Filtrar'), 'sorting', array('query'=>'sort=1&type=usados', 'attributes' => array('id'=> 'usados-submit')));
 	}
 	else if(arg(1)=='nuevos')
-	{
+	{/*
 		echo t('Ordenar por: ');	
 		echo l( t('Precio'), 'sorting', array('query'=>'sort=1&type=nuevos')).' - ';
 		echo l( t('Ano'), 'sorting', array('query'=>'sort=2&type=nuevos')).' - ';
 		echo l( t('Kilometraje'), 'sorting', array('query'=>'sort=3&type=nuevos'));
+	*/
+		echo t('Ordenar por: ');
+		echo '<select id="filtrar-nuevos" name="filtrar-estados">';	
+		echo '<option value="precio">Precio</option>';
+		echo '<option value="ano">A&ntilde;o</option>';
+		echo '<option value="km">Kilometraje</option>';
+		echo '</select>';
+		echo l( t('Filtrar'), 'sorting', array('query'=>'sort=1&type=nuevos', 'attributes' => array('id'=> 'nuevos-submit')));
+	
 	}
 	else if(arg(1)=='motos')
-	{
+	{/*
 		echo t('Ordenar por: ');	
 		echo l( t('Precio'), 'sorting', array('query'=>'sort=1&type=motos')).' - ';
 		echo l( t('Ano'), 'sorting', array('query'=>'sort=2&type=motos')).' - ';
 		echo l( t('Kilometraje'), 'motos/usados/3', array('query'=>'sort=3&type=motos'));
+		*/
+		echo t('Ordenar por: ');
+		echo '<select id="filtrar-motos" name="filtrar-estados">';	
+		echo '<option value="precio">Precio</option>';
+		echo '<option value="ano">A&ntilde;o</option>';
+		echo '<option value="km">Kilometraje</option>';
+		echo '</select>';
+		echo l( t('Filtrar'), 'sorting', array('query'=>'sort=1&type=motos', 'attributes' => array('id'=> 'motos-submit')));
 	}
 	else
-	{
+	{/*
 		echo t('Ordenar por: ');	
 		echo l( t('Precio'), 'sorting', array('query'=>'sort=1&type=global')).' - ';
 		echo l( t('Ano'), 'sorting', array('query'=>'sort=2&type=global')).' - ';
 		echo l( t('Kilometraje'), 'sorting', array('query'=>'sort=3&type=global'));
+		*/
+		echo t('Ordenar por: ');
+		echo '<select id="filtrar-global" name="filtrar-estados">';	
+		echo '<option value="precio">Precio</option>';
+		echo '<option value="ano">A&ntilde;o</option>';
+		echo '<option value="km">Kilometraje</option>';
+		echo '</select>';
+		echo l( t('Filtrar'), 'sorting', array('query'=>'sort=1&type=global', 'attributes' => array('id'=> 'global-submit')));
 	}
 ?>
 
