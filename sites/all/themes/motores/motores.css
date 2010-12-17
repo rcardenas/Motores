@@ -1537,8 +1537,8 @@ html[xmlns] .clearfix {
 	color: #0093FF;
 	margin-right: 5px;
 }
-.page-crear-anuncio .table,
-.section-tarifas .table
+.page-crear-anuncio .table table,
+.section-tarifas .table table
 {
 	color: #000000;
 	font-weight: bold;
@@ -1569,10 +1569,10 @@ html[xmlns] .clearfix {
 {
 	height: 35px;
 }
-.page-crear-anuncio .table td,
-.page-crear-anuncio .table th,
-.section-tarifas .table td,
-.section-tarifas .table th
+.page-crear-anuncio .table table td,
+.page-crear-anuncio .table table th,
+.section-tarifas .table table td,
+.section-tarifas .table table th
 {
 	padding: 10px;
 	text-align: center;
@@ -1585,7 +1585,7 @@ html[xmlns] .clearfix {
 	border-bottom: none;
 }
 .page-crear-anuncio .lastcol,
-.section-tarifas .lastcol
+.section-tarifas  .table .lastcol
 {
 	border-right: none;
 	width: 100px;
