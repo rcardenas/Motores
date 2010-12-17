@@ -327,8 +327,13 @@ html[xmlns] .clearfix {
     text-align: left;
     width: 970px;
 	  }
+	  
+	   #closure-blocks table /* Wrapper for any blocks placed in the closure region */
+  {
+	  
+	  }
   #closure-blocks a:link , #closure-blocks a:visited ,  #closure-blocks a:hover, #closure-blocks a:active {
-	color: #CCC;
+	color: #FFF;
 	text-decoration: none;
 }
    #footer_logo
@@ -359,12 +364,14 @@ html[xmlns] .clearfix {
 	list-style-type: none;
 	padding-right: 10px;
 	padding-left: 10px;
-	list-style-image: url(img/divider.png);
-	float: left;
+	/*list-style-image: url(img/divider.png);
+	*/float: left;
 	font-size: x-small;
 	margin-left: 10px;
 	text-align: top;
-
+	border-left-width: thin;
+	border-left-style: solid;
+	border-left-color: #FFF;
 }
 #FooterlinkSup li a { vertical-align: middle; }
 
@@ -1530,8 +1537,8 @@ html[xmlns] .clearfix {
 	color: #0093FF;
 	margin-right: 5px;
 }
-.page-crear-anuncio table,
-.section-tarifas table
+.page-crear-anuncio .table,
+.section-tarifas .table
 {
 	color: #000000;
 	font-weight: bold;
@@ -1562,10 +1569,10 @@ html[xmlns] .clearfix {
 {
 	height: 35px;
 }
-.page-crear-anuncio table td,
-.page-crear-anuncio table th,
-.section-tarifas table td,
-.section-tarifas table th
+.page-crear-anuncio .table td,
+.page-crear-anuncio .table th,
+.section-tarifas .table td,
+.section-tarifas .table th
 {
 	padding: 10px;
 	text-align: center;
