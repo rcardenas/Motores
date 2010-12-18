@@ -3257,5 +3257,10 @@ html[xmlns] .clearfix {
 	padding-bottom: 15px;
 	padding-left: 15px;
 }
+  #Servicio_lista  a:link , #Servicio_lista a:visited ,  #Servicio_lista  a:hover, #Servicio_lista  a:active {
+	color: #1895c5;
+	text-decoration: none;
+}
+
 /*Termina Servicios*/
 /* @end */
