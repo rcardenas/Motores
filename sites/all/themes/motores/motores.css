@@ -2643,8 +2643,7 @@ html[xmlns] .clearfix {
 	margin-right: 12px;
 	float: left;
 }
-#motores-search-top-form .form-submit
-{
+#motores-search-top-form .form-submit, .section-busqueda #global-submit{
 	border:medium none;
 	color:#FFFFFF;
 	font-weight:bold;
