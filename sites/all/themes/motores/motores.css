@@ -3012,7 +3012,11 @@ html[xmlns] .clearfix {
 	margin-left: auto;
 }
 .front #edit-anio-min,
-.front #edit-anio-max
+.front #edit-anio-max,
+.front #motores-search-refine-nuevos-form #edit-anio-min-1,
+.front #motores-search-refine-nuevos-form #edit-anio-max-1,
+.front #motores-search-refine-motos-form #edit-anio-min-2,
+.front #motores-search-refine-motos-form #edit-anio-max-2
 {
 	margin-top: 10px;
 }
@@ -3213,9 +3217,11 @@ html[xmlns] .clearfix {
 
 #Servicio_contacto {
 	width:262px;
+	height:127px;
 	float:left;
-	height:112px;
 	margin-bottom: 24px;
+    padding-bottom: 15px;
+
 }
 #Servicio_contacto .bar , #Servicio_lista .bar{
     margin: 0;
@@ -3223,6 +3229,7 @@ html[xmlns] .clearfix {
 	width: 100%;
 	border-top: 1px solid #CFCFCF;
 	}
+	
 	
 
 #Servicio_lista .Ligas{
@@ -3245,10 +3252,11 @@ html[xmlns] .clearfix {
 	color: #fd3500;
 }
 
-#Servicio_Bienvenida , #Servicio_lista .Servicio_lista_ligas{
-    padding-right: 15px;
+#Servicio_Bienvenida , #Servicio_lista .Servicio_lista_ligas {
+	padding-right: 15px;
 	padding-bottom: 15px;
 	padding-left: 15px;
+	padding-top: 15px;
 }
 
  #Servicio_lista #Servicio_lista_ligas, #Servicio_contacto #Servicio_lista_ligas{
@@ -3259,6 +3267,10 @@ html[xmlns] .clearfix {
   #Servicio_lista  a:link , #Servicio_lista a:visited ,  #Servicio_lista  a:hover, #Servicio_lista  a:active {
 	color: #1895c5;
 	text-decoration: none;
+}
+#Servicio_contacto  .Servicio_lista_ligas{
+	padding-right: 15px;
+	padding-left: 15px;
 }
 
 /*Termina Servicios*/
