@@ -39,9 +39,9 @@
 	{
 		echo t('Ordenar por: ');
 		echo '<select id="filtrar-usados" name="filtrar-estados">';	
-		echo '<option value="precio">Precio</option>';
-		echo '<option value="ano">A&ntilde;o</option>';
-		echo '<option value="km">Kilometraje</option>';
+		echo '<option value="precio">Precio: Más Alto Primero</option>';
+		echo '<option value="ano">Año: Más Nuevo Primero</option>';
+		echo '<option value="km">Kilometraje: Más Alto Primero</option>';
 		echo '</select>';
 		echo l( t('Filtrar'), 'sorting', array('query'=>'sort=1&type=usados', 'attributes' => array('id'=> 'usados-submit')));
 	}
@@ -54,9 +54,9 @@
 	*/
 		echo t('Ordenar por: ');
 		echo '<select id="filtrar-nuevos" name="filtrar-estados">';	
-		echo '<option value="precio">Precio</option>';
-		echo '<option value="ano">A&ntilde;o</option>';
-		echo '<option value="km">Kilometraje</option>';
+		echo '<option value="precio">Precio: Más Alto Primero</option>';
+		echo '<option value="ano">Año: Más Nuevo Primero</option>';
+		echo '<option value="km">Kilometraje: Más Alto Primero</option>';
 		echo '</select>';
 		echo l( t('Filtrar'), 'sorting', array('query'=>'sort=1&type=nuevos', 'attributes' => array('id'=> 'nuevos-submit')));
 	
@@ -70,9 +70,9 @@
 		*/
 		echo t('Ordenar por: ');
 		echo '<select id="filtrar-motos" name="filtrar-estados">';	
-		echo '<option value="precio">Precio</option>';
-		echo '<option value="ano">A&ntilde;o</option>';
-		echo '<option value="km">Kilometraje</option>';
+		echo '<option value="precio">Precio: Más Alto Primero</option>';
+		echo '<option value="ano">Año: Más Nuevo Primero</option>';
+		echo '<option value="km">Kilometraje: Más Alto Primero</option>';
 		echo '</select>';
 		echo l( t('Filtrar'), 'sorting', array('query'=>'sort=1&type=motos', 'attributes' => array('id'=> 'motos-submit')));
 	}
@@ -85,9 +85,9 @@
 		*/
 		echo t('Ordenar por: ');
 		echo '<select id="filtrar-global" name="filtrar-estados">';	
-		echo '<option value="precio">Precio</option>';
-		echo '<option value="ano">A&ntilde;o</option>';
-		echo '<option value="km">Kilometraje</option>';
+		echo '<option value="precio">Precio: Más Alto Primero</option>';
+		echo '<option value="ano">Año: Más Nuevo Primero</option>';
+		echo '<option value="km">Kilometraje: Más Alto Primero</option>';
 		echo '</select>';
 		echo l( t('Filtrar'), 'sorting', array('query'=>'sort=1&type=global', 'attributes' => array('id'=> 'global-submit')));
 	}
