@@ -43,7 +43,13 @@
 		echo '<option value="ano">Año: Más Nuevo Primero</option>';
 		echo '<option value="km">Kilometraje: Más Alto Primero</option>';
 		echo '</select>';
-		echo l( t('Filtrar'), 'sorting', array('query'=>'sort=1&type=usados', 'attributes' => array('id'=> 'usados-submit')));
+		
+		echo '<select id="orden-b-u" name="orden-b">';	
+		echo '<option value="dsc">Descendente</option>';
+		echo '<option value="asc">Ascendente</option>';
+		echo '</select>';
+		
+		echo l( t('Filtrar'), 'sorting', array('query'=>'sort=1&type=usados&sorto=1', 'attributes' => array('id'=> 'usados-submit')));
 	}
 	else if(arg(1)=='nuevos')
 	{/*
@@ -58,7 +64,13 @@
 		echo '<option value="ano">Año: Más Nuevo Primero</option>';
 		echo '<option value="km">Kilometraje: Más Alto Primero</option>';
 		echo '</select>';
-		echo l( t('Filtrar'), 'sorting', array('query'=>'sort=1&type=nuevos', 'attributes' => array('id'=> 'nuevos-submit')));
+		
+		echo '<select id="orden-b-n" name="orden-b">';	
+		echo '<option value="dsc">Descendente</option>';
+		echo '<option value="asc">Ascendente</option>';
+		echo '</select>';
+		
+		echo l( t('Filtrar'), 'sorting', array('query'=>'sort=1&type=nuevos&sorto=1', 'attributes' => array('id'=> 'nuevos-submit')));
 	
 	}
 	else if(arg(1)=='motos')
@@ -74,7 +86,13 @@
 		echo '<option value="ano">Año: Más Nuevo Primero</option>';
 		echo '<option value="km">Kilometraje: Más Alto Primero</option>';
 		echo '</select>';
-		echo l( t('Filtrar'), 'sorting', array('query'=>'sort=1&type=motos', 'attributes' => array('id'=> 'motos-submit')));
+		
+		echo '<select id="orden-b-m" name="orden-b">';	
+		echo '<option value="dsc">Descendente</option>';
+		echo '<option value="asc">Ascendente</option>';
+		echo '</select>';
+		
+		echo l( t('Filtrar'), 'sorting', array('query'=>'sort=1&type=motos&sorto=1', 'attributes' => array('id'=> 'motos-submit')));
 	}
 	else
 	{/*
@@ -89,7 +107,13 @@
 		echo '<option value="ano">Año: Más Nuevo Primero</option>';
 		echo '<option value="km">Kilometraje: Más Alto Primero</option>';
 		echo '</select>';
-		echo l( t('Filtrar'), 'sorting', array('query'=>'sort=1&type=global', 'attributes' => array('id'=> 'global-submit')));
+		
+		echo '<select id="orden-b-g" name="orden-b">';	
+		echo '<option value="dsc">Descendente</option>';
+		echo '<option value="asc">Ascendente</option>';
+		echo '</select>';
+		
+		echo l( t('Filtrar'), 'sorting', array('query'=>'sort=1&type=global&sorto=1', 'attributes' => array('id'=> 'global-submit')));
 	}
 ?>
 

@@ -1091,6 +1091,7 @@ function motores_search_sorting(){
   $km_max = $_SESSION['search_form_state']['km_max'];
   $keywords = $_SESSION['search_form_state']['keywords'];
   $sort =  $_GET['sort'];
+  $sorto =  $_GET['sorto'];
   $type =  $_GET['type'];
   
   
@@ -1214,11 +1215,11 @@ function motores_search_sorting(){
   	case 'usados':
   	case 'nuevos':
   	case 'motos': 
-  		drupal_goto('busqueda/'.$type.'/'.$sort);
+  		drupal_goto('busqueda/'.$type.'/'.$sort.'/'.$sorto);
   	break;
   	
   	case 'global':
-  		drupal_goto('busqueda/'.$sort);
+  		drupal_goto('busqueda/'.$sort.'/'.$sorto);
   	break;
   }
   
