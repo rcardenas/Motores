@@ -291,7 +291,7 @@ function motores_uc_cart_checkout_review( $panes, &$form )
   
   $r .= $form.'</div>';
   
-  return $r;
+  return 'hola';
 }
 
 /**
