@@ -76,7 +76,7 @@ Drupal.behaviors.motoresTaxo = function (context) {
   	  {
   	    $('#edit-field-marca-value, #edit-field-marca-moto-value, #edit-field-marca-lancha-value, #edit-field-marca-camioneta-value, #edit-field-marca-extremo-value, #edit-field-marca-otros-value').append('<option value="'+alternativo[src]['llave']+'">'+alternativo[src]['text']+'</option>');	
   	  }
-  	  $('#edit-field-marca-value, #edit-field-marca-moto-value, #edit-field-marca-lancha-value, #edit-field-marca-camioneta-value, #edit-field-marca-extremo-value, #edit-field-marca-otros-valuee').show();
+  	  $('#edit-field-marca-value, #edit-field-marca-moto-value, #edit-field-marca-lancha-value, #edit-field-marca-camioneta-value, #edit-field-marca-extremo-value, #edit-field-marca-otros-value').show();
     });
   }
 }

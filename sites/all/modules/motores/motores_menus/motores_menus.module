@@ -11,9 +11,9 @@ function motores_menus_block($op = 'list', $delta = 0, $edit = array())
 	    case 'view':
 	      switch ( $delta )
 	      {
-			    case 0:
-	          $blocks['title'] = '';
-	          $blocks['content'] = motores_menus_markup();
+			  case 0:
+	          	$blocks['title'] = '';
+	          	$blocks['content'] = motores_menus_markup();
 	          break;
 	      }
 	      return $blocks;
