@@ -30,7 +30,7 @@ function uc_payment_method_deposito( $op, &$order )
   switch ($op)
   {
     case 'cart-review': 
-    echo 'shit';
+      //echo 'shit';
 		     $node = node_load($_SESSION['anuncio']);
 
        if($node->field_referencia[0]['value'] == '')

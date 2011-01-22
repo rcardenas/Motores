@@ -1,5 +1,5 @@
 <?php
-// $Id: privatemsg.test,v 1.2.2.16 2010/04/12 13:13:16 berdir Exp $
+// $Id: privatemsg.test,v 1.2.2.19 2010/06/22 09:01:41 berdir Exp $
 /**
  * @file
  * Test file for privatemsg.module
@@ -457,7 +457,6 @@ class PrivatemsgTestCase extends DrupalWebTestCase {
     $recipient = $this->drupalCreateUser(array('write privatemsg', 'read privatemsg', 'delete privatemsg'));
     $recipient2 = $this->drupalCreateUser(array('write privatemsg', 'read privatemsg'));
     $admin = $this->drupalCreateUser(array('write privatemsg', 'read privatemsg', 'delete privatemsg', 'read all private messages'));
-    $dummy = $this->drupalCreateUser();
 
     // Create texts.
     $subject = $this->randomName(20);
@@ -542,16 +541,116 @@ class PrivatemsgTestCase extends DrupalWebTestCase {
     $this->drupalGet('messages/view/' . $return['message']['thread_id']);
     $this->assertText($body1, 'First message is still displayed');
     $this->assertNoText($edit['body'], t('Reply of deleted user is not displayed anymore'));
-
-    // Test if deleting a user does not produce any errors.
-    user_delete(array(), $dummy);
   }
 
   /**
-   * Implementation of tearDown().
+   * Test preview functionality.
    */
-  function tearDown() {
-    //we dont really need to do this. i'm adding it just to keep it in front of my eyes so i can memorize it.
-    parent::tearDown();
+  function testPreview() {
+    $user = $this->drupalCreateUser(array('read privatemsg', 'write privatemsg'));
+
+    $message = array(
+      'recipient' => $user->name,
+      'subject' => $this->randomName(),
+      'body' => $this->randomName(50),
+    );
+    $this->drupalLogin($user);
+    $this->drupalPost('messages/new', $message, t('Preview message'));
+    $this->assertTitle(t('Write new message to @user', array('@user' => $user->name)) . ' | Drupal', t('Correct title is displayed.'));
+    $this->assertFieldByXPath("//div[@class='message-body']/p", $message['body'], t('Message body is previewed'));
+  }
+}
+
+/**
+ * Tests for node, blocks and profile integration.
+ */
+class PrivatemsgLinksTestCase extends DrupalWebTestCase {
+
+  /**
+   * Implements of getInfo().
+   */
+  public function getInfo() {
+    return array
+    (
+      'name' => t('Privatemsg links'),
+      'description' => t('Tests links displayed in nodes, profiles and blocks.'),
+      'group' => t('Privatemsg'),
+    );
+  }
+
+  /**
+   * Implements setUp().
+   */
+  function setUp() {
+    parent::setUp('privatemsg');
+  }
+
+  /**
+   * Tests menu block.
+   */
+  function testMenuBlock() {
+    $admin = $this->drupalCreateUser(array('read privatemsg', 'write privatemsg', 'administer privatemsg settings', 'administer blocks', 'administer menu'));
+    $user = $this->drupalCreateUser(array('read privatemsg'));
+
+    // Enable block.
+    $this->drupalLogin($admin);
+    $blocks = array(
+      'privatemsg_privatemsg-menu[region]' => 'right',
+    );
+    $this->drupalPost('admin/build/block', $blocks, t('Save blocks'));
+
+    // Disable secondary menu.
+    /* @todo: Not yet possible because simpletest needs a log out link to verify that the user is logged in.
+    $menu_settings = array(
+      'menu_secondary_links_source' => '',
+    );
+    $this->drupalPost('admin/structure/menu/settings', $menu_settings, t('Save configuration'));
+     *
+     */
+
+    $this->drupalGet('');
+    $this->assertRaw('<h2>Private messages</h2>', t('Privatemsg menu block title displayed.'));
+    $this->assertText('Write new message', t('Write new message link displayed.'));
+
+    $message = array(
+      'recipient' => $user->name,
+      'subject' => $this->randomName(),
+      'body' => $this->randomName(50),
+    );
+    $this->drupalPost('messages/new', $message, t('Send message'));
+
+    $this->drupalLogin($user);
+    $this->assertNoText(t('Write new message'), t('Write new message link not displayed.'));
+    $this->assertNoUniqueText(t('Messages (1 new)'), t('Messages link including new message information displayed'));
+  }
+
+  /**
+   * Tests menu block.
+   */
+  function testNewBlock() {
+    $admin = $this->drupalCreateUser(array('read privatemsg', 'write privatemsg', 'administer privatemsg settings', 'administer blocks', 'administer menu'));
+    $user = $this->drupalCreateUser(array('read privatemsg'));
+
+    // Enable block.
+    $this->drupalLogin($admin);
+    $blocks = array(
+      'privatemsg_privatemsg-new[region]' => 'right',
+    );
+    $this->drupalPost('admin/build/block', $blocks, t('Save blocks'));
+
+    $this->drupalGet('');
+    $this->assertNoRaw('<h2>New message</h2>', t('Privatemsg new block title not displayed.'));
+
+    $message = array(
+      'recipient' => $user->name,
+      'subject' => $this->randomName(),
+      'body' => $this->randomName(50),
+    );
+    $this->drupalPost('messages/new', $message, t('Send message'));
+
+    $this->drupalLogin($user);
+    $this->assertRaw('<h2>New message</h2>', t('Privatemsg new block title displayed.'));
+
+    $this->assertText(t('You have a new message, click here to read it'), t('New message indication displayed.'));
   }
 }

@@ -6,9 +6,9 @@ dependencies[] = fieldgroup
 package = CCK
 core = 6.x
 
-; Information added by drupal.org packaging script on 2009-12-10
-version = "6.x-1.4"
+; Information added by drupal.org packaging script on 2010-09-26
+version = "6.x-1.5"
 core = "6.x"
 project = "multistep"
-datestamp = "1260481848"
+datestamp = "1285536961"
 

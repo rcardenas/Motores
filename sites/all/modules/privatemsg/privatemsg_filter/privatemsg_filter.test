@@ -1,5 +1,5 @@
 <?php
-// $Id: privatemsg_filter.test,v 1.1.2.6 2010/01/31 20:12:46 berdir Exp $
+// $Id: privatemsg_filter.test,v 1.1.2.8 2010/06/22 09:16:26 berdir Exp $
 
 /*
  * @file
@@ -248,5 +248,81 @@ class PrivatemsgTagsTestCase extends DrupalWebTestCase {
     $this->drupalPost($delete_url, array(), t('Delete'));
     $this->assertText(t('Tag has been deleted'), t('Tag has been deleted'));
     $this->assertNoText($public['tag'], t('Deleted tag is not displayed anymore.'));
+  }
+
+  function testInboxTagging() {
+    $webuser = $this->drupalCreateuser(array('read privatemsg', 'write privatemsg', 'tag private messages', 'create private message tags'));
+    $admin = $this->drupalCreateUser(array('administer privatemsg settings'));
+
+    // Display tag column in thread list.
+    $this->drupalLogin($admin);
+    $this->drupalPost('admin/settings/messages', array('privatemsg_display_fields[tags]' => 1), t('Save configuration'));
+
+    // Create a new thread through the api.
+    $response = privatemsg_new_thread(array($webuser), $subject1 = $this->randomName(10), $this->randomName(20), array('author' => $webuser));
+    $thread_id = $response['message']['thread_id'];
+
+    $edit = array(
+      'tags' => 'Awesome bananas, Banana',
+    );
+    $this->drupalLogin($webuser);
+    $this->drupalPost('messages/view/' . $thread_id, $edit, t('Tag this conversation'));
+    $this->assertRaw('Awesome bananas,', t('Found message tag'));
+    $this->assertRaw('Banana,', t('Found message tag'));
+
+    // Create another thread.
+    $response = privatemsg_new_thread(array($webuser), $subject2 = $this->randomName(10), $this->randomName(20), array('author' => $webuser));
+    $thread_id2 = $response['message']['thread_id'];
+
+    $this->drupalGet('messages');
+    $rows = $this->xpath('//tbody/tr');
+    foreach ($rows as $row) {
+      if ($row->td[2]->a == $subject1) {
+        // The first thread should have both tags.
+        $this->assertEqual('Awesome bananas', $row->td[1]->a[0], t('First thread is tagged with Awesome bananas'));
+        $this->assertEqual('Banana', $row->td[1]->a[1], t('First thread is tagged with Banana'));
+      }
+      if ($row->td[2]->a == $subject2) {
+        // The second thread should have no tags.
+        $this->assertEqual('', $row->td[1], t('Second thread is not tagged'));
+      }
+    }
+
+    $add_tag = array(
+      'threads[' . $thread_id2 . ']' => 1,
+      'tag-add' => 2,
+    );
+    $this->drupalPost(NULL, $add_tag, t('Apply Tag'));
+    $rows = $this->xpath('//tbody/tr');
+    foreach ($rows as $row) {
+      if ($row->td[2]->a == $subject1) {
+        // The first thread should have both tags.
+        $this->assertEqual('Awesome bananas', $row->td[1]->a[0], t('First thread is tagged with Awesome bananas'));
+        $this->assertEqual('Banana', $row->td[1]->a[1], t('First thread is tagged with Banana'));
+      }
+      if ($row->td[2]->a == $subject2) {
+        // The second thread should have one tag.
+        $this->assertEqual('Banana', $row->td[1]->a, t('Second thread is correctly tagged'));
+      }
+    }
+
+    $remove_tag = array(
+      'threads[' . $thread_id . ']' => 1,
+      'threads[' . $thread_id2 . ']' => 1,
+      'tag-remove' => 2,
+    );
+    $this->drupalPost(NULL, $remove_tag, t('Remove Tag'));
+    $rows = $this->xpath('//tbody/tr');
+    foreach ($rows as $row) {
+      if ($row->td[2]->a == $subject1) {
+        // The first thread should have only one tag now.
+        $this->assertEqual('Awesome bananas', $row->td[1]->a, t('First thread is tagged with Awesome bananas'));
+      }
+      if ($row->td[2]->a == $subject2) {
+        // The second thread should have no tags.
+        $this->assertEqual('', $row->td[1], t('Second thread is not tagged'));
+      }
+    }
+    $this->assertNoText('Banana', t('Banana tag is not displayed anymore'));
   }
 }

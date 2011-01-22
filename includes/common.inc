@@ -1,5 +1,5 @@
 <?php
-// $Id: common.inc,v 1.756.2.88 2010/06/02 18:52:32 goba Exp $
+// $Id: common.inc,v 1.756.2.106 2010/12/15 21:11:22 goba Exp $
 
 /**
  * @file
@@ -953,14 +953,15 @@ function t($string, $args = array(), $langcode = NULL) {
  */
 
 /**
- * Verify the syntax of the given e-mail address.
+ * Verifies the syntax of the given e-mail address.
  *
- * Empty e-mail addresses are allowed. See RFC 2822 for details.
+ * See RFC 2822 for details.
  *
  * @param $mail
  *   A string containing an e-mail address.
  * @return
- *   TRUE if the address is in a valid format.
+ *   1 if the email address is valid, 0 if it is invalid or empty, and FALSE if
+ *   there is an input error (such as passing in an array instead of a string).
  */
 function valid_email_address($mail) {
   $user = '[a-zA-Z0-9_\-\.\+\^!#\$%&*+\/\=\?\`\|\{\}~\']+';
@@ -988,19 +989,19 @@ function valid_email_address($mail) {
 function valid_url($url, $absolute = FALSE) {
   if ($absolute) {
     return (bool)preg_match("
-      /^                                                      #Start at the beginning of the text
-      (?:ftp|https?|feed):\/\/                                #Look for ftp, http, https or feed schemes
-      (?:                                                     #Userinfo (optional) which is typically
-        (?:(?:[\w\.\-\+!$&'\(\)*\+,;=]|%[0-9a-f]{2})+:)*      #a username or a username and password
-        (?:[\w\.\-\+%!$&'\(\)*\+,;=]|%[0-9a-f]{2})+@          #combination
+      /^                                                      # Start at the beginning of the text
+      (?:ftp|https?|feed):\/\/                                # Look for ftp, http, https or feed schemes
+      (?:                                                     # Userinfo (optional) which is typically
+        (?:(?:[\w\.\-\+!$&'\(\)*\+,;=]|%[0-9a-f]{2})+:)*      # a username or a username and password
+        (?:[\w\.\-\+%!$&'\(\)*\+,;=]|%[0-9a-f]{2})+@          # combination
       )?
       (?:
-        (?:[a-z0-9\-\.]|%[0-9a-f]{2})+                        #A domain name or a IPv4 address
-        |(?:\[(?:[0-9a-f]{0,4}:)*(?:[0-9a-f]{0,4})\])         #or a well formed IPv6 address
+        (?:[a-z0-9\-\.]|%[0-9a-f]{2})+                        # A domain name or a IPv4 address
+        |(?:\[(?:[0-9a-f]{0,4}:)*(?:[0-9a-f]{0,4})\])         # or a well formed IPv6 address
       )
-      (?::[0-9]+)?                                            #Server port number (optional)
+      (?::[0-9]+)?                                            # Server port number (optional)
       (?:[\/|\?]
-        (?:[\w#!:\.\?\+=&@$'~*,;\/\(\)\[\]\-]|%[0-9a-f]{2})   #The path and query (optional)
+        (?:[\w#!:\.\?\+=&@$'~*,;\/\(\)\[\]\-]|%[0-9a-f]{2})   # The path and query (optional)
       *)?
     $/xi", $url);
   }
@@ -1382,42 +1383,48 @@ function format_date($timestamp, $type = 'medium', $format = '', $timezone = NUL
  */
 
 /**
- * Generate a URL from a Drupal menu path. Will also pass-through existing URLs.
- *
- * @param $path
- *   The Drupal path being linked to, such as "admin/content/node", or an
- *   existing URL like "http://drupal.org/".  The special path
- *   '<front>' may also be given and will generate the site's base URL.
- * @param $options
- *   An associative array of additional options, with the following keys:
- *   - 'query'
- *       A URL-encoded query string to append to the link, or an array of query
- *       key/value-pairs without any URL-encoding.
- *   - 'fragment'
- *       A fragment identifier (or named anchor) to append to the link.
- *       Do not include the '#' character.
- *   - 'absolute' (default FALSE)
- *       Whether to force the output to be an absolute link (beginning with
- *       http:). Useful for links that will be displayed outside the site, such
- *       as in an RSS feed.
- *   - 'alias' (default FALSE)
- *       Whether the given path is an alias already.
- *   - 'external'
- *       Whether the given path is an external URL.
- *   - 'language'
- *       An optional language object. Used to build the URL to link to and
- *       look up the proper alias for the link.
- *   - 'base_url'
- *       Only used internally, to modify the base URL when a language dependent
- *       URL requires so.
- *   - 'prefix'
- *       Only used internally, to modify the path when a language dependent URL
- *       requires so.
- * @return
- *   A string containing a URL to the given path.
+ * Generates an internal or external URL.
  *
  * When creating links in modules, consider whether l() could be a better
  * alternative than url().
+ *
+ * @param $path
+ *   The internal path or external URL being linked to, such as "node/34" or
+ *   "http://example.com/foo". A few notes:
+ *   - If you provide a full URL, it will be considered an external URL.
+ *   - If you provide only the path (e.g. "node/34"), it will be
+ *     considered an internal link. In this case, it should be a system URL,
+ *     and it will be replaced with the alias, if one exists. Additional query
+ *     arguments for internal paths must be supplied in $options['query'], not
+ *     included in $path.
+ *   - If you provide an internal path and $options['alias'] is set to TRUE, the
+ *     path is assumed already to be the correct path alias, and the alias is
+ *     not looked up.
+ *   - The special string '<front>' generates a link to the site's base URL.
+ *   - If your external URL contains a query (e.g. http://example.com/foo?a=b),
+ *     then you can either URL encode the query keys and values yourself and
+ *     include them in $path, or use $options['query'] to let this function
+ *     URL encode them.
+ * @param $options
+ *   An associative array of additional options, with the following elements:
+ *   - 'query': A URL-encoded query string to append to the link, or an array of
+ *     query key/value-pairs without any URL-encoding.
+ *   - 'fragment': A fragment identifier (named anchor) to append to the URL.
+ *     Do not include the leading '#' character.
+ *   - 'absolute' (default FALSE): Whether to force the output to be an absolute
+ *     link (beginning with http:). Useful for links that will be displayed
+ *     outside the site, such as in an RSS feed.
+ *   - 'alias' (default FALSE): Whether the given path is a URL alias already.
+ *   - 'external': Whether the given path is an external URL.
+ *   - 'language': An optional language object. Used to build the URL to link
+ *     to and look up the proper alias for the link.
+ *   - 'base_url': Only used internally, to modify the base URL when a language
+ *     dependent URL requires so.
+ *   - 'prefix': Only used internally, to modify the path when a language
+ *     dependent URL requires so.
+ *
+ * @return
+ *   A string containing a URL to the given path.
  */
 function url($path = NULL, $options = array()) {
   // Merge in defaults.
@@ -1544,47 +1551,37 @@ function drupal_attributes($attributes = array()) {
 }
 
 /**
- * Format an internal Drupal link.
+ * Formats an internal or external URL link as an HTML anchor tag.
  *
- * This function correctly handles aliased paths, and allows themes to highlight
- * links to the current page correctly, so all internal links output by modules
- * should be generated by this function if possible.
+ * This function correctly handles aliased paths, and adds an 'active' class
+ * attribute to links that point to the current page (for theming), so all
+ * internal links output by modules should be generated by this function if
+ * possible.
  *
  * @param $text
- *   The text to be enclosed with the anchor tag.
+ *   The link text for the anchor tag.
  * @param $path
- *   The Drupal path being linked to, such as "admin/content/node". Can be an
- *   external or internal URL.
- *     - If you provide the full URL, it will be considered an external URL.
- *     - If you provide only the path (e.g. "admin/content/node"), it is
- *       considered an internal link. In this case, it must be a system URL
- *       as the url() function will generate the alias.
- *     - If you provide '<front>', it generates a link to the site's
- *       base URL (again via the url() function).
- *     - If you provide a path, and 'alias' is set to TRUE (see below), it is
- *       used as is.
+ *   The internal path or external URL being linked to, such as "node/34" or
+ *   "http://example.com/foo". After the url() function is called to construct
+ *   the URL from $path and $options, the resulting URL is passed through
+ *   check_url() before it is inserted into the HTML anchor tag, to ensure
+ *   well-formed HTML. See url() for more information and notes.
  * @param $options
- *   An associative array of additional options, with the following keys:
- *     - 'attributes'
- *       An associative array of HTML attributes to apply to the anchor tag.
- *     - 'query'
- *       A query string to append to the link, or an array of query key/value
- *       properties.
- *     - 'fragment'
- *       A fragment identifier (named anchor) to append to the link.
- *       Do not include the '#' character.
- *     - 'absolute' (default FALSE)
- *       Whether to force the output to be an absolute link (beginning with
- *       http:). Useful for links that will be displayed outside the site, such
- *       as in an RSS feed.
- *     - 'html' (default FALSE)
- *       Whether the title is HTML, or just plain-text. For example for making
- *       an image a link, this must be set to TRUE, or else you will see the
- *       escaped HTML.
- *     - 'alias' (default FALSE)
- *       Whether the given path is an alias already.
+ *   An associative array of additional options, with the following elements:
+ *   - 'attributes': An associative array of HTML attributes to apply to the
+ *     anchor tag.
+ *   - 'html' (default FALSE): Whether $text is HTML or just plain-text. For
+ *     example, to make an image tag into a link, this must be set to TRUE, or
+ *     you will see the escaped HTML image tag.
+ *   - 'language': An optional language object. If the path being linked to is
+ *     internal to the site, $options['language'] is used to look up the alias
+ *     for the URL, and to determine whether the link is "active", or pointing
+ *     to the current page (the language as well as the path must match).This
+ *     element is also used by url().
+ *   - Additional $options elements used by the url() function.
+ *
  * @return
- *   an HTML string containing a link to the given path.
+ *   An HTML string containing a link to the given path.
  */
 function l($text, $path, $options = array()) {
   global $language;
@@ -1710,7 +1707,7 @@ function drupal_eval($code) {
  * Returns the path to a system item (module, theme, etc.).
  *
  * @param $type
- *   The type of the item (i.e. theme, theme_engine, module).
+ *   The type of the item (i.e. theme, theme_engine, module, profile).
  * @param $name
  *   The name of the item for which the path is requested.
  *
@@ -1748,7 +1745,7 @@ function drupal_add_link($attributes) {
  *
  * @param $path
  *   (optional) The path to the CSS file relative to the base_path(), e.g.,
- *   /modules/devel/devel.css.
+ *   modules/devel/devel.css.
  *
  *   Modules should always prefix the names of their CSS files with the module
  *   name, for example: system-menus.css rather than simply menus.css. Themes
@@ -2021,10 +2018,21 @@ function drupal_load_stylesheet($file, $optimize = NULL) {
 
     if ($_optimize) {
       // Perform some safe CSS optimizations.
-      $contents = preg_replace('<
-        \s*([@{}:;,]|\)\s|\s\()\s* |  #Remove whitespace around separators, but keep space around parentheses.
-        /\*([^*\\\\]|\*(?!/))+\*/     #Remove comments that are not CSS hacks.
-        >x', '\1', $contents);
+      // Regexp to match comment blocks.
+      $comment     = '/\*[^*]*\*+(?:[^/*][^*]*\*+)*/';
+      // Regexp to match double quoted strings.
+      $double_quot = '"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"';
+      // Regexp to match single quoted strings.
+      $single_quot = "'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'";
+      $contents = preg_replace_callback(
+        "<$double_quot|$single_quot|$comment>Ss",  // Match all comment blocks along
+        "_process_comment",                        // with double/single quoted strings
+        $contents);                                // and feed them to _process_comment().
+      $contents = preg_replace(
+        '<\s*([@{}:;,]|\)\s|\s\()\s*>S',           // Remove whitespace around separators,
+        '\1', $contents);                          // but keep space around parentheses.
+      // End the file with a new line.
+      $contents .= "\n";
     }
 
     // Change back directory.
@@ -2032,6 +2040,41 @@ function drupal_load_stylesheet($file, $optimize = NULL) {
   }
 
   return $contents;
+}
+
+/**
+ * Process comment blocks.
+ *
+ * This is the callback function for the preg_replace_callback()
+ * used in drupal_load_stylesheet_content(). Support for comment
+ * hacks is implemented here.
+ */
+function _process_comment($matches) {
+  static $keep_nextone = FALSE;
+
+  // Quoted string, keep it.
+  if ($matches[0][0] == "'" || $matches[0][0] == '"') {
+    return $matches[0];
+  }
+  // End of IE-Mac hack, keep it.
+  if ($keep_nextone) {
+    $keep_nextone = FALSE;
+    return $matches[0];
+  }
+  switch (strrpos($matches[0], '\\')) {
+    case FALSE :
+      // No backslash, strip it.
+      return '';
+
+    case drupal_strlen($matches[0])-3 :
+      // Ends with \*/ so is a multi line IE-Mac hack, keep the next one also.
+      $keep_nextone = TRUE;
+      return '/*_\*/';
+
+    default :
+      // Single line IE-Mac hack.
+      return '/*\_*/';
+  }
 }
 
 /**
@@ -2793,18 +2836,28 @@ function drupal_system_listing($mask, $directory, $key = 'name', $min_depth = 1)
 
 
 /**
- * This dispatch function hands off structured Drupal arrays to type-specific
- * *_alter implementations. It ensures a consistent interface for all altering
- * operations.
+ * Hands off alterable variables to type-specific *_alter implementations.
+ *
+ * This dispatch function hands off the passed in variables to type-specific
+ * hook_TYPE_alter() implementations in modules. It ensures a consistent
+ * interface for all altering operations.
  *
  * @param $type
- *   The data type of the structured array. 'form', 'links',
- *   'node_content', and so on are several examples.
+ *   A string describing the type of the alterable $data (e.g. 'form',
+ *   'profile').
  * @param $data
- *   The structured array to be altered.
+ *   The variable that will be passed to hook_TYPE_alter() implementations to
+ *   be altered. The type of this variable depends on $type. For example, when
+ *   altering a 'form', $data will be a structured array. When altering a
+ *   'profile', $data will be an object. If you need to pass additional
+ *   parameters by reference to the hook_TYPE_alter() functions, include them
+ *   as an array in $data['__drupal_alter_by_ref']. They will be unpacked and
+ *   passed to the hook_TYPE_alter() functions, before the additional
+ *   ... parameters (see below).
  * @param ...
- *   Any additional params will be passed on to the called
- *   hook_$type_alter functions.
+ *   Any additional parameters will be passed on to the hook_TYPE_alter()
+ *   functions (not by reference), after any by-reference parameters included
+ *   in $data (see above)
  */
 function drupal_alter($type, &$data) {
   // PHP's func_get_args() always returns copies of params, not references, so
@@ -2845,8 +2898,15 @@ function drupal_alter($type, &$data) {
  * Renders HTML given a structured array tree.
  *
  * Recursively iterates over each of the array elements, generating HTML code.
- * This function is usually called from within a another function, like
+ * This function is usually called from within another function, like
  * drupal_get_form() or node_view().
+ *
+ * drupal_render() flags each element with a '#printed' status to indicate that
+ * the element has been rendered, which allows individual elements of a given
+ * array to be rendered independently. This prevents elements from being
+ * rendered more than once on subsequent calls to drupal_render() if, for example,
+ * they are part of a larger array. If the same array or array element is passed
+ * more than once to drupal_render(), it simply returns a NULL value.
  *
  * @param $elements
  *   The structured array describing the data to be rendered.
@@ -3097,10 +3157,6 @@ function drupal_common_theme() {
     'pager_link' => array(
       'arguments' => array('text' => NULL, 'page_new' => NULL, 'element' => NULL, 'parameters' => array(), 'attributes' => array()),
     ),
-    // from locale.inc
-    'locale_admin_manage_screen' => array(
-      'arguments' => array('form' => NULL),
-    ),
     // from menu.inc
     'menu_item_link' => array(
       'arguments' => array('item' => NULL),
@@ -3216,7 +3272,10 @@ function drupal_get_schema($table = NULL, $rebuild = FALSE) {
 
       // Invoke hook_schema for all modules.
       foreach (module_implements('schema') as $module) {
-        $current = module_invoke($module, 'schema');
+        // Cast the result of hook_schema() to an array, as a NULL return value
+        // would cause array_merge() to set the $schema variable to NULL as well.
+        // That would break modules which use $schema further down the line.
+        $current = (array) module_invoke($module, 'schema');
         _drupal_initialize_schema($module, $current);
         $schema = array_merge($schema, $current);
       }
@@ -3313,15 +3372,17 @@ function drupal_uninstall_schema($module) {
  */
 function drupal_get_schema_unprocessed($module, $table = NULL) {
   // Load the .install file to get hook_schema.
-  module_load_include('install', $module);
+  module_load_install($module);
   $schema = module_invoke($module, 'schema');
 
   if (!is_null($table) && isset($schema[$table])) {
     return $schema[$table];
   }
-  else {
+  elseif (!empty($schema)) {
     return $schema;
   }
+
+  return array();
 }
 
 /**
@@ -3567,17 +3628,17 @@ function drupal_parse_info_file($filename) {
 
   $data = file_get_contents($filename);
   if (preg_match_all('
-    @^\s*                           #Start at the beginning of a line, ignoring leading whitespace
+    @^\s*                           # Start at the beginning of a line, ignoring leading whitespace
     ((?:
-      [^=;\[\]]|                    #Key names cannot contain equal signs, semi-colons or square brackets,
-      \[[^\[\]]*\]                  #unless they are balanced and not nested
+      [^=;\[\]]|                    # Key names cannot contain equal signs, semi-colons or square brackets,
+      \[[^\[\]]*\]                  # unless they are balanced and not nested
     )+?)
-    \s*=\s*                         #Key/value pairs are separated by equal signs (ignoring white-space)
+    \s*=\s*                         # Key/value pairs are separated by equal signs (ignoring white-space)
     (?:
-      ("(?:[^"]|(?<=\\\\)")*")|     #Double-quoted string, which may contain slash-escaped quotes/slashes
-      (\'(?:[^\']|(?<=\\\\)\')*\')| #Single-quoted string, which may contain slash-escaped quotes/slashes
-      ([^\r\n]*?)                   #Non-quoted string
-    )\s*$                           #Stop at the next end of a line, ignoring trailing whitespace
+      ("(?:[^"]|(?<=\\\\)")*")|     # Double-quoted string, which may contain slash-escaped quotes/slashes
+      (\'(?:[^\']|(?<=\\\\)\')*\')| # Single-quoted string, which may contain slash-escaped quotes/slashes
+      ([^\r\n]*?)                   # Non-quoted string
+    )\s*$                           # Stop at the next end of a line, ignoring trailing whitespace
     @msx', $data, $matches, PREG_SET_ORDER)) {
     foreach ($matches as $match) {
       // Fetch the key and value string
@@ -3641,6 +3702,8 @@ function watchdog_severity_levels() {
 
 /**
  * Explode a string of given tags into an array.
+ *
+ * @see drupal_implode_tags()
  */
 function drupal_explode_tags($tags) {
   // This regexp allows the following types of user input:
@@ -3665,6 +3728,8 @@ function drupal_explode_tags($tags) {
 
 /**
  * Implode an array of tags into a string.
+ *
+ * @see drupal_explode_tags()
  */
 function drupal_implode_tags($tags) {
   $encoded_tags = array();

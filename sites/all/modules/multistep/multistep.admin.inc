@@ -1,26 +1,12 @@
 <?php
-// $Id: multistep.admin.inc,v 1.1.2.5 2009/09/08 13:30:40 vkareh Exp $
+// $Id: multistep.admin.inc,v 1.1.2.8 2010/07/20 00:31:09 vkareh Exp $
 
 /**
- * Displays the administrative settings page
+ * Form used for administering multistep workflow settings.
  */
-function multistep_admin_settings() {
-  return drupal_get_form('multistep_admin_settings_form');
-}
-
-/**
- * Creates the form used for admin settings.
- */
-function multistep_admin_settings_form(&$form_state) {
+function multistep_admin_settings_workflow_form(&$form_state) {
   $form = array();
-  // Revisions and Publishing
-  $form['multistep']['status'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Revisioning and publishing'),
-    '#description' => t('These settings will change how multistep interacts with node revisioning and publishing.'),
-    '#weight' => -1,
-  );
-  $form['multistep']['status']['multistep_status_revisions'] = array(
+  $form['multistep_status_revisions'] = array(
     '#type' => 'radios',
     '#title' => t('Revisions'),
     '#description' => t('Sets how multistep will interact with node revisioning, <em>if revisioning is enabled for the content type</em>.
@@ -42,7 +28,7 @@ function multistep_admin_settings_form(&$form_state) {
     ),
     '#weight' => -10,
   );
-  $form['multistep']['status']['multistep_status_publishing'] = array(
+  $form['multistep_status_publishing'] = array(
     '#type' => 'radios',
     '#title' => t('Publishing'),
     '#description' => t('Sets how multistep will interact with the node published status, <em>if publishing is enabled for the content type</em>.
@@ -58,63 +44,72 @@ function multistep_admin_settings_form(&$form_state) {
     ),
     '#weight' => -9,
   );
-  $form['multistep']['status']['multistep_submit_status'] = array(
-    '#type' => 'submit',
-    '#value' => t('Save'),
-    '#weight' => 1,
-    '#access' => user_access('administer multistep'),
-    '#submit' => array('multistep_admin_settings_status_form_submit'),
-  );
-  // Navigation buttons
-  $form['multistep']['buttons'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Navigation button labels'),
-    '#description' => t('These settings will change the text displayed on each of the submit buttons on multistep forms.'),
-    '#weight' => 0,
-  );
-  $form['multistep']['buttons']['multistep_button_prev'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Previous button'),
-    '#default_value' => variable_get('multistep_button_prev', '< Previous'),
-    '#description' => t('This button will bring you back one step.'),
-    '#weight' => -10,
-  );
-  $form['multistep']['buttons']['multistep_button_next'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Next button'),
-    '#default_value' => variable_get('multistep_button_next', 'Next >'),
-    '#description' => t('This button will move you forward one step.'),
-    '#weight' => -9,
-  );
-  $form['multistep']['buttons']['multistep_button_save'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Save button'),
-    '#default_value' => variable_get('multistep_button_save', 'Save'),
-    '#description' => t('This button will save the form while remaining in the current step.'),
+  $form['multistep_workflow_mode'] = array(
+    '#type' => 'radios',
+    '#title' => t('Workflow mode'),
+    '#description' => t('Disables navigation block links for steps that have not been submitted') . '<br /><strong>' . t('Note: This does not remove access from those steps, it merely displays the links as static text instead.') . '</strong>',
+    '#options' => array(
+      'free' => t('Steps can be submitted in any order (Default)'),
+      'direct' => t('Steps can be submitted only in one direction (Wizard)'),
+    ),
+    '#default_value' => variable_get('multistep_workflow_mode', 'free'),
     '#weight' => -8,
   );
-  $form['multistep']['buttons']['multistep_button_done'] = array(
+  $form['multistep_show_step_numbers'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Show step numbers'),
+    '#description' => t('Show step numbers in navigation block.'),
+    '#default_value' => variable_get('multistep_show_step_numbers', TRUE),
+    '#weight' => -6,
+  );
+  return system_settings_form($form);
+}  
+  
+/**
+ * Form used for changing multistep form labels.
+ */
+function multistep_admin_settings_design_form(&$form_state) {
+  drupal_set_message(t('Saving these strings will disable their translation via Drupal\'s language system. Use the reset button to return them to the original state.'), 'warning');
+  $form = array();
+  $form['multistep_button_prev'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Previous button'),
+    '#description' => t('This button will bring you back one step. To omit this button, remove any text and leave this field blank.'),
+    '#default_value' => variable_get('multistep_button_prev', t('< Previous')),
+    '#weight' => -10,
+  );
+  $form['multistep_button_next'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Next button'),
+    '#description' => t('This button will move you forward one step.'),
+    '#default_value' => variable_get('multistep_button_next', t('Next >')),
+    '#required' => TRUE,
+    '#weight' => -9,
+  );
+  $form['multistep_button_save'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Save button'),
+    '#description' => t('This button will save the form while remaining in the current step. To omit this button, remove any text and leave this field blank.'),
+    '#default_value' => variable_get('multistep_button_save', t('Save')),
+    '#weight' => -8,
+  );
+  $form['multistep_button_done'] = array(
     '#type' => 'textfield',
     '#title' => t('Done button'),
-    '#default_value' => variable_get('multistep_button_done', 'Done'),
     '#description' => t('This button will save the form and redirect you to the node view.'),
+    '#default_value' => variable_get('multistep_button_done', t('Done')),
+    '#required' => TRUE,
     '#weight' => -7,
   );
-  $form['multistep']['buttons']['multistep_submit_buttons'] = array(
-    '#type' => 'submit',
-    '#value' => t('Save button labels'),
-    '#weight' => 1,
-    '#access' => user_access('administer multistep'),
-    '#validate' => array('multistep_admin_settings_buttons_form_validate'),
-    '#submit' => array('multistep_admin_settings_buttons_form_submit'),
-  );
-  // Reset data
-  $form['multistep']['reset'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Reset data'),
-    '#description' => t('This form will reset all the step data for the selected content type. Use this if you just enabled multistep for a content type that already contained nodes.') . '<br /><strong>' . t('Warning! Resetting the tables for a content type that already had multistep enabled could result in the loss of the step data!') . '</strong>',
-    '#weight' => 1,
-  );
+  return system_settings_form($form);
+}
+
+/**
+ * Form used for changing multistep form labels.
+ */
+function multistep_admin_settings_reset_form(&$form_state) {
+  $form = array();
+  $form['#description'] = t('This form will reset all the step data for the selected content type. Use this if you just enabled multistep for a content type that already contained nodes.') . '<br /><strong>' . t('Warning! Resetting the tables for a content type that already had multistep enabled could result in the loss of the step data!') . '</strong>';
   $content_types = content_types();
   $options = array('' => '- Select -');
   foreach ($content_types as $content_type) {
@@ -122,69 +117,21 @@ function multistep_admin_settings_form(&$form_state) {
       $options[$content_type['type']] = $content_type['name'];
     }
   }
-  $form['multistep']['reset']['multistep_type'] = array(
+  $form['multistep_type'] = array(
     '#type' => 'select',
     '#title' => t('Content type'),
     '#options' => $options,
+    '#required' => TRUE,
     '#weight' => -1,
   );
   // Show reset button if multistep is enabled for this content type.
-  $form['multistep']['reset']['multistep_reset'] = array(
+  $form['multistep_reset'] = array(
     '#type' => 'submit',
     '#value' => t('Reset data'),
     '#weight' => 1,
     '#access' => user_access('administer multistep'),
-    '#validate' => array('multistep_admin_settings_reset_form_validate'),
-    '#submit' => array('multistep_admin_settings_reset_form_submit'),
   );
   return $form;
-}
-
-/**
- * Saves the revision and publishing settings.
- */
-function multistep_admin_settings_status_form_submit($form, &$form_state) {
-  variable_set('multistep_status_revisions', $form_state['values']['multistep_status_revisions']);
-  variable_set('multistep_status_publishing', $form_state['values']['multistep_status_publishing']);
-  drupal_set_message(t('Settings saved successfully.'));
-}
-
-/**
- * Validates the navigation button labels form to make sure they contain text.
- */
-function multistep_admin_settings_buttons_form_validate($form, &$form_state) {
-  if (empty($form_state['values']['multistep_button_prev']) || !isset($form_state['values']['multistep_button_prev'])) {
-    form_set_error('multistep_button_prev', 'You need to enter a label for the <em>Previous</em> button.');
-  }
-  if (empty($form_state['values']['multistep_button_next']) || !isset($form_state['values']['multistep_button_next'])) {
-    form_set_error('multistep_button_next', 'You need to enter a label for the <em>Next</em> button.');
-  }
-  if (empty($form_state['values']['multistep_button_save']) || !isset($form_state['values']['multistep_button_save'])) {
-    form_set_error('multistep_button_save', 'You need to enter a label for the <em>Save</em> button.');
-  }
-  if (empty($form_state['values']['multistep_button_done']) || !isset($form_state['values']['multistep_button_done'])) {
-    form_set_error('multistep_button_done', 'You need to enter a label for the <em>Done</em> button.');
-  }
-}
-
-/**
- * Saves the navigation button labels.
- */
-function multistep_admin_settings_buttons_form_submit($form, &$form_state) {
-  variable_set('multistep_button_prev', $form_state['values']['multistep_button_prev']);
-  variable_set('multistep_button_next', $form_state['values']['multistep_button_next']);
-  variable_set('multistep_button_save', $form_state['values']['multistep_button_save']);
-  variable_set('multistep_button_done', $form_state['values']['multistep_button_done']);
-  drupal_set_message(t('Button labels saved successfully.'));
-}
-
-/**
- * Validates the reset data form to make sure a content type was selected.
- */
-function multistep_admin_settings_reset_form_validate($form, &$form_state) {
-  if (empty($form_state['values']['multistep_type']) || !isset($form_state['values']['multistep_type'])) {
-    form_set_error('multistep_type', 'You need to select which content type you want to reset the data for.');
-  }
 }
 
 /**

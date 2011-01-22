@@ -1,5 +1,5 @@
 <?php
-// $Id: form.inc,v 1.265.2.33 2010/05/19 15:02:32 goba Exp $
+// $Id: form.inc,v 1.265.2.35 2010/11/04 09:55:29 goba Exp $
 
 /**
  * @defgroup forms Form builder functions
@@ -62,7 +62,9 @@
  *   Any additional arguments are passed on to the functions called by
  *   drupal_get_form(), including the unique form constructor function.
  *   For example, the node_edit form requires that a node object be passed
- *   in here when it is called.
+ *   in here when it is called. These are available to implementations of
+ *   hook_form_alter() and hook_form_FORM_ID_alter() as the array
+ *   $form['#parameters'].
  * @return
  *   The rendered form.
  */
@@ -248,9 +250,14 @@ function form_get_cache($form_build_id, &$form_state) {
 }
 
 /**
- * Retrieves a form using a form_id, populates it with $form_state['values'],
- * processes it, and returns any validation errors encountered. This
- * function is the programmatic counterpart to drupal_get_form().
+ * Retrieves, populates, and processes a form.
+ *
+ * This function allows you to supply values for form elements and submit a
+ * form for processing. Compare to drupal_get_form(), which also builds and
+ * processes a form, but does not allow you to supply values.
+ *
+ * There is no return value, but you can check to see if there are errors by
+ * calling form_get_errors().
  *
  * @param $form_id
  *   The unique string identifying the desired form. If a function
@@ -270,7 +277,6 @@ function form_get_cache($form_build_id, &$form_state) {
  *   For example, the node_edit form requires that a node object be passed
  *   in here when it is called.
  * For example:
- *
  * @code
  * // register a new user
  * $form_state = array();

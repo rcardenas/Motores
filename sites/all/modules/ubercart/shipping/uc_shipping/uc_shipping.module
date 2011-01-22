@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_shipping.module,v 1.6.2.19 2010/07/07 18:59:48 islandusurper Exp $
+// $Id: uc_shipping.module,v 1.6.2.20 2010/07/30 15:06:21 islandusurper Exp $
 
 /**
  * @file
@@ -114,6 +114,15 @@ function uc_shipping_menu() {
     'title' => 'Print',
     'page callback' => 'theme',
     'page arguments' => array('uc_shipping_shipment_print', 3, 5),
+    'access callback' => 'uc_shipping_order_access',
+    'access arguments' => array(3),
+    'type' => MENU_LOCAL_TASK,
+    'file' => 'uc_shipping.admin.inc',
+  );
+  $items['admin/store/orders/%uc_order/shipments/%uc_shipping_shipment/packing_slip'] = array(
+    'title' => 'Packing slip',
+    'page callback' => 'theme',
+    'page arguments' => array('uc_shipping_shipment_print', 3, 5, FALSE),
     'access callback' => 'uc_shipping_order_access',
     'access arguments' => array(3),
     'type' => MENU_LOCAL_TASK,

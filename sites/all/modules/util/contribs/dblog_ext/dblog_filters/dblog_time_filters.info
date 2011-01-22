@@ -10,9 +10,9 @@ dependencies[] = dblog_filters
 ; format_minutes
 dependencies[] = dblog_common
 
-; Information added by drupal.org packaging script on 2010-06-04
-version = "6.x-3.0-rc1"
+; Information added by drupal.org packaging script on 2010-10-28
+version = "6.x-3.0"
 core = "6.x"
 project = "util"
-datestamp = "1275677413"
+datestamp = "1288295149"
 

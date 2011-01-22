@@ -1,5 +1,5 @@
 <?php
-// $Id: filter.module,v 1.204.2.15 2010/05/28 14:40:02 goba Exp $
+// $Id: filter.module,v 1.204.2.17 2010/11/03 14:11:43 goba Exp $
 
 /**
  * @file
@@ -965,23 +965,30 @@ function filter_xss_admin($string) {
 }
 
 /**
- * Filters XSS. Based on kses by Ulf Harnhammar, see
- * http://sourceforge.net/projects/kses
+ * Filters an HTML string to prevent cross-site-scripting (XSS) vulnerabilities.
  *
- * For examples of various XSS attacks, see:
- * http://ha.ckers.org/xss.html
+ * Based on kses by Ulf Harnhammar, see http://sourceforge.net/projects/kses.
+ * For examples of various XSS attacks, see http://ha.ckers.org/xss.html.
  *
  * This code does four things:
- * - Removes characters and constructs that can trick browsers
- * - Makes sure all HTML entities are well-formed
- * - Makes sure all HTML tags and attributes are well-formed
- * - Makes sure no HTML tags contain URLs with a disallowed protocol (e.g. javascript:)
+ * - Removes characters and constructs that can trick browsers.
+ * - Makes sure all HTML entities are well-formed.
+ * - Makes sure all HTML tags and attributes are well-formed.
+ * - Makes sure no HTML tags contain URLs with a disallowed protocol (e.g.
+ *   javascript:).
  *
  * @param $string
- *   The string with raw HTML in it. It will be stripped of everything that can cause
- *   an XSS attack.
+ *   The string with raw HTML in it. It will be stripped of everything that can
+ *   cause an XSS attack.
  * @param $allowed_tags
  *   An array of allowed tags.
+ *
+ * @return
+ *   An XSS safe version of $string, or an empty string if $string is not
+ *   valid UTF-8.
+ *
+ * @see drupal_validate_utf8()
+ * @ingroup sanitization
  */
 function filter_xss($string, $allowed_tags = array('a', 'em', 'strong', 'cite', 'code', 'ul', 'ol', 'li', 'dl', 'dt', 'dd')) {
   // Only operate on valid UTF-8 strings. This is necessary to prevent cross
@@ -1212,7 +1219,7 @@ function _filter_xss_attributes($attr) {
 function filter_xss_bad_protocol($string, $decode = TRUE) {
   static $allowed_protocols;
   if (!isset($allowed_protocols)) {
-    $allowed_protocols = array_flip(variable_get('filter_allowed_protocols', array('http', 'https', 'ftp', 'news', 'nntp', 'telnet', 'mailto', 'irc', 'ssh', 'sftp', 'webcal', 'rtsp')));
+    $allowed_protocols = array_flip(variable_get('filter_allowed_protocols', array('http', 'https', 'ftp', 'news', 'nntp', 'tel', 'telnet', 'mailto', 'irc', 'ssh', 'sftp', 'webcal', 'rtsp')));
   }
 
   // Get the plain text representation of the attribute value (i.e. its meaning).
