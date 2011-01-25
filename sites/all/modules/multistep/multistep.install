@@ -1,5 +1,5 @@
 <?php
-// $Id: multistep.install,v 1.1.2.1.2.10 2009/09/08 13:30:40 vkareh Exp $
+// $Id: multistep.install,v 1.1.2.1.2.11 2010/07/28 01:34:30 vkareh Exp $
 
 /**
  * Implementation of hook_install().
@@ -24,6 +24,11 @@ function multistep_schema() {
       'status' => array('type' => 'varchar', 'length' => 12, 'not null' => TRUE, 'default' => '', 'description' => 'The status of the step.'),
     ),
     'description' => t('Keeps track of submitted steps in multistep forms.'),
+    'primary key' => array('nid', 'step'),
+    'indexes' => array(
+      'multistep_nid_step' => array('nid', 'step'),
+      'multistep_status' => array(array('status', 1)),
+    ),
   );
   return $schema;
 }
@@ -110,4 +115,13 @@ function multistep_update_6101() {
 function multistep_update_6102() {
   // Set multistep to a higher weight so that it allows extra CCK options to load first.
   db_query("UPDATE {system} SET weight = 10 WHERE name = 'multistep'");
+}
+
+function multistep_update_6103() {
+  // Add indexes for faster querying.
+  $ret = array();
+  db_add_primary_key($ret, 'multistep', array('nid', 'step'));
+  db_add_index($ret, 'multistep', 'multistep_nid_step', array('nid', 'step'));
+  db_add_index($ret, 'multistep', 'multistep_status', array(array('status', 1)));
+  return $ret;
 }

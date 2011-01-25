@@ -1,5 +1,5 @@
 <?php
-// $Id: file.inc,v 1.121.2.12 2010/05/11 09:49:58 goba Exp $
+// $Id: file.inc,v 1.121.2.14 2010/12/13 19:02:09 goba Exp $
 
 /**
  * @file
@@ -359,11 +359,23 @@ function file_move(&$source, $dest = 0, $replace = FILE_EXISTS_RENAME) {
 /**
  * Modify a filename as needed for security purposes.
  *
- * Dangerous file names will be altered; for instance, the file name
- * "exploit.php.pps" will become "exploit.php_.pps". All extensions that are
+ * Munging a file name prevents unknown file extensions from masking exploit
+ * files. When web servers such as Apache decide how to process a URL request,
+ * they use the file extension. If the extension is not recognized, Apache
+ * skips that extension and uses the previous file extension. For example, if
+ * the file being requested is exploit.php.pps, and Apache does not recognize
+ * the '.pps' extension, it treats the file as PHP and executes it. To make
+ * this file name safe for Apache and prevent it from executing as PHP, the
+ * .php extension is "munged" into .php_, making the safe file name
+ * exploit.php_.pps.
+ *
+ * Specifically, this function adds an underscore to all extensions that are
  * between 2 and 5 characters in length, internal to the file name, and not
- * included in $extensions will be altered by adding an underscore. If variable
- * 'allow_insecure_uploads' evaluates to TRUE, no alterations will be made.
+ * included in $extensions.
+ *
+ * Function behavior is also controlled by the Drupal variable
+ * 'allow_insecure_uploads'. If 'allow_insecure_uploads' evaluates to TRUE, no
+ * alterations will be made, if it evaluates to FALSE, the filename is 'munged'.
  *
  * @param $filename
  *   File name to modify.
@@ -475,17 +487,17 @@ function file_space_used($uid = NULL) {
 }
 
 /**
- * Saves a file upload to a new location. The source file is validated as a
- * proper upload and handled as such.
+ * Saves a file upload to a new location.
  *
- * The file will be added to the files table as a temporary file. Temporary files
- * are periodically cleaned. To make the file permanent file call
+ * The source file is validated as a proper upload and handled as such.
+ * The file will be added to the files table as a temporary file. Temporary
+ * files are periodically cleaned. To make the file permanent file call
  * file_set_status() to change its status.
  *
  * @param $source
  *   A string specifying the name of the upload field to save.
  * @param $validators
- *   An optional, associative array of callback functions used to validate the
+ *   (optional) An associative array of callback functions used to validate the
  *   file. The keys are function names and the values arrays of callback
  *   parameters which will be passed in after the file object. The
  *   functions should return an array of error messages; an empty array
@@ -495,9 +507,12 @@ function file_space_used($uid = NULL) {
  *   A string containing the directory $source should be copied to. If this is
  *   not provided or is not writable, the temporary directory will be used.
  * @param $replace
- *   A boolean indicating whether an existing file of the same name in the
- *   destination directory should overwritten. A false value will generate a
- *   new, unique filename in the destination directory.
+ *   Replace behavior when the destination file already exists:
+ *   - FILE_EXISTS_REPLACE: Replace the existing file.
+ *   - FILE_EXISTS_RENAME: Append _{incrementing number} until the filename
+ *     is unique.
+ *   - FILE_EXISTS_ERROR: Do nothing and return FALSE.
+ *
  * @return
  *   An object containing the file information, or 0 in the event of an error.
  */

@@ -1,5 +1,5 @@
 <?php
-// $Id: privatemsg_filter.module,v 1.1.2.30 2009/11/23 19:54:49 berdir Exp $
+// $Id: privatemsg_filter.module,v 1.1.2.31 2010/05/05 21:26:27 berdir Exp $
 
 /**
  * @file
@@ -501,7 +501,7 @@ function privatemsg_filter_form_privatemsg_list_alter(&$form, $form_state) {
   }
 
   $tags = privatemsg_filter_get_tags_data($user);
-  if (privatemsg_user_access('filter private messages') && !empty($tags) && !empty($form['#data'])) {
+  if (privatemsg_user_access('tag private messages') && !empty($tags) && !empty($form['#data'])) {
     $options = array();
     $options[] = t('Apply tag...');
     foreach ($tags as $tag_id => $tag) {

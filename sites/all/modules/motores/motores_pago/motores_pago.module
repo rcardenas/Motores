@@ -46,7 +46,7 @@ function uc_payment_method_deposito( $op, &$order )
     
        }
     	node_save($node);
-      //print_r($order);exit;
+      print_r($node->type);
       $review[] = array(
         'title' => t('Cuenta'), 
         'data' => 'Santander'
@@ -56,8 +56,8 @@ function uc_payment_method_deposito( $op, &$order )
         'data' => '$'.$order->order_total.' MXN'
       );
 	  $review[] = array(
-        'title' => t('Refrencia Bancaria'), 
-        'data' => $ref
+        'title' => t('Referencia Bancaria'), 
+        'data' => $node->field_referencia[0]['value'] 
       );
       return $review;
   }

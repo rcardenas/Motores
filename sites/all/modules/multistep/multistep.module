@@ -1,5 +1,5 @@
 <?php
-// $Id: multistep.module,v 1.1.2.2.2.31 2009/12/10 21:36:43 vkareh Exp $
+// $Id: multistep.module,v 1.1.2.2.2.50 2010/09/26 21:25:07 vkareh Exp $
 
 /**
  * Implementation of hook_help().
@@ -33,11 +33,43 @@ function multistep_perm() {
  */
 function multistep_menu() {
   $items['admin/settings/multistep'] = array(
-    'title' => t('Multistep'),
+    'title' => 'Multistep',
     'description' => 'Allows the user to configure different options for the multistep module.',
-    'page callback' => 'multistep_admin_settings',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('multistep_admin_settings_workflow_form'),
     'access arguments' => array('administer multistep'),
     'file' => 'multistep.admin.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['admin/settings/multistep/workflow'] = array(
+    'title' => 'Workflow',
+    'description' => 'These settings will change workflow settings for multistep.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('multistep_admin_settings_workflow_form'),
+    'access arguments' => array('administer multistep'),
+    'file' => 'multistep.admin.inc',
+    'weight' => -9,
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+  );
+  $items['admin/settings/multistep/design'] = array(
+    'title' => 'Button labels',
+    'description' => 'These settings will change the button labels for multistep.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('multistep_admin_settings_design_form'),
+    'access arguments' => array('administer multistep'),
+    'file' => 'multistep.admin.inc',
+    'weight' => -8,
+    'type' => MENU_LOCAL_TASK,
+  );
+  $items['admin/settings/multistep/reset'] = array(
+    'title' => 'Reset data',
+    'description' => 'This form will reset all the step data for the selected content type.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('multistep_admin_settings_reset_form'),
+    'access arguments' => array('administer multistep'),
+    'file' => 'multistep.admin.inc',
+    'weight' => -7,
+    'type' => MENU_LOCAL_TASK,
   );
   return $items;
 }
@@ -52,11 +84,20 @@ function multistep_block($op = 'list', $delta = 0, $edit = array()) {
       // Provide a block for each content type that has multisteps.
       foreach ($content_types as $type => $values) {
         if (variable_get('multistep_expose_' . $type, 'disabled') == 'enabled') {
-          $blocks[$type]['info'] = 'Multistep Menu - ' . $values['name'];
+          $blocks[$type] = array(
+            'info' => 'Multistep Menu - ' . $values['name'],
+            'cache' => BLOCK_NO_CACHE,
+          );
         }
       }
       return $blocks;
     case 'configure':
+      $form['body'] = array(
+        '#type' => 'textarea',
+        '#title' => t('Block body'),
+        '#default_value' => variable_get('multistep_body_' . $delta, ''),
+        '#description' => t('The content of the block as shown to the user.'),
+      );
       $form['menu'] = array(
         '#type' => 'radios',
         '#title' => t('Enable menu'),
@@ -72,10 +113,11 @@ function multistep_block($op = 'list', $delta = 0, $edit = array()) {
       $form['list'] = array(
         '#type' => 'item',
         '#title' => t('Group list'),
-        '#description' => t('To change which groups should appear on the menu list, ' . l('click here', 'admin/content/node-type/' . $delta . '/fields') . ' and change the configuration in each group.'),
+        '#description' => t('To change which groups should appear on the menu list, !link and change the configuration in each group.', array('!link' => l('click here', 'admin/content/node-type/' . $delta . '/fields'))),
       );
       return $form;
     case 'save':
+      variable_set('multistep_body_' . $delta, $edit['body']);
       variable_set('multistep_menu_' . $delta, $edit['menu']);
       variable_set('multistep_progress_' . $delta, $edit['progress']);
     case 'view':
@@ -89,25 +131,70 @@ function multistep_block($op = 'list', $delta = 0, $edit = array()) {
  * Creates a menu of the different groups in a form.
  */
 function _multistep_block($type) {
-  if (arg(0) == 'node' && is_numeric(arg(1)) && arg(2) == 'edit') {
-    $node = node_load(arg(1));
-    if ($node->type == $type && variable_get('multistep_expose_' . $type, 'disabled') == 'enabled') {
+  if (arg(0) == 'node' || arg(0) == 'user') {
+    $node_type = '';
+    $new = FALSE;
+    $context = arg(0);
+    if (arg(0) == 'node' && is_numeric(arg(1)) && arg(2) == 'edit') {
+      $node_type = node_load(arg(1))->type;
+    }
+    elseif (arg(0) == 'node' && arg(1) == 'add' && arg(2) != '') {
+      $node_type = strtr(arg(2), array('-' => '_'));
+      $new = TRUE;
+    }
+    elseif (arg(0) == 'user' && is_numeric(arg(1)) && arg(2) == 'edit' && !is_numeric(arg(3))) {
+      $node_type = arg(3);
+    }
+    elseif (arg(0) == 'user' && is_numeric(arg(1)) && arg(2) == 'profile' && !is_numeric(arg(3))) {
+      $node_type = arg(3);
+    }
+    else {
+      return;
+    }
+    if ($node_type == $type && variable_get('multistep_expose_' . $type, 'disabled') == 'enabled') {
+      // Display block body.
+      if (variable_get('multistep_body_' . $type, '') != '') {
+        $body_text = array(
+          '#type' => 'item',
+          '#value' => variable_get('multistep_body_' . $type, ''),
+        );
+        $body = drupal_render($body_text);
+      }
       $groups = fieldgroup_groups($type);
+      //Get design variables
+      $show_step_numbers = variable_get('multistep_show_step_numbers', TRUE);
+      $workflow_mode = variable_get('multistep_workflow_mode', 'free');
+      $current_step = _multistep_get_current_step($type);
       // Generate the menu items.
       if (variable_get('multistep_menu_' . $type, 'enabled') == 'enabled') {
         foreach ($groups as $group) {
           if ($group['settings']['multistep']['block']) {
             $step = $group['settings']['multistep']['step'];
-            $id = 'multistep-' . $type . '-' . $step;
-            // Jump to the anchor point of the group.
-            $anchor = 'multistep-' . $group['group_name'];
             // Highlight unsubmitted steps.
             $status = _multistep_get_status(arg(1), $step);
-            $done = is_null($status) || $status == '' ? '' : 'multistep-' . $status;
-            $content[$step . $group['weight']] = l($group['label'], 'node/' . arg(1) . '/edit/' . $step, array('attributes' => array('id' => $id, 'class' => $done), 'fragment' => $anchor));
+            $data[$step . $group['weight']] = array(
+              'id' => 'multistep-' . $type . '-' . $step,
+              // Jump to the anchor point of the group.
+              'anchor' => 'multistep-' . $group['group_name'],
+              'class' => array(
+                is_null($status) || $status == '' ? '' : 'multistep-' . $status,
+                $current_step == $step ? 'active': '',
+              ),
+              'url' => (!$new && ($workflow_mode == 'free' || ($workflow_mode == 'direct' && ($status == 'submitted' || $last_submitted_step + 1 == $step))) ? $context . '/' . arg(1) . '/' . ($context == 'node' ? 'edit' : 'profile/' . $type) . '/' . $step : NULL),
+              'label' => (($show_step_numbers) ? $step . '. ' : '') . $group['label'],
+              'next_unsubmitted_step' => FALSE,
+            );
+            if ($workflow_mode == 'direct') {
+              if ($status == 'unsubmitted' && $last_submitted_step == $step -1) {
+                $data[$step . $group['weight']]['next_unsubmitted_step'] = TRUE;
+              }
+              if ($status == 'submitted') {
+                $last_submitted_step = $step;
+              }
+            }
           }
         }
-        $menu = theme_item_list($content);
+      $menu = theme('multistep_navigation', $data);
       }
       // Generate the progress bar.
       if (variable_get('multistep_progress_' . $type, 'enabled') == 'enabled') {
@@ -125,7 +212,7 @@ function _multistep_block($type) {
       $content_type = content_types($type);
       return array(
         'subject' => $content_type['name'] . ' menu',
-        'content' => $menu . $progress,
+        'content' => $body . $menu . $progress,
       );
     }
   }
@@ -144,16 +231,27 @@ function multistep_fieldgroup_form(&$form, &$form_state, $form_id, &$group) {
  * Implementation of hook_field_access().
  * Restrict access to fields that do not belong in the current step.
  */
-function multistep_field_access($op, $field) {
+function multistep_field_access($op, $field, $account = NULL, $node = NULL) {
+  if (arg(0) == 'admin' || !isset($field['type_name'])) {
+    return;
+  }
   $type = $field['type_name'];
-  //if ($type == 'carro') print_r($field);
-  if ( $field['type'] == 'filefield' ) return;
-  //return;
   // Do nothing if multistep is not enabled for this node type.
   if (variable_get('multistep_expose_' . $type, 'disabled') != 'enabled') {
     return;
   }
+  // Do nothing if no node is loaded for this field.
+  if (empty($node)) {
+    return;
+  }
   switch ($op) {
+    case 'view':
+      // In some rare cases a field can be set to view only during node edit.
+      // @see http://drupal.org/node/825392
+      if (arg(0) == 'node' && is_numeric(arg(1)) && arg(2) != 'edit') {
+        return;
+      }
+      break;
     case 'edit':
       $step = _multistep_get_current_step($type);
       // Render all steps if requested by a user with "toggle multistep" permissions.
@@ -162,8 +260,16 @@ function multistep_field_access($op, $field) {
       }
       $group = _fieldgroup_field_get_group($type, $field['field_name']);
       $groups = fieldgroup_groups($type);
+      // Return if the current field belongs in every step
+      if (isset($field['widget']['multistep']) && $field['widget']['multistep'] == 0 && !$groups[$group]) {
+        return;
+      }
+      // Return if the current field's group belongs in every step
+      if ($groups[$group]['settings']['multistep']['step'] == 0 && $groups[$group]) {
+        return;
+      }
       // Set #access to FALSE if the current field does not belong in the current step.
-      if ($field['widget']['multistep'] != $step && !$groups[$group]) {
+      if (isset($field['widget']['multistep']) && $field['widget']['multistep'] != $step && !$groups[$group]) {
         return FALSE;
       }
       // Set #access to FALSE if the current field's group does not belong in the current step.
@@ -195,7 +301,7 @@ function multistep_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
 }
 
 /**
- * Implementation of hook_form_alter() for node_type_form.
+ * Implementation of hook_form_FORM_ID_alter() for node_type_form.
  * This is the form for editing the content type.
  */
 function multistep_form_node_type_form_alter(&$form, &$form_state) {
@@ -205,7 +311,7 @@ function multistep_form_node_type_form_alter(&$form, &$form_state) {
   $form['multistep'] = array(
     '#type' => 'fieldset',
     '#title' => t('Multistep Form'),
-    '#description' => t('After enabling multistep, go to the ') . l('settings page', 'admin/settings/multistep') . t(' to reset the step data.'),
+    '#description' => t('After enabling multistep, go to the !link to reset the step data.', array('!link' => l('settings page', 'admin/settings/multistep'))),
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
     '#weight' => 2,
@@ -260,10 +366,10 @@ function multistep_form_node_type_form_alter(&$form, &$form_state) {
         || (module_exists('auto_nodetitle') && auto_nodetitle_get_setting($type) == AUTO_NODETITLE_DISABLED))) {
           $form['multistep']['multistep_settings']['multistep_extra_fields']['multistep_extra_' . $field_name] = array(
             '#type' => 'select',
-            '#title' => t($field_value['label']),
+            '#title' => t('!field_label', array('!field_label' => $field_value['label'])),
             '#default_value' => variable_get('multistep_extra_' . $field_name . '_' . $type, 1),
             '#options' => array(0 => t('All'), 1 => '1'),
-            '#description' => t('Setting the Title field in a step other than the first one might create complications due to the possibility of having nodes without title. Enable ' . l('Automatic Nodetitles', 'http://drupal.org/project/auto_nodetitle') . ' for this content type to use this feature.'),
+            '#description' => t('Setting the Title field in a step other than the first one might create complications due to the possibility of having nodes without title. Enable !link for this content type to use this feature.', array('!link' => l('Automatic Nodetitles', 'http://drupal.org/project/auto_nodetitle'))),
           );
         }
         elseif ($field_name == 'taxonomy' && module_exists('taxonomy')) {
@@ -271,20 +377,32 @@ function multistep_form_node_type_form_alter(&$form, &$form_state) {
           foreach ($vocabularies as $vid => $vocabulary) {
             $form['multistep']['multistep_settings']['multistep_extra_fields']['multistep_extra_' . $field_name . '_' . $vid] = array(
               '#type' => 'select',
-              '#title' => t('Taxonomy - ' . $vocabulary->name),
+              '#title' => t('Taxonomy - !name', array('!name' => $vocabulary->name)),
               '#default_value' => variable_get('multistep_extra_' . $field_name . '_' . $vid . '_' . $type, 1),
               '#options' => _multistep_get_steps($type),
-              '#description' => t('Select the step the ' . $vocabulary->name . ' field belongs to.'),
+              '#description' => t('Select the step the !vocabulary field belongs to.', array('!vocabulary' => $vocabulary->name)),
             );
           }
+        }
+        elseif ($field_name == 'body_field' && $form['#node_type']->has_body && $form['#node_type']->min_word_count) {
+          // If the Body field has a minimum word limit, it has to be visible on the first step for validation.
+          // @see http://drupal.org/node/782534
+          // @todo Find a way of deferring validation
+          $form['multistep']['multistep_settings']['multistep_extra_fields']['multistep_extra_' . $field_name] = array(
+            '#type' => 'select',
+            '#title' => t('!body_label', array('!body_label' => $form['#node_type']->body_label)),
+            '#default_value' => variable_get('multistep_extra_' . $field_name . '_' . $type, 1),
+            '#options' => array(0 => t('All'), 1 => '1'),
+            '#description' => t('Select the step the !body_label field belongs to.', array('!body_label' => $form['#node_type']->body_label)) . '<br />' . t('If the !body_label field has a minimum word limit, it has to be visible on the first step for validation.', array('!body_label' => $form['#node_type']->body_label)),
+          );
         }
         else {
           $form['multistep']['multistep_settings']['multistep_extra_fields']['multistep_extra_' . $field_name] = array(
             '#type' => 'select',
-            '#title' => t($field_value['label']),
+            '#title' => t('!field_label', array('!field_label' => $field_value['label'])),
             '#default_value' => variable_get('multistep_extra_' . $field_name . '_' . $type, 1),
             '#options' => _multistep_get_steps($type),
-            '#description' => t('Select the step the ' . $field_value['label'] . ' field belongs to.'),
+            '#description' => t('Select the step the !field_label field belongs to.', array('!field_label' => $field_value['label'])),
           );
         }
       }
@@ -295,7 +413,7 @@ function multistep_form_node_type_form_alter(&$form, &$form_state) {
 }
 
 /**
- * Implementation of hook_form_alter() for fieldgroup_group_edit_form.
+ * Implementation of hook_form_FORM_ID_alter() for fieldgroup_group_edit_form.
  * This is the form to create/edit fieldgroup information.
  */
 function multistep_form_fieldgroup_group_edit_form_alter(&$form, &$form_state) {
@@ -324,7 +442,7 @@ function multistep_form_fieldgroup_group_edit_form_alter(&$form, &$form_state) {
   $form['settings']['multistep']['block'] = array(
     '#type' => 'checkbox',
     '#title' => t('This group is part of the menu block'),
-    '#description' => t('Mark this box to show this fieldgroup as part of the multistep ') . l('menu block', 'admin/build/block/configure/multistep/' . $type) . '.',
+    '#description' => t('Mark this box to show this fieldgroup as part of the multistep !link.', array('!link' => l('menu block', 'admin/build/block/configure/multistep/' . $type))),
     '#default_value' => $group['settings']['multistep']['block'] ? $group['settings']['multistep']['block'] : 0,
     '#weight' => -9,
   );
@@ -370,18 +488,25 @@ function multistep_widget_settings_alter(&$form, $op, $widget) {
  * This is the node-editing form.
  */
 function multistep_form_alter(&$form, &$form_state, $form_id) {
-  $type = $form['#node']->type;
+  // Do nothing if this is not a node-editing form.
+  if (substr_count($form_id, 'node_form') <= 0 || arg(0) == 'admin') {
+    return;
+  }
   // Do nothing if multistep is not enabled for this node type.
-  if (variable_get('multistep_expose_' . $type, 'disabled') != 'enabled'
-  || substr_count($form_id, 'node_form') <= 0
-  || arg(0) == 'admin') {
+  $type = $form['#node']->type;
+  if (variable_get('multistep_expose_' . $type, 'disabled') != 'enabled') {
     return;
   }
   // Disable immediate redirection through "destination" parameter, but preserve the destination value.
   if (isset($_REQUEST['destination'])) {
-    $dest = $_REQUEST['destination'];
+    $query = array('redirect' => $_REQUEST['destination']);
     unset($_REQUEST['destination']);
-    drupal_goto($_REQUEST['q'], array('redirect' => $dest));
+    // Add compatibility with Prepopulate
+    // @see http://drupal.org/node/889924
+    if (isset($_REQUEST['edit'])) {
+      $query = array_merge($query, array('edit' => $_REQUEST['edit']));
+    }
+    drupal_goto($_REQUEST['q'], $query);
   }
   // We need to remove #redirect to prevent redirection to the profile main page
   if (module_exists('content_profile') && is_content_profile($type)) {
@@ -419,28 +544,36 @@ function multistep_form_alter(&$form, &$form_state, $form_id) {
       elseif ($step != 0 && $step != variable_get('multistep_extra_' . $field_name . '_' . $type, 1)
       && variable_get('multistep_extra_' . $field_name . '_' . $type, 1) != 0) {
         $form[$field_name]['#access'] = FALSE;
+        // Body field has a slightly different structure
+        if ($field_name == 'body_field') {
+          $form[$field_name]['body']['#access'] = FALSE;
+        }
       }
     }
   }
   // This adds different submitting buttons (Previous, Save, Next, Done).
-  if ($step > 1) {
-    $form['buttons']['previous'] = array(
+  if(variable_get('multistep_button_prev', t('< Previous'))) {
+    if ($step > 1) {
+      $form['buttons']['previous'] = array(
+        '#type' => 'submit',
+        '#value' => variable_get('multistep_button_prev', t('< Previous')),
+        '#submit' => array('multistep_previous'),
+        '#weight' => 101,
+      );
+    }
+  }
+  if (variable_get('multistep_button_save', t('Save'))) {
+    $form['buttons']['save'] = array(
       '#type' => 'submit',
-      '#value' => variable_get('multistep_button_prev', '< Previous'),
-      '#submit' => array('multistep_previous'),
-      '#weight' => 101,
+      '#value' => variable_get('multistep_button_save', t('Save')),
+      '#submit' => array('multistep_save'),
+      '#weight' => 102,
     );
   }
-  $form['buttons']['save'] = array(
-    '#type' => 'submit',
-    '#value' => variable_get('multistep_button_save', 'Save'),
-    '#submit' => array('multistep_save'),
-    '#weight' => 102,
-  );
   if ($step < variable_get('multistep_steps_' . $type, 0) && $step != 0) {
     $form['buttons']['next'] = array(
       '#type' => 'submit',
-      '#value' => variable_get('multistep_button_next', 'Next >'),
+      '#value' => variable_get('multistep_button_next', t('Next >')),
       '#submit' => array('multistep_next'),
       '#weight' => 103,
     );
@@ -448,7 +581,7 @@ function multistep_form_alter(&$form, &$form_state, $form_id) {
   if ($step == variable_get('multistep_steps_' . $type, 0) || $step == 0) {
     $form['buttons']['done'] = array(
       '#type' => 'submit',
-      '#value' => variable_get('multistep_button_done', 'Done'),
+      '#value' => variable_get('multistep_button_done', t('Done')),
       '#submit' => array('multistep_done'),
       '#weight' => 103,
     );
@@ -471,6 +604,26 @@ function multistep_form_alter(&$form, &$form_state, $form_id) {
   unset($form['buttons']['submit']);
   // Will decide whether the form is ready for revisioning or publishing.
   $form['#validate'][] = 'multistep_validate';
+  // Check the Published box if the settings need it
+  if (variable_get('multistep_status_publishing', 'default') == 'complete' && array_search('status', variable_get('node_options_' . $type, array())) !== FALSE) {
+    $form['options']['status']['#default_value'] = 1;
+  }
+}
+
+/**
+ * Implementation of hook_user().
+ * This is the user registration form.
+ *
+function multistep_user($op, &$edit, &$account, $category = NULL) {
+  switch ($op) {
+    case 'insert':
+      $profile = array();
+      $types = content_profile_get_types('names');
+      foreach ($types as $type => $type_name) {
+        $profile[] = content_profile_load($type, $account->uid);
+      }
+      break;
+  }
 }
 
 /**
@@ -553,7 +706,12 @@ function multistep_submit($form, &$form_state, $action) {
       $form_state['redirect'] = 'user/' . $user->uid . '/profile/' . $type . '/' . $goto_step;
     }
     else {
-      $form_state['redirect'] = array('node/' . $nid . '/edit/' . $goto_step, (isset($_REQUEST['redirect']) ? array('redirect' => $_REQUEST['redirect']) : array()));
+      $redirect = isset($_REQUEST['redirect']) ? array('redirect' => $_REQUEST['redirect']) : array();
+      // Add compatibility with Prepopulate
+      // @see http://drupal.org/node/889924
+      $edit = isset($_REQUEST['edit']) ? array('edit' => $_REQUEST['edit']) : array();
+      $query = array_merge($redirect, $edit);
+      $form_state['redirect'] = array('node/' . $nid . '/edit/' . $goto_step, $query);
     }
   }
   else {
@@ -631,16 +789,23 @@ function _multistep_get_steps($form_type) {
  * Determine the current step that the field should be part of in the current
  * node type. This is used for multi-value fields and multigroups.
  */
-function _multistep_get_field_step($field, $type) {
+function _multistep_get_field_step($field_name, $type) {
   $step = 1;
-  $group = _fieldgroup_field_get_group($type, $field);
-  $groups = fieldgroup_groups($type);
-  // Verify whether it's a multigroup or a mult-valued field
-  if ($groups[$field]['settings']['multistep']['step']) {
-    $step = $groups[$field]['settings']['multistep']['step'];
+  // Verify whether there is a step associated with the field first.
+  $field = content_fields($field_name, $type);
+  if (isset($field['widget']['multistep'])) {
+    $step = $field['widget']['multistep'];
   }
-  elseif ($groups[$group]['settings']['multistep']['step']) {
-    $step = $groups[$group]['settings']['multistep']['step'];
+  else {
+    $group = _fieldgroup_field_get_group($type, $field_name);
+    $groups = fieldgroup_groups($type);
+    // Verify whether it's a multigroup or a mult-valued field
+    if ($groups[$field_name]['settings']['multistep']['step']) {
+      $step = $groups[$field_name]['settings']['multistep']['step'];
+    }
+    elseif ($groups[$group]['settings']['multistep']['step']) {
+      $step = $groups[$group]['settings']['multistep']['step'];
+    }
   }
   return $step;
 }
@@ -654,9 +819,29 @@ function _multistep_get_field_step($field, $type) {
  */
 function _multistep_get_current_step($type) {
   $step = 1;
+  // @see http://drupal.org/node/566682 - Added support for hierarchical_select.
+  if (arg(0) == 'hierarchical_select_json') {
+    $hsid = $_POST['hsid'];
+    foreach ($_POST['taxonomy'] as $vid => $config) {
+      if ($config['hsid'] == $hsid) {
+        $step = variable_get('multistep_extra_taxonomy_' . $vid . '_' . $type, $step);
+      }
+    }
+  }
+  // This condition occurs for autocomplete fields
+  // @see http://drupal.org/node/868826
+  if (arg(1) == 'autocomplete' // Nodereference does this
+  || arg(0) == 'autocomplete_widgets') { // Autocomplete Widgets does this
+    $field = arg(2);
+    // Decide step based on type/field combination
+    $step = _multistep_get_field_step($field, $type);
+    return $step;
+  }
   // This condition occurs if using AHAH to add another value for a multi-value field.
-  if (arg(1) == 'js_add_more') {
-    $type = arg(2);
+  if (arg(1) == 'js_add_more' // Add more button
+  || arg(1) == 'js' // Upload through the upload module
+  || arg(1) == 'ahah') { // Upload through the filefield module
+    $type = str_replace('-', '_', arg(2));
     $field = arg(3);
     // Decide step based on type/field combination
     $step = _multistep_get_field_step($field, $type);
@@ -714,9 +899,9 @@ function _multistep_get_current_step($type) {
 }
 
 /**
- * Invokes a hook to allow third party modules to update the status of a node.
+ * Invokes a hook to allow third party modules to update the status of a step.
  */
-function multistep_update_status(&$form_state, $status, $step) {
+function multistep_update_status(&$form_state, $status = 'unsubmitted', $step) {
   // Allow other modules to override the status
   $override = module_invoke_all('multistep_update_status', $form_state, $status, $step);
   foreach ($override as $value) {
@@ -745,10 +930,10 @@ function _multistep_update_status($nid, $status = 'unsubmitted', $step = NULL) {
     // Generate the step list for this node in the database, or set the current step.
     for ($step = $start; $step <= $end; $step++) {
       if (is_null(_multistep_get_status($nid, $step))) {
-        db_query('INSERT INTO {multistep} (nid, step, status) VALUES (%d, %d, "%s")', $nid, $step, $status);
+        db_query("INSERT INTO {multistep} (nid, step, status) VALUES (%d, %d, '%s')", $nid, $step, $status);
       }
       else {
-        db_query('UPDATE {multistep} SET status = "%s" WHERE nid = %d AND step = %d', $status, $nid, $step);
+        db_query("UPDATE {multistep} SET status = '%s' WHERE nid = %d AND step = %d", $status, $nid, $step);
       }
     }
   }
@@ -763,7 +948,7 @@ function _multistep_reset_data($type) {
     return;
   }
   // Get all the nodes for this content type.
-  $result = db_query('SELECT nid, status FROM {node} WHERE type = "%s"', $type);
+  $result = db_query("SELECT nid, status FROM {node} WHERE type = '%s'", $type);
   while ($node = db_fetch_object($result)) {
     if ($node->status == 1) {
       $status = 'submitted';
@@ -778,7 +963,10 @@ function _multistep_reset_data($type) {
 function _multistep_get_status($nid, $step) {
   $status = NULL;
   if ($nid != NULL && $step != NULL && $step > 0) {
-    $status = db_fetch_object(db_query('SELECT status FROM {multistep} WHERE nid = %d AND step = %d', $nid, $step))->status;
+    $row = db_fetch_object(db_query('SELECT status FROM {multistep} WHERE nid = %d AND step = %d', $nid, $step));
+    if ($row) {
+      $status = $row->status;
+    }
   }
   return $status;
 }
@@ -802,7 +990,7 @@ function _multistep_is_complete(&$form_state) {
  */
 function _multistep_will_complete(&$form_state, $current_step) {
   // Return FALSE if some other module is setting the step as unsubmitted
-  $override = module_invoke_all('multistep_update_status', $form_state, $status, $current_step);
+  $override = module_invoke_all('multistep_update_status', $form_state, 'unsubmitted', $current_step);
   foreach ($override as $status) {
     if ($status != 'submitted') {
       return FALSE;
@@ -824,7 +1012,7 @@ function _multistep_will_complete(&$form_state, $current_step) {
     // If it's complete, submitting the current step will keep it complete.
     return TRUE;
   }
-  elseif (count($unsubmitted) == 1 && $unsubmitted[$current_step] == $current_step) {
+  elseif (isset($unsubmitted[$current_step]) && count($unsubmitted) == 1 && $unsubmitted[$current_step] == $current_step) {
     // If the current step is the only one left, submitting it will complete the form.
     return TRUE;
   }
@@ -838,9 +1026,22 @@ function _multistep_will_complete(&$form_state, $current_step) {
  */
 function multistep_theme() {
   return array(
+    'multistep_navigation' => array(
+      'arguments' => array('data' => array()),
+      'file' => 'multistep.theme.inc',
+    ),
     'multistep_progress_bar' => array(
       'arguments' => array('progress' => NULL),
       'file' => 'multistep.theme.inc',
-  )
+    ),
+  );
+}
+
+/**
+ * Implementation of hook_views_api().
+ */
+function multistep_views_api() {
+  return array(
+    'api' => 2,
   );
 }

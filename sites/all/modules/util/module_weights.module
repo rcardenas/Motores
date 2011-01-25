@@ -1,5 +1,5 @@
 <?php
-// $Id: module_weights.module,v 1.1.2.3.2.3 2010/06/04 18:28:28 nancyw Exp $
+// $Id: module_weights.module,v 1.1.2.3.2.4 2010/08/22 19:02:43 nancyw Exp $
 
 /**
  * @file
@@ -62,7 +62,12 @@ function fetch_module_weights($name = NULL) {
       else {
         // Do we want a warning?
         if (variable_get('module_weights_warning', 0)) {
-          drupal_set_message(t('@name module file (@file) could not be found.', array('@name' => $row->name, '@file' => $row->filename)));
+          if ($row->status) {
+            drupal_set_message(t('@name module file (@file) could not be found, but is still marked as "enabled!"', array('@name' => $row->name, '@file' => $row->filename)), 'warning');
+          }
+          else {
+            drupal_set_message(t('@name module file (@file) could not be found.', array('@name' => $row->name, '@file' => $row->filename)));
+          }
         }
       }
     }
@@ -149,10 +154,15 @@ function module_weights_settings() {
 
   $weighted = $missing = array();
   $header = array(t('Module'), t('Weight'));
-  $result = db_query("SELECT name, weight, filename FROM {system} WHERE TYPE = 'module' ORDER BY name");
+  $result = db_query("SELECT name, weight, filename, status FROM {system} WHERE TYPE = 'module' ORDER BY name");
   while ($row = db_fetch_object($result)) {
     if (!file_exists($row->filename)) {
-      $missing[] = $row->name;
+      $desc = $row->name;
+      if ($row->status) {
+        drupal_set_message(t('@name module file (@file) could not be found, but is still marked as "enabled!"', array('@name' => $row->name, '@file' => $row->filename)), 'warning');
+        $desc .= '*';
+      }
+      $missing[] = $desc;
     }
 
     if ($row->weight != 0) {

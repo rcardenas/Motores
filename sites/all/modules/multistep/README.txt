@@ -1,7 +1,7 @@
-$Id: README.txt,v 1.1.2.1.2.9 2009/10/19 15:48:44 vkareh Exp $
+$Id: README.txt,v 1.1.2.1.2.10 2010/09/26 21:25:07 vkareh Exp $
 
--- SUMMARY --
-
+Summary
+=======
 Multistep adds multiple-step functionality to content type editing forms. It
 does so by assigning a step number to each field or fieldgroup within the
 content type and hiding all the fields or groups that do not belong to the
@@ -18,20 +18,18 @@ For a full description visit the project page:
 Bug reports, feature suggestions and latest developments:
   http://drupal.org/project/issues/multistep
 
-
--- REQUIREMENTS --
-
-This module depends on CCK and Fieldgroup, which can be found here:
+Requirements
+============
+This module depends on CCK, which can be found here:
   http://drupal.org/project/cck
+It also benefits strongly from Fieldgroups, which is part of CCK.
 
-
--- INSTALLATION --
-
+Installation
+============
 Install as usual, see http://drupal.org/node/70151 for further information.
 
-
--- TO USE --
-
+To Use
+======
 To use this module, go into the content type editing form in Administer >>
 Content management >> Content types and select the content type you want to
 enable the multistep for.
@@ -53,17 +51,16 @@ If you have a Taxonomy vocabulary set for the content type, you will see an
 option to set which step it should belong to in the content type editing form
 after you save the number of steps.
 
-
--- CONFIGURATION --
-
+Configuration
+=============
 To configure the multistep menu and the progress bar, go to Administer >> Site
 building >> Blocks and configure the corresponding block that will appear on
 the list. You can select whether to enable or disable the menu and the progress
 bar.
 
-To remove/show the original buttons on the node editing form (Preview, Delete),
-go to the content type editing form in Administer >> Content management >>
-Content types and check/uncheck the box that says "Hide standard buttons".
+To remove/show the Preview button on the node editing form, go to the content
+type editing form in Administer >> Content management >> Content types and
+check/uncheck the box that says "Hide Preview button".
 
 To change the text that appears on the different buttons of the form (Previous,
 Next, Save, Done), go to the admin settings page in Administer >> Site
@@ -78,30 +75,14 @@ You can also set whether the default display of the form is the multistep form
 or the entire form. Only users with "toggle multistep" permissions will be able
 to switch displays.
 
+Development
+===========
+For hooks provided by Multistep, read multistep.api.php
 
--- DEVELOPMENT --
+If you create a module that defines fieldsets for CCK, you have to implement
+hook_content_extra_fields(). See http://drupal.org/node/901420 for information
+on how to implement this specific hook.
 
-A hook is provided in case you want to override the status of a step when you
-submit a form. The hook would be implemented as:
-
-  HOOK_multistep_update_status(&$form_state, $status, $step);
-
-Where HOOK is the name of your module. This will allow you to set the $step of
-the node to the specificed $status at the time of submission. It should return
-the string of the status: the options are 'submitted' or 'unsubmitted'.
-
-
--- TROUBLESHOOTING --
-
-Nothing here yet.
-
-
--- FAQ --
-
-Nothing here yet.
-
-
--- CONTACT --
-
-Author:
-* Victor Kareh (vkareh) - http://www.vkareh.net
+Credits
+=======
+Author: Victor Kareh (vkareh) - http://www.vkareh.net

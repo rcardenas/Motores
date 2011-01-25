@@ -1,5 +1,5 @@
 <?php
-// $Id: pm_email_notify.module,v 1.1.2.15 2010/04/28 20:19:52 berdir Exp $
+// $Id: pm_email_notify.module,v 1.1.2.17 2010/08/05 09:25:12 berdir Exp $
 
 /**
  * @file
@@ -105,7 +105,7 @@ function pm_email_notify_privatemsg_message_insert($message) {
 function pm_email_notify_mail($key, &$message, $params) {
   $language = $message['language'];
   $variables = user_mail_tokens($params['recipient'], $language);
-  $variables = array_merge($variables, _pm_email_notify_token($params['recipient'], $params['message']));
+  $variables = array_merge($variables, _pm_email_notify_token($params['recipient'], $params['message'], $language));
   switch ($key) {
     case 'notice':
       $message['subject'] = t(variable_get('pm_email_notify_subject', 'New private message at !site.'), $variables, $language->language);
@@ -123,15 +123,15 @@ function pm_email_notify_mail($key, &$message, $params) {
  * @return
  *   Array of mappings from token names to values (for use with strtr()).
  */
-function _pm_email_notify_token($recipient, $message) {
+function _pm_email_notify_token($recipient, $message, $language) {
   $tokens = array(
     '!author' => $message['author']->name,
     '!pm_subject' => trim(drupal_html_to_text(check_plain($message['subject']))),
     '!pm_body' => trim(drupal_html_to_text(check_markup($message['body'], $message['format'], FALSE))),
     '!thread' => $message['thread_id'],
     '!user_uid' => $recipient->uid,
-    '!message' => url('messages/view/' . $message['thread_id'], array('absolute' => TRUE)),
-    '!settings' => url('user/' . $recipient->uid . '/edit', array('absolute' => TRUE)),
+    '!message' => url('messages/view/' . $message['thread_id'], array('absolute' => TRUE, 'language' => $language)),
+    '!settings' => url('user/' . $recipient->uid . '/edit', array('absolute' => TRUE, 'language' => $language)),
   );
 
   return $tokens;
@@ -169,7 +169,7 @@ function pm_email_notify_user($op, &$edit, &$account, $category = NULL) {
       return $form;
 
      case 'submit':
-      if ($category == 'account' && privatemsg_user_access('read privatemsg')) {
+      if (isset($edit['pm_send_notifications']) && privatemsg_user_access('read privatemsg')) {
         $pm_email_enabled = $edit['pm_send_notifications'];
         unset($edit['pm_send_notifications']);
         // Update database entry with user preference.

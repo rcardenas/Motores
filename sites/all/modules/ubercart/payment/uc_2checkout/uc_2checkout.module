@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_2checkout.module,v 1.6.2.12 2010/01/27 22:23:32 islandusurper Exp $
+// $Id: uc_2checkout.module,v 1.6.2.13 2010/08/11 17:52:20 islandusurper Exp $
 
 /**
  * @file
@@ -16,13 +16,6 @@ function uc_2checkout_menu() {
   $items['cart/2checkout/complete'] = array(
     'title' => 'Order complete',
     'page callback' => 'uc_2checkout_complete',
-    'access callback' => 'uc_2checkout_completion_access',
-    'type' => MENU_CALLBACK,
-    'file' => 'uc_2checkout.pages.inc',
-  );
-  $items['cart/2checkout/finalize'] = array(
-    'title' => 'Order complete',
-    'page callback' => 'uc_2checkout_finalize',
     'access callback' => 'uc_2checkout_completion_access',
     'type' => MENU_CALLBACK,
     'file' => 'uc_2checkout.pages.inc',
@@ -53,7 +46,7 @@ function uc_2checkout_completion_access() {
 function uc_2checkout_ucga_display() {
   // Tell UC Google Analytics to display the e-commerce JS on the custom
   // order completion page for this module.
-  if (arg(0) == 'cart' && arg(1) == '2checkout' && arg(2) == 'finalize') {
+  if (arg(0) == 'cart' && arg(1) == '2checkout' && arg(2) == 'complete') {
     return TRUE;
   }
 }

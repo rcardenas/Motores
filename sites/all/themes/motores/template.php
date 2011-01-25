@@ -181,7 +181,7 @@ function motores_preprocess_page(&$vars, $hook)
 
 /**
  * Darle tema a la seccion de checkout review cuando compras un anuncio
- *
+
 function motores_uc_cart_checkout_review( $panes, &$form )
 {
   global $user;
@@ -292,7 +292,7 @@ function motores_uc_cart_checkout_review( $panes, &$form )
   $r .= $form.'</div>';
   
   return $r;
-}
+}*/
 
 /**
  * Override or insert variables into the node templates.

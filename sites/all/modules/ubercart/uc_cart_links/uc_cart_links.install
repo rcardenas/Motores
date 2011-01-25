@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_cart_links.install,v 1.2.2.7 2010/03/19 21:27:18 tr Exp $
+// $Id: uc_cart_links.install,v 1.2.2.8 2010/08/11 17:52:20 islandusurper Exp $
 
 /**
  * @file
@@ -56,4 +56,13 @@ function uc_cart_links_uninstall() {
   drupal_uninstall_schema('uc_cart_links');
   db_query("DELETE FROM {variable} WHERE name LIKE 'uc_cart_links_%%'");
   cache_clear_all('variables', 'cache');
+}
+
+/**
+ * Remove obsolete variable.
+ */
+function uc_cart_links_update_6001() {
+  variable_del('uc_cart_links_empty');
+
+  return array();
 }

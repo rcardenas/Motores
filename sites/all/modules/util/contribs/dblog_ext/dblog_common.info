@@ -9,9 +9,9 @@ package = Util
 ; alternative confirm_from/JavaScript/none
 ; format_minutes
 
-; Information added by drupal.org packaging script on 2010-06-04
-version = "6.x-3.0-rc1"
+; Information added by drupal.org packaging script on 2010-10-28
+version = "6.x-3.0"
 core = "6.x"
 project = "util"
-datestamp = "1275677413"
+datestamp = "1288295149"
 

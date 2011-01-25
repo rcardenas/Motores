@@ -1,5 +1,5 @@
 <?php
-// $Id: onepageprofile.module,v 1.7.2.10 2010/03/09 18:38:46 aidan Exp $
+// $Id: onepageprofile.module,v 1.7.2.14 2010/09/12 14:44:01 aidan Exp $
 
 
 /**
@@ -32,7 +32,7 @@ function onepageprofile_menu_alter(&$items) {
   foreach ($categories as $key => $category) {
     unset($items['user/%user_category/edit/'. $category['name']]);
   }
-  
+
   // Remove categories provided by other modules
   if (module_exists('simplenews')) {
     unset($items['user/%user_category/edit/newsletter']);
@@ -65,7 +65,7 @@ function onepageprofile_user($op, &$edit, &$account, $category = NULL) {
     case 'form':
       if ($category == 'account') {
         $form = array();
-    
+
         // Grab all of the categories provided by the profile module
         $categories = profile_categories();
         foreach ($categories as $category) {
@@ -75,22 +75,27 @@ function onepageprofile_user($op, &$edit, &$account, $category = NULL) {
             if (module_exists('i18nprofile')) {
               i18nprofile_form_translate_category($category_form, $category_name);
             }
+
+            $form_state = array('storage' => NULL, 'submitted' => FALSE);
+            $category_form['#id'] = 'profile_form_profile';
+            $category_form['#parameters'] = array('profile_form_profile', $edit, $account, $category_name, FALSE);
+            drupal_alter('form', $category_form, $form_state, 'profile_form_profile');
+
             $form += $category_form;
-          }          
+          }
         }
-        
+
         // Other modules
-        // TODO There must be a better way to do this via _user_categories($user);
         if (module_exists('simplenews')) {
-          $simplenews_form = simplenews_user('form', $edit, $account, 'newsletter');;
+          $simplenews_form = simplenews_user('form', $edit, $account, 'newsletter');
           if (is_array($simplenews_form)) {
             $form += $simplenews_form;
           }
         }
-        
+
         return $form;
       }
-      
+
       break;
 
     case 'update':
@@ -98,19 +103,19 @@ function onepageprofile_user($op, &$edit, &$account, $category = NULL) {
       // - form_build_id ensures this is not called programatically
       // - arg(3) ensures we're not on a module provided category
       if (isset($edit['form_build_id']) && !arg(3)) {
-        
+
         // Save information for the profile module
         $categories = profile_categories();
         foreach ($categories as $category) {
           profile_save_profile($edit, $account, $category['name']);
         }
-        
+
         // Save information for other modules
         if (module_exists('simplenews')) {
           simplenews_user('update', $edit, $account, 'newsletter');
         }
       }
-      
+
       break;
   }
 }
@@ -200,6 +205,17 @@ function onepageprofile_settings_reset($form, $form_state) {
 
 
 /**
+ * Implementation of hook_domianignore().
+ *
+ * Prevent the domain module from altering the $form['#action'] of the
+ * profile forms as they are added to the user form. 
+ */
+function onepageprofile_domainignore() {
+  return array('profile_form_profile');
+}
+
+
+/**
  * Theme admin settings form
  */
 function theme_onepageprofile_settings($form) {
@@ -270,6 +286,15 @@ function _onepageprofile_get_categories() {
   $categories = array();
 
   foreach (element_children($form) as $field) {
+
+    // Special check for theme_select
+    if ($field == 'theme_select') {
+      $categories[$field] = array(
+        '#weight' => $form[$field]['#weight'],
+        '#title'  => $form[$field]['themes']['#title'],
+      );
+      continue;
+    }
 
     // Operate only on fieldsets
     if (!isset($form[$field]['#type']) || $form[$field]['#type'] !== 'fieldset') {

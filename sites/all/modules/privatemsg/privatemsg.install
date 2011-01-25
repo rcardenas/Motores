@@ -1,5 +1,5 @@
 <?php
-// $Id: privatemsg.install,v 1.5.2.4.2.11.2.17 2009/11/26 18:42:54 berdir Exp $
+// $Id: privatemsg.install,v 1.5.2.4.2.11.2.18 2010/08/09 19:26:52 berdir Exp $
 
 /**
  * @file
@@ -46,11 +46,10 @@ function privatemsg_schema() {
       ),
 
     ),
-    'indexes'         => array(
-      'mid'               => array('mid'),
-      'thread_id'         => array('thread_id'),
-      'uid'         => array('uid'),
-      'is_new'              => array('mid', 'uid', 'is_new', ),
+    'indexes'      => array(
+      'list'         => array('uid', 'deleted', 'is_new'),
+      'messages'     => array('mid', 'uid'),
+      'participants' => array('thread_id', 'uid', 'deleted')
     ),
   );
 
@@ -96,11 +95,6 @@ function privatemsg_schema() {
       ),
     ),
     'primary key'     => array('mid'),
-    'indexes'         => array(
-      'author'            => array('author'),
-      'subject'           => array(array('subject', 20)),
-      'timestamp'         => array('timestamp'),
-    ),
   );
 
 
@@ -482,5 +476,28 @@ function privatemsg_update_6006() {
   $sql = "UPDATE {pm_index} SET deleted = %d WHERE deleted = 1";
   $result = db_query($sql, time());
   $ret[] = array('success' => $result !== FALSE, 'query' => check_plain($sql));
+  return $ret;
+}
+
+/**
+ * Update indexes on {pm_index} and {pm_message}.
+ */
+function privatemsg_update_6007() {
+  $ret = array();
+
+  // Delete unecessary indexes.
+  db_drop_index($ret, 'pm_index', 'mid');
+  db_drop_index($ret, 'pm_index', 'thread_id');
+  db_drop_index($ret, 'pm_index', 'uid');
+
+  db_drop_index($ret, 'pm_message', 'author');
+  db_drop_index($ret, 'pm_message', 'subject');
+  db_drop_index($ret, 'pm_message', 'timestamp');
+
+  // Add new indexes.
+  db_add_index($ret, 'pm_index', 'list', array('uid', 'deleted', 'is_new'));
+  db_add_index($ret, 'pm_index', 'messages', array('mid', 'uid'));
+  db_add_index($ret, 'pm_index', 'participants', array('thread_id', 'uid', 'deleted'));
+
   return $ret;
 }

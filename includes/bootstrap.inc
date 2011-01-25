@@ -1,5 +1,5 @@
 <?php
-// $Id: bootstrap.inc,v 1.206.2.23 2010/06/02 13:07:45 goba Exp $
+// $Id: bootstrap.inc,v 1.206.2.31 2010/12/15 13:21:14 goba Exp $
 
 /**
  * @file
@@ -214,6 +214,11 @@ define('LANGUAGE_LTR', 0);
  */
 define('LANGUAGE_RTL', 1);
 
+// Hide E_DEPRECATED messages.
+if (defined('E_DEPRECATED')) {
+  error_reporting(error_reporting() & ~E_DEPRECATED);
+}
+
 /**
  * Start the timer with the specified name. If you start and stop
  * the same timer multiple times, the measured intervals will be
@@ -371,7 +376,7 @@ function conf_init() {
   global $base_url, $base_path, $base_root;
 
   // Export the following settings.php variables to the global namespace
-  global $db_url, $db_prefix, $cookie_domain, $conf, $installed_profile, $update_free_access;
+  global $db_url, $db_prefix, $db_collation, $cookie_domain, $conf, $installed_profile, $update_free_access;
   $conf = array();
 
   if (isset($_SERVER['HTTP_HOST'])) {
@@ -483,7 +488,7 @@ function conf_init() {
  * the above, depending on where the module is located.
  *
  * @param $type
- *   The type of the item (i.e. theme, theme_engine, module).
+ *   The type of the item (i.e. theme, theme_engine, module, profile).
  * @param $name
  *   The name of the item for which the filename is requested.
  * @param $filename
@@ -561,7 +566,11 @@ function variable_init($conf = array()) {
 }
 
 /**
- * Return a persistent variable.
+ * Returns a persistent variable.
+ *
+ * Case-sensitivity of the variable_* functions depends on the database
+ * collation used. To avoid problems, always use lower case for persistent
+ * variable names.
  *
  * @param $name
  *   The name of the variable to return.
@@ -579,7 +588,11 @@ function variable_get($name, $default) {
 }
 
 /**
- * Set a persistent variable.
+ * Sets a persistent variable.
+ *
+ * Case-sensitivity of the variable_* functions depends on the database
+ * collation used. To avoid problems, always use lower case for persistent
+ * variable names.
  *
  * @param $name
  *   The name of the variable to set.
@@ -604,7 +617,11 @@ function variable_set($name, $value) {
 }
 
 /**
- * Unset a persistent variable.
+ * Unsets a persistent variable.
+ *
+ * Case-sensitivity of the variable_* functions depends on the database
+ * collation used. To avoid problems, always use lower case for persistent
+ * variable names.
  *
  * @param $name
  *   The name of the variable to undefine.
@@ -670,7 +687,7 @@ function bootstrap_invoke_all($hook) {
  * including a theme, engine, module, etc., more than once.
  *
  * @param $type
- *   The type of item to load (i.e. theme, theme_engine, module).
+ *   The type of item to load (i.e. theme, theme_engine, module, profile).
  * @param $name
  *   The name of the item to load.
  *
@@ -791,7 +808,7 @@ function bootstrap_hooks() {
 function drupal_unpack($obj, $field = 'data') {
   if ($obj->$field && $data = unserialize($obj->$field)) {
     foreach ($data as $key => $value) {
-      if (!isset($obj->$key)) {
+      if (!empty($key) && !isset($obj->$key)) {
         $obj->$key = $value;
       }
     }
@@ -909,7 +926,8 @@ function request_uri() {
  * Log a system message.
  *
  * @param $type
- *   The category to which this message belongs.
+ *   The category to which this message belongs. Can be any string, but the
+ *   general practice is to use the name of the module calling watchdog().
  * @param $message
  *   The message to store in the log. See t() for documentation
  *   on how $message and $variables interact. Keep $message
@@ -919,7 +937,8 @@ function request_uri() {
  *   NULL if message is already translated or not possible to
  *   translate.
  * @param $severity
- *   The severity of the message, as per RFC 3164
+ *   The severity of the message, as per RFC 3164. Possible values are
+ *   WATCHDOG_ERROR, WATCHDOG_WARNING, etc.
  * @param $link
  *   A link to associate with the message.
  *
@@ -943,7 +962,7 @@ function watchdog($type, $message, $variables = array(), $severity = WATCHDOG_NO
     );
 
   // Call the logging hooks to log/process the message
-  foreach (module_implements('watchdog', TRUE) as $module) {
+  foreach (module_implements('watchdog') as $module) {
     module_invoke($module, 'watchdog', $log_message);
   }
 }
