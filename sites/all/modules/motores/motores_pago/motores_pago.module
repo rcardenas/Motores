@@ -30,21 +30,11 @@ function uc_payment_method_deposito( $op, &$order )
   switch ($op)
   {
     case 'cart-review': 
-<<<<<<< HEAD
-	$node = node_load($_SESSION['anuncio']);
-	
-   if($node->field_referencia[0]['value'] == ''){
- 		$cuenta = db_query("SELECT `id` FROM `motores_referencia` where `libre` = 0 and LOWER(`tipo`) = LOWER('".$node->type."') LIMIT 1");
- 		$r = db_fetch_array($cuenta);
-	    $ref =  $r['id'];
-	    $node->field_referencia[0]['value'] = $ref;
-   		db_query("UPDATE  `motores`.`motores_referencia` SET  `libre` =  '1' WHERE  `motores_referencia`.`id` = '".$ref."';");
 
-   }
-	node_save($node);
-=======
-    echo 'shit';
 		     $node = node_load($_SESSION['anuncio']);
+		     
+		     drupal_add_js(array('anuncio' => $node->title), 'setting');
+		     
 
        if($node->field_referencia[0]['value'] == '')
        {
@@ -56,7 +46,6 @@ function uc_payment_method_deposito( $op, &$order )
     
        }
     	node_save($node);
->>>>>>> a6b09043967fcc36a620570f6a043545a94df34c
       //print_r($order);exit;
       $review[] = array(
         'title' => t('Cuenta'), 
@@ -98,6 +87,15 @@ function motores_pago_form_alter( &$form, &$form_state, $form_id )
           t('Una vez realizado el pago, su anuncio será publicado el día hábil siguiente.').'</div>'
       );
       
+    break;
+    
+    case 'uc_paypal_wps_form':
+    	
+    	 $node = node_load($_SESSION['anuncio']);
+		     
+		 drupal_add_js(array('anuncio' => $node->title), 'setting');
+
+    
     break;
   }
 }

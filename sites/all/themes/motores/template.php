@@ -181,7 +181,7 @@ function motores_preprocess_page(&$vars, $hook)
 
 /**
  * Darle tema a la seccion de checkout review cuando compras un anuncio
- */
+ *
 function motores_uc_cart_checkout_review( $panes, &$form )
 {
   global $user;
