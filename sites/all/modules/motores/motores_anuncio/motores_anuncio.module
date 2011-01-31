@@ -55,21 +55,51 @@ function motores_anuncio_settings()
 function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
 {
   global $user;
+  
+  //print_r($form);
+  
+  
+
+  
+  
   if ( $user->uid != 1 && !in_array('editor', $user->roles) )
   {
     switch ($form_id)
     {
     
-    
+ 
     /************************************
     *               CARROS              *
     ************************************/
     
       case 'carro_node_form':
+      
         
         drupal_add_js(drupal_get_path('module', 'motores_anuncio').'/anuncio_engine.js', $type = 'module', 'header', FALSE, FALSE);
         
-        //print_r($form);exit;
+        
+        if($_SESSION['messages']['status'][0] == 'Se ha añadido <strong>Anuncio Básico</strong> a su <a href="/motores/cart">cesta de la compra</a>.' || $form['field_tipo_anunio']['#value'][0]['nid'] == 53 )
+        {
+        	//print_r('Basico');
+        	$_SESSION['el_tipo']=1;
+        	//print_r($_SESSION['el_tipo']);
+        }
+        else if($_SESSION['messages']['status'][0] == 'Se ha añadido <strong>Anuncio Gratuito</strong> a su <a href="/motores/cart">cesta de la compra</a>.' || $form['field_tipo_anunio']['#value'][0]['nid'] == 63 )
+        {
+        	//print_r('Gratuito');
+        	$_SESSION['el_tipo']=0;
+        	//print_r($_SESSION['el_tipo']);
+        }
+        else if($_SESSION['messages']['status'][0] == 'Se ha añadido <strong>Anuncio Premium</strong> a su <a href="/motores/cart">cesta de la compra</a>.' || $form['field_tipo_anunio']['#value'][0]['nid'] == 64 )
+        {
+        	//print_r('Premium');
+        	$_SESSION['el_tipo']=2;
+        	//print_r($_SESSION['el_tipo']);
+        }
+        
+    
+        
+       
         
         // container div
         $form['#prefix'] = '<div class="anuncio600">';
@@ -121,6 +151,8 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
         /**********
         PASO 4
         **********/
+        
+        
         $form['group_detalles']['#prefix'] = 
         '<h2>'.t('Paso 4: Detalles').'</h2><p>'.t('Llena los siguientes datos describiendo las características del vehículo que deseas vender.
         Los campos obligatorios se indican con').' (<span class="form-required">*</span>).</p>';
@@ -171,8 +203,40 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
             unset($form['group_logo']);
             unset($form['group_liga']);
           }
+        
+  
+          $eltipo = $_SESSION['el_tipo'];
           
-          $form['group_fotos']['field_imagenes']['field_imagenes_add_more']['#value'] = t('Agregar otra foto');
+          if( $_eltipo == 0 )
+          {
+          	foreach ( $form['group_fotos']['field_imagenes'] as $i => $value )
+          	{
+          		if ( is_numeric($i) )
+          		{
+          			if( $i>0 )
+          			{
+          				print_r($i);
+          				unset($form['group_fotos']['field_imagenes'][$i]);
+          			}
+          		}
+          	}
+          }
+          else if( $_eltipo == 1 )
+          {
+          	foreach ( $form['group_fotos']['field_imagenes'] as $i => $value )
+          	{
+          		if ( is_numeric($i) )
+          		{
+          			if( $i>14 )
+          			{
+          				print_r($i);
+          				unset($form['group_fotos']['field_imagenes'][$i]);
+          			}
+          		}
+          	}
+          }
+          
+          
           $form['group_fotos']['#prefix'] = 
           '<h2>'.t('Paso 5: Fotos').'</h2><p>'.t('Sube las fotos del automóvil aquí, en formato JPG, GIF o PNG. Recuerda que las puedes subir después.').'</p>';
           $form['group_fotos']['field_imagenes']['#prefix'] = 

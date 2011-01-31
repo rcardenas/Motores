@@ -671,5 +671,9 @@ global $user;
 		 
 		 $form['submit']['#value'] = 'Continuar';
 		break;
+		
+		
 	}
+	
+	
 }

@@ -1,0 +1,50 @@
+<?php
+// puedes usar print_r para desplegar lo que hay en una variable
+
+// implementation of hook menu
+function motores_cuenta_menu(){
+   $items['admin/settings/numcuenta']=array(
+	'title'=>'Cuenta y Clabe',
+    'description' => 'Numero de Cuenta y Clabe Interbancaria.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('motores_cuenta_settings'),
+    'access arguments' => array('Indicar cuenta y clabe'),
+	);
+	
+	return $items;
+}
+
+// implementation of hook perm
+function motores_cuenta_perm(){
+  $items=array('Indicar cuenta y clabe');
+  return $items;
+}
+
+/**
+ * Admin settings form.
+ */
+function motores_cuenta_settings() {
+	
+  $form['num_cuenta']=array(
+	'#type'=> 'textfield',
+	'#title'=>'Numero de Cuenta',
+	'#default_value'=>variable_get('num_cuenta','')
+	);
+	
+	$form['clabe']=array(
+	'#type'=> 'textfield',
+	'#title'=>'Clabe Interbancaria',
+	'#default_value'=>variable_get('clabe','')
+	);
+
+  return system_settings_form($form);
+}
+
+function motores_cuenta_init(){
+	if(arg(0)=='cart' && arg(1)=='checkout' && arg(2) =='review')
+	{
+		drupal_add_js(array('cuenta' => variable_get('num_cuenta',6789)), 'setting');
+		drupal_add_js(array('clabe'=>variable_get('clabe',12345)), 'setting');
+		drupal_add_js(drupal_get_path('module', 'motores_cuenta') .'/addcuenta.js');
+	}
+}

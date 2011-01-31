@@ -1,0 +1,4 @@
+name = Cuenta y Clabe
+description = Indicar el numero de cuenta y clabe intercancaria a desplegar
+core = 6.x
+package = Techbase
