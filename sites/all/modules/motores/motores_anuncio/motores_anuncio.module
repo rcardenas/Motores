@@ -206,6 +206,7 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
         
   
           $eltipo = $_SESSION['el_tipo'];
+          $_SESSION['el_tipo'] = "";
           
           if( $_eltipo == 0 )
           {
@@ -228,6 +229,20 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
           		if ( is_numeric($i) )
           		{
           			if( $i>14 )
+          			{
+          				print_r($i);
+          				unset($form['group_fotos']['field_imagenes'][$i]);
+          			}
+          		}
+          	}
+          }
+          else if( $_eltipo == 2 )
+          {
+          	foreach ( $form['group_fotos']['field_imagenes'] as $i => $value )
+          	{
+          		if ( is_numeric($i) )
+          		{
+          			if( $i>31 )
           			{
           				print_r($i);
           				unset($form['group_fotos']['field_imagenes'][$i]);
@@ -361,6 +376,53 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
             unset($form['group_liga']);
           }
           
+          $eltipo = $_SESSION['el_tipo'];
+          $_SESSION['el_tipo'] = "";
+          
+          if( $_eltipo == 0 )
+          {
+          	foreach ( $form['group_fotos']['field_imagenes'] as $i => $value )
+          	{
+          		if ( is_numeric($i) )
+          		{
+          			if( $i>0 )
+          			{
+          				print_r($i);
+          				unset($form['group_fotos']['field_imagenes'][$i]);
+          			}
+          		}
+          	}
+          }
+          else if( $_eltipo == 1 )
+          {
+          	foreach ( $form['group_fotos']['field_imagenes'] as $i => $value )
+          	{
+          		if ( is_numeric($i) )
+          		{
+          			if( $i>14 )
+          			{
+          				print_r($i);
+          				unset($form['group_fotos']['field_imagenes'][$i]);
+          			}
+          		}
+          	}
+          }
+          else if( $_eltipo == 2 )
+          {
+          	foreach ( $form['group_fotos']['field_imagenes'] as $i => $value )
+          	{
+          		if ( is_numeric($i) )
+          		{
+          			if( $i>31 )
+          			{
+          				print_r($i);
+          				unset($form['group_fotos']['field_imagenes'][$i]);
+          			}
+          		}
+          	}
+          }
+
+          
           $form['group_fotos']['field_imagenes']['field_imagenes_add_more']['#value'] = t('Agregar otra foto');
           $form['group_fotos']['#prefix'] = 
           '<h2>'.t('Paso 5: Fotos').'</h2><p>'.t('Sube las fotos del automóvil aquí, en formato JPG, GIF o PNG. Recuerda que las puedes subir después.').'</p>';
@@ -491,6 +553,53 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
             unset($form['group_liga']);
           }
           
+          $eltipo = $_SESSION['el_tipo'];
+          $_SESSION['el_tipo'] = "";
+          
+          if( $_eltipo == 0 )
+          {
+          	foreach ( $form['group_fotos']['field_imagenes'] as $i => $value )
+          	{
+          		if ( is_numeric($i) )
+          		{
+          			if( $i>0 )
+          			{
+          				print_r($i);
+          				unset($form['group_fotos']['field_imagenes'][$i]);
+          			}
+          		}
+          	}
+          }
+          else if( $_eltipo == 1 )
+          {
+          	foreach ( $form['group_fotos']['field_imagenes'] as $i => $value )
+          	{
+          		if ( is_numeric($i) )
+          		{
+          			if( $i>14 )
+          			{
+          				print_r($i);
+          				unset($form['group_fotos']['field_imagenes'][$i]);
+          			}
+          		}
+          	}
+          }
+          else if( $_eltipo == 2 )
+          {
+          	foreach ( $form['group_fotos']['field_imagenes'] as $i => $value )
+          	{
+          		if ( is_numeric($i) )
+          		{
+          			if( $i>31 )
+          			{
+          				print_r($i);
+          				unset($form['group_fotos']['field_imagenes'][$i]);
+          			}
+          		}
+          	}
+          }
+
+          
           $form['group_fotos']['field_imagenes']['field_imagenes_add_more']['#value'] = t('Agregar otra foto');
           $form['group_fotos']['#prefix'] = 
           '<h2>'.t('Paso 5: Fotos').'</h2><p>'.t('Sube las fotos del automóvil aquí, en formato JPG, GIF o PNG. Recuerda que las puedes subir después.').'</p>';
@@ -619,6 +728,53 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
             unset($form['group_logo']);
             unset($form['group_liga']);
           }
+          
+          $eltipo = $_SESSION['el_tipo'];
+          $_SESSION['el_tipo'] = "";
+          
+          if( $_eltipo == 0 )
+          {
+          	foreach ( $form['group_fotos']['field_imagenes'] as $i => $value )
+          	{
+          		if ( is_numeric($i) )
+          		{
+          			if( $i>0 )
+          			{
+          				print_r($i);
+          				unset($form['group_fotos']['field_imagenes'][$i]);
+          			}
+          		}
+          	}
+          }
+          else if( $_eltipo == 1 )
+          {
+          	foreach ( $form['group_fotos']['field_imagenes'] as $i => $value )
+          	{
+          		if ( is_numeric($i) )
+          		{
+          			if( $i>14 )
+          			{
+          				print_r($i);
+          				unset($form['group_fotos']['field_imagenes'][$i]);
+          			}
+          		}
+          	}
+          }
+          else if( $_eltipo == 2 )
+          {
+          	foreach ( $form['group_fotos']['field_imagenes'] as $i => $value )
+          	{
+          		if ( is_numeric($i) )
+          		{
+          			if( $i>31 )
+          			{
+          				print_r($i);
+          				unset($form['group_fotos']['field_imagenes'][$i]);
+          			}
+          		}
+          	}
+          }
+
           
           $form['group_fotos']['field_imagenes']['field_imagenes_add_more']['#value'] = t('Agregar otra foto');
           $form['group_fotos']['#prefix'] = 
@@ -752,6 +908,53 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
             unset($form['group_liga']);
           }
           
+          $eltipo = $_SESSION['el_tipo'];
+          $_SESSION['el_tipo'] = "";
+          
+          if( $_eltipo == 0 )
+          {
+          	foreach ( $form['group_fotos']['field_imagenes'] as $i => $value )
+          	{
+          		if ( is_numeric($i) )
+          		{
+          			if( $i>0 )
+          			{
+          				print_r($i);
+          				unset($form['group_fotos']['field_imagenes'][$i]);
+          			}
+          		}
+          	}
+          }
+          else if( $_eltipo == 1 )
+          {
+          	foreach ( $form['group_fotos']['field_imagenes'] as $i => $value )
+          	{
+          		if ( is_numeric($i) )
+          		{
+          			if( $i>14 )
+          			{
+          				print_r($i);
+          				unset($form['group_fotos']['field_imagenes'][$i]);
+          			}
+          		}
+          	}
+          }
+          else if( $_eltipo == 2 )
+          {
+          	foreach ( $form['group_fotos']['field_imagenes'] as $i => $value )
+          	{
+          		if ( is_numeric($i) )
+          		{
+          			if( $i>31 )
+          			{
+          				print_r($i);
+          				unset($form['group_fotos']['field_imagenes'][$i]);
+          			}
+          		}
+          	}
+          }
+
+          
           $form['group_fotos']['field_imagenes']['field_imagenes_add_more']['#value'] = t('Agregar otra foto');
           $form['group_fotos']['#prefix'] = 
           '<h2>'.t('Paso 5: Fotos').'</h2><p>'.t('Sube las fotos del automóvil aquí, en formato JPG, GIF o PNG. Recuerda que las puedes subir después.').'</p>';
@@ -880,6 +1083,53 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
             unset($form['group_logo']);
             unset($form['group_liga']);
           }
+          
+          $eltipo = $_SESSION['el_tipo'];
+          $_SESSION['el_tipo'] = "";
+          
+          if( $_eltipo == 0 )
+          {
+          	foreach ( $form['group_fotos']['field_imagenes'] as $i => $value )
+          	{
+          		if ( is_numeric($i) )
+          		{
+          			if( $i>0 )
+          			{
+          				print_r($i);
+          				unset($form['group_fotos']['field_imagenes'][$i]);
+          			}
+          		}
+          	}
+          }
+          else if( $_eltipo == 1 )
+          {
+          	foreach ( $form['group_fotos']['field_imagenes'] as $i => $value )
+          	{
+          		if ( is_numeric($i) )
+          		{
+          			if( $i>14 )
+          			{
+          				print_r($i);
+          				unset($form['group_fotos']['field_imagenes'][$i]);
+          			}
+          		}
+          	}
+          }
+          else if( $_eltipo == 2 )
+          {
+          	foreach ( $form['group_fotos']['field_imagenes'] as $i => $value )
+          	{
+          		if ( is_numeric($i) )
+          		{
+          			if( $i>31 )
+          			{
+          				print_r($i);
+          				unset($form['group_fotos']['field_imagenes'][$i]);
+          			}
+          		}
+          	}
+          }
+
           
           $form['group_fotos']['field_imagenes']['field_imagenes_add_more']['#value'] = t('Agregar otra foto');
           $form['group_fotos']['#prefix'] = 

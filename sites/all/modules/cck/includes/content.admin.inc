@@ -1151,7 +1151,7 @@ function content_field_edit_form(&$form_state, $type_name, $field_name) {
   $form['field']['multiple'] = array(
     '#type' => 'select',
     '#title' => t('Number of values'),
-    '#options' => array(1 => t('Unlimited'), 0 => 1) + drupal_map_assoc(range(2, 32)),
+    '#options' => array(1 => t('Unlimited'), 0 => 1) + drupal_map_assoc(range(2, 35)),
     '#default_value' => $field['multiple'],
     '#description' => $description,
   );
