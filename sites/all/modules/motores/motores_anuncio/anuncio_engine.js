@@ -25,3 +25,21 @@ Drupal.behaviors.eula = function()
     }
   });
 }
+
+Drupal.behaviors.borraimgs = function()
+{
+	$('.preview-block img.imagecache').each(
+  	function()
+  	{
+  		var source = $(this).attr('src');
+  		
+  		var parts = source.split('preview_thumb');
+  		
+  		if(parts[1] == '/')
+  		{
+  			$(this).detach();
+  		}
+  	}
+  );
+
+}

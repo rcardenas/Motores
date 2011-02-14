@@ -168,6 +168,7 @@ function motores_preprocess_page(&$vars, $hook)
   {
     $vars['body_classes'] .= ' multistep multistep-5';
     unset($vars['breadcrumb']);
+    drupal_add_js(drupal_get_path('module', 'motores_anuncio').'/anuncio_engine.js');
   }
   // if we're at the cart
   if ( arg(0) == 'cart' )

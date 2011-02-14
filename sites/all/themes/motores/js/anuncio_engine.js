@@ -13,4 +13,20 @@ Drupal.behaviors.anuncio = function()
   $('#scrollable-small .field-item').click(function(){
     big.setPage( scroll.getClickIndex() );
   });
+   
+  $('#scrollable-small .field-item img').each(
+  	function()
+  	{
+  		var source = $(this).attr('src');
+  		
+  		var parts = source.split('slideshow_small');
+  		
+  		if(parts[1] == '/')
+  		{
+  			$(this).parent().detach();
+  		}
+  	}
+  );
+  
+  
 }
