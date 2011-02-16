@@ -227,7 +227,7 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
           	{
           		if ( is_numeric($i) )
           		{
-          			if( $i>14 )
+          			if( $i>15 )
           			{
           				unset($form['group_fotos']['field_imagenes'][$i]);
           			}
@@ -396,7 +396,7 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
           	{
           		if ( is_numeric($i) )
           		{
-          			if( $i>14 )
+          			if( $i>15 )
           			{
           				
           				unset($form['group_fotos']['field_imagenes'][$i]);
@@ -573,7 +573,7 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
           	{
           		if ( is_numeric($i) )
           		{
-          			if( $i>14 )
+          			if( $i>15 )
           			{
           				
           				unset($form['group_fotos']['field_imagenes'][$i]);
@@ -749,7 +749,7 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
           	{
           		if ( is_numeric($i) )
           		{
-          			if( $i>14 )
+          			if( $i>15 )
           			{
           				
           				unset($form['group_fotos']['field_imagenes'][$i]);
@@ -928,7 +928,7 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
           	{
           		if ( is_numeric($i) )
           		{
-          			if( $i>14 )
+          			if( $i>15 )
           			{
           				
           				unset($form['group_fotos']['field_imagenes'][$i]);
@@ -1104,7 +1104,7 @@ function motores_anuncio_form_alter( &$form, &$form_state, $form_id )
           	{
           		if ( is_numeric($i) )
           		{
-          			if( $i>14 )
+          			if( $i>15 )
           			{
           				
           				unset($form['group_fotos']['field_imagenes'][$i]);
